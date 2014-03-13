@@ -1,0 +1,6 @@
+DROP TABLE IF EXISTS user_info;
+CREATE TABLE user_info(
+	id SERIAL,
+	name VARCHAR(50) UNIQUE,
+	PRIMARY KEY(id)
+);
