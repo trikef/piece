@@ -1,0 +1,34 @@
+.ui-listview li p{
+	white-space: normal !important;	
+}
+.ui-btn-right-2{
+	top: .3125em;
+	right: 2.5em !important;
+}
+.content-header{
+	position: relative;
+	height: 40px;
+	top: -20px;
+	z-index: 1;
+}
+.content-footer{
+	position: relative;
+	height: 40px;
+	top: 15px;
+	z-index: 1;
+}
+.ui-li-name{
+	float: left;
+	padding-right: 10px;
+}
+.ui-li-text{
+	
+}
+.ui-li-date{
+	float: left;
+}
+.ui-li-action{
+	position: relative;
+	top:-25px;
+	text-align: right;
+}
