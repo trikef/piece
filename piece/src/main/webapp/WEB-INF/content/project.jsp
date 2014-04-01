@@ -6,7 +6,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>bit</title>
+	<title><s:property value="p.title"/></title>
 	<link rel="stylesheet" href="/css/main.css" />
 <!-- 	<link rel="stylesheet" href="/css/jquery-ui.css"> -->
 	<link rel="stylesheet" href="/css/jquery.mobile-1.4.2.css" />
@@ -20,8 +20,6 @@
 <div data-role="page" id="projectlistpage">
 	<div data-role="header" data-position="fixed">
 		<h1><s:property value="p.title"/></h1>
-		<a href="#panel-task-input" data-ajax="false" class="ui-btn ui-shadow ui-corner-all ui-icon-plus ui-btn-icon-notext ui-btn-inline ui-btn-right ui-btn-right-2">task</a>
-		<a href="#panel-chat-input" data-ajax="false" class="ui-btn ui-shadow ui-corner-all ui-icon-comment ui-btn-icon-notext ui-btn-inline ui-btn-right">chat</a>
 	</div><!-- /header -->
 	<div class="ui-content" role="main">
 		<ul data-role="listview"  data-count-theme="b" data-inset="true">
@@ -68,9 +66,6 @@
 			</ul>
 		</div>
 	    <div id="project-task" class="ui-content">
-	        <div class="content-header">
-				<a href="#panel-task-input" data-ajax="false" class="ui-btn ui-shadow ui-corner-all ui-icon-plus ui-btn-icon-notext ui-btn-inline">task</a>
-	        </div>
 	        <ul data-role="listview" class="piece-list" >
 			<s:iterator value="pis">
 			<li>
@@ -80,6 +75,9 @@
 			</li>
 			</s:iterator>
 			</ul>
+			<div class="content-footer">
+				<a href="#panel-task-input" data-ajax="false" class="ui-btn ui-shadow ui-corner-all ui-icon-plus ui-btn-icon-notext ui-btn-inline">task</a>
+	        </div>
 	    </div>
 	</div>
 	</div>

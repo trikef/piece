@@ -11,22 +11,28 @@ import org.slf4j.LoggerFactory;
 
 import com.iinur.piece.data.PieceDao;
 import com.iinur.piece.data.bean.Piece;
+import com.iinur.piece.data.bean.PieceWithPath;
 
 public class PieceModel {
 	
 	private static final Logger log = LoggerFactory
 			.getLogger(PieceModel.class);
 
+	private PieceDao pdao = null;
+	
+	public PieceModel(){
+		this.pdao = new PieceDao();
+	}
+
 	public int registration(int project_id, int user_id, String title,
 			String description, String goal, String target_date) {
 		int result = 0;
-		PieceDao pdao = new PieceDao();
 		try {
 			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-			pdao.insert(project_id, user_id, title, description, goal, new Timestamp(
+			this.pdao.insert(project_id, user_id, title, description, goal, new Timestamp(
 					df.parse(target_date).getTime()));
-			result = pdao.getNewId();
+			result = this.pdao.getNewId();
 		} catch (ParseException e) {
 			log.error(e.getMessage());
 		}
@@ -34,22 +40,26 @@ public class PieceModel {
 	}
 	
 	public Piece getSingle(int id){
-		PieceDao pdao = new PieceDao();
-		return pdao.getSingle(id);
+		return this.pdao.getSingle(id);
 	}
 	
 	public List<Piece> get(int project_id){
-		PieceDao pdao = new PieceDao();
-		return pdao.get(project_id);
+		return this.pdao.get(project_id);
 	}
 	
 	public List<Piece> getChild(int project_id, int parent_id){
-		PieceDao pdao = new PieceDao();
-		return pdao.getChild(project_id, parent_id);
+		return this.pdao.getChild(project_id, parent_id);
 	}
 	
 	public List<Piece> getParent(int project_id, int child_id){
-		PieceDao pdao = new PieceDao();
-		return pdao.getParent(project_id, child_id);
+		return this.pdao.getParent(project_id, child_id);
+	}
+	
+	public PieceWithPath getWithPath(int id){
+		return this.pdao.getPieceWithPath(id);
+	}
+	
+	public List<PieceWithPath> getListWithPath(int project_id, int parent_id){
+		return this.pdao.getPieceWithPathList(project_id, parent_id);
 	}
 }
