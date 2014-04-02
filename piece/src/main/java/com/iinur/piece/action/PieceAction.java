@@ -7,7 +7,9 @@ import org.apache.struts2.convention.annotation.Result;
 
 import com.iinur.piece.data.bean.Piece;
 import com.iinur.piece.data.bean.PieceWithPath;
+import com.iinur.piece.data.bean.Product;
 import com.iinur.piece.model.PieceModel;
+import com.iinur.piece.model.ProductModel;
 
 @Action(value="/piece/{id:.+}",
 results={@Result(name="success", location="piece.jsp")}
@@ -20,6 +22,7 @@ public class PieceAction extends BaseAction {
 	//public List<Piece> pis;//child_piece
 	//public List<Piece> pips;//parent_piece
 	public List<PieceWithPath> piwps;
+	public List<Product> ps;
 	
 	public String execute(){
 		String result = before();
@@ -32,6 +35,9 @@ public class PieceAction extends BaseAction {
 		//this.pis = pmodel.getChild(this.p.getProject_id(), id);
 		//this.pips = pmodel.getParent(this.p.getProject_id(), id);
 		this.piwps = pmodel.getListWithPath(this.p.getProject_id(), id);
+		
+		ProductModel pdmodel = new ProductModel();
+		this.ps = pdmodel.getList(id);
 
 		return SUCCESS;
 	}

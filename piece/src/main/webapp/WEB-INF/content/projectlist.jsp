@@ -6,14 +6,14 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>bit</title>
+	<title>プロジェクトリスト</title>
 	<link rel="stylesheet" href="/css/main.css" />
-	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css" />
+<!-- 	<link rel="stylesheet" href="/css/jquery-ui.css"> -->
+	<link rel="stylesheet" href="/css/jquery.mobile-1.4.2.css" />
 <!--<link rel="shortcut icon" href="../favicon.ico"> -->
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
-	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-	<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-	<script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+	<script src="/js/jquery-1.11.0.js"></script>
+<!-- 	<script src="/js/jquery-ui-1.10.2.custom.js"></script> -->
+	<script src="/js/jquery.mobile-1.4.2.js"></script>
 	<script src="/js/main.js"></script>
 </head>
 <body>
@@ -25,7 +25,7 @@
 	<div class="ui-content" role="main">
 		<ul data-role="listview"  data-count-theme="b" data-inset="true">
 		    <s:iterator value="ps">
-			<li><a href="/project/<s:property value="id"/>">
+			<li><a data-ajax="false" href="/project/<s:property value="id"/>">
 			<br /><h3 style="white-space: normal;"><s:property value="title"/></h3>
 			<p><s:property value="description"/></p>
 			<p><s:property value="goal"/></p>

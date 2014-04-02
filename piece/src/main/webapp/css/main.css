@@ -17,18 +17,39 @@
 	top: 15px;
 	z-index: 1;
 }
+.ui-li-header{
+	margin-top: 30px !important;
+	background-color: lightgray !important;
+}
 .ui-li-name{
 	float: left;
 	padding-right: 10px;
 }
 .ui-li-text{
-	
+	float: left;
+}
+.ui-li-text-right{
+	text-align: right;
 }
 .ui-li-date{
 	float: left;
+	clear: both;
 }
 .ui-li-action{
 	position: relative;
 	top:-25px;
 	text-align: right;
+}
+.piece-list{
+	margin-bottom: 10px !important;
+}
+.product-list{
+	margin-bottom: 20px !important;
+}
+.piece-topic-path{
+	border-top-style: solid;
+	border-top-width: 1px;
+	border-top-color: gray;
+	background-color: lightgray;
+	margin: 0 !important;
 }

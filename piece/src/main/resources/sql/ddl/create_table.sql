@@ -119,3 +119,36 @@ CREATE TABLE chat(
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY(id)
 );
+
+DROP TABLE IF EXISTS product;
+CREATE TABLE product(
+	id SERIAL,
+	piece_id INTEGER NOT NULL,
+	user_id INTEGER NOT NULL,
+	name VARCHAR(255),
+	status INTEGER DEFAULT 1,
+	star DOUBLE PRECISION,
+	star_count INTEGER,
+	type_id INTEGER DEFAULT 1,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY(id)
+);
+
+DROP TABLE IF EXISTS product_type;
+CREATE TABLE product_type(
+	id SERIAL,
+	name VARCHAR(255) NOT NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY(id)
+);
+
+DROP TABLE IF EXISTS product_text;
+CREATE TABLE product_text(
+	text_id SERIAL,
+	product_id INTEGER NOT NULL,
+	data TEXT,
+	comment TEXT,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP,
+	PRIMARY KEY(text_id)
+);

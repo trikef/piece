@@ -31,7 +31,7 @@
 				</a>>
 				</s:if>
 				<s:else>
-				<a href="/piece/<s:property value="id"/>">
+				<a data-ajax="false" href="/piece/<s:property value="id"/>">
 					<s:property value="title"/>
 				</a>>
 				</s:else>
@@ -43,6 +43,26 @@
 			<p><strong><s:date name="piwp.target_date" format="yyyy/MM/dd" /></strong></p>
 			<p class="ui-li-aside"><strong><s:date name="piwp.created_at" format="yyyy/MM/dd hh:mm" /></strong></p>
 			</li>
+		</ul>
+		<ul data-role="listview" class="piece-list" >
+			<li class="ui-li-header">タスク</li>
+		<s:if test="%{piwps.size()>0}">
+		<s:iterator value="piwps">
+		<li>
+			<p class="piece-topic-path"><small><s:iterator  status="stat" value="piece_path">
+				<s:if test="#stat.index>0">
+				<a data-ajax="false" href="/piece/<s:property value="id"/>">
+					<s:property value="title"/>
+				</a>>
+				</s:if>
+			</s:iterator>
+			</small></p>
+			<a data-ajax="false" href="/piece/<s:property value="id" />">
+			<p><s:property value="title"/></p>
+			</a>
+		</li>
+		</s:iterator>
+		</s:if>
 		</ul>
 		<div data-role="collapsibleset" data-theme="a" data-content-theme="b">
 		    <div data-role="collapsible">
@@ -77,26 +97,46 @@
 		        </ul>
 		    </div>
 		</div>
-		<s:if test="%{piwps.size()>0}">
-		<h3>サブタスクリスト</h3>
-		<ul data-role="listview" class="piece-list" >
-		<s:iterator value="piwps">
+		<ul data-role="listview" class="product-list" >
+			<li class="ui-li-header">データ</li>
+		<s:if test="%{ps.size()>0}">
+		<s:iterator value="ps">
 		<li>
-			<p><small><s:iterator  status="stat" value="piece_path">
-				<s:if test="#stat.index>0">
-				<a href="/piece/<s:property value="id"/>">
-					<s:property value="title"/>
-				</a>>
-				</s:if>
-			</s:iterator>
-			</small></p>
-			<a href="/piece/<s:property value="id" />">
-			<p><s:property value="title"/></p>
+			<a data-ajax="false" href="/product/<s:property value="id" />">
+				<p class="ui-li-name"><strong><s:property value="user_name"/></strong></p>
+				<p class="ui-li-text"><s:property value="name"/></p>
+				<p class="ui-li-text-right"><s:property value="type_name"/></p>
+				<p class="ui-li-date"><strong><s:date name="created_at" format="yyyy/MM/dd HH:mm" /></strong></p>
 			</a>
 		</li>
 		</s:iterator>
-		</ul>
 		</s:if>
+		</ul>
+		<div data-role="collapsibleset" data-theme="a" data-content-theme="b">
+		    <div data-role="collapsible">
+		    <h2>データ追加</h2>
+		        <ul data-role="listview" data-theme="a" data-divider-theme="b">
+		            <li>
+						<input type="hidden" name="pi" id="product-pid-input" value="<s:property value="piwp.id" />" />
+						<input type="hidden" name="ui" id="product-uid-input" value="<s:property value="uid" />" />
+						<div class="ui-field-contain">
+							<label for="product-data-input">データ
+							</label>
+							<textarea cols="40" rows="10" name="d" id="product-data-input" placeholder=""></textarea>
+						</div>
+						<div class="ui-field-contain">
+							<label for="product-comment-input">コメント
+							</label>
+							<textarea cols="40" rows="10" name="d" id="product-comment-input" placeholder=""></textarea>
+						</div>
+						<div class="ui-field-contain">
+							<a onClick="Product.add_text(1)" class="ui-btn ui-corner-all">追加</a>
+							<a onClick="Product.add_text(2)" class="ui-btn ui-corner-all">下書き</a>
+						</div>
+		            </li>
+		        </ul>
+		    </div>
+		</div>
 	</div>
 	<div data-role="footer" data-position="fixed">
 	    <div data-role="navbar">

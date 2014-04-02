@@ -25,12 +25,40 @@ var Piece = {
 		return defer.promise().done(function(data) {
 			if(data.id>0){
 				$('.piece-list')
-				.append("<li><a class='ui-btn ui-btn-icon-right ui-icon-carat-r' href='/piece/"+data.id+"'><p>"+data.title+"</p></a></li>"
+				.append("<li><a data-ajax='false' class='ui-btn ui-btn-icon-right ui-icon-carat-r' href='/piece/"+data.id+"'><p>"+data.title+"</p></a></li>"
 						);
 			}
 		});
 	}
 };
+var Product = {
+		add_text : function(status_id) {
+			var defer = $.Deferred();
+			var pid = $("#product-pid-input").val();
+			var uid = $("#product-uid-input").val();
+			var data = $("#product-data-input").val();
+			var comment = $("#product-comment-input").val();
+			$.ajax({
+				url : "/api/producttextregi",
+				data : {
+					pi : pid,
+					ui : uid,
+					d : data,
+					c : comment
+				},
+				dataType : 'json',
+				success : defer.resolve,
+				error : defer.reject
+			});
+			return defer.promise().done(function(data) {
+				if(data.id>0){
+					$('.product-list')
+					.append("<li><a data-ajax='false' class='ui-btn ui-btn-icon-right ui-icon-carat-r' href='/product/"+data.id+"'><p>"+data.name+"</p></a></li>"
+							);
+				}
+			});
+		}
+	};
 var Chat = {
 		add : function() {
 			var defer = $.Deferred();
