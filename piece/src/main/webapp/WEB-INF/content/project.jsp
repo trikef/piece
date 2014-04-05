@@ -69,7 +69,7 @@
 	        <ul data-role="listview" class="piece-list" >
 			<s:iterator value="pis">
 			<li>
-				<a href="/piece/<s:property value="id" />">
+				<a data-ajax="false" href="/piece/<s:property value="id" />">
 				<p><s:property value="title"/></p>
 				</a>
 			</li>
