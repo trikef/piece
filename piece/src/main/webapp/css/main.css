@@ -36,9 +36,7 @@
 	clear: both;
 }
 .ui-li-action{
-	position: relative;
-	top:-25px;
-	text-align: right;
+	float: right;
 }
 .ui-li-topicpath{
 	padding-top: 10px;
@@ -55,4 +53,8 @@
 	border-top-color: gray;
 	background-color: lightgray;
 	margin: 0 !important;
+}
+.btn-min-space{
+	padding-bottom: 20px;
+	margin-top: 0px !important;
 }

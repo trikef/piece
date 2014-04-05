@@ -28,9 +28,7 @@
 			<li><a data-ajax="false" href="/project/<s:property value="id"/>">
 			<br /><h3 style="white-space: normal;"><s:property value="title"/></h3>
 			<p><s:property value="description"/></p>
-			<p><s:property value="goal"/></p>
-			<p><strong><s:date name="target_date" format="yyyy/MM/dd" /></strong></p>
-			<p class="ui-li-aside"><strong><s:date name="created_at" format="yyyy/MM/dd hh:mm" /></strong></p>
+			<p class="ui-li-aside"><strong><s:date name="created_at" format="yyyy/MM/dd HH:mm" /></strong></p>
 			</a></li>
 			</s:iterator>
 		</ul>

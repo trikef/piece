@@ -11,6 +11,9 @@ public class Chat {
 	private int priority;
 	private Timestamp created_at;
 	private String name;
+	private int good;
+	private int bad;
+	private boolean regi;
 
 	public int getId() {
 		return id;
@@ -42,6 +45,18 @@ public class Chat {
 	public void setPriority(int priority) {
 		this.priority = priority;
 	}
+	public int getGood() {
+		return good;
+	}
+	public void setGood(int good) {
+		this.good = good;
+	}
+	public int getBad() {
+		return bad;
+	}
+	public void setBad(int bad) {
+		this.bad = bad;
+	}
 	public Timestamp getCreated_at() {
 		return created_at;
 	}
@@ -53,6 +68,13 @@ public class Chat {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public boolean isRegi() {
+		return regi;
+	}
+	public void setRegi(boolean regi) {
+		this.regi = regi;
 	}
 
 	private static String TIME_FORMAT = "yyyy/MM/dd HH:mm";

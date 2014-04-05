@@ -22,8 +22,11 @@ public class ChatDao extends BaseDao {
 	
 	public Chat get(int id) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT c.id,c.project_id,c.user_id,c.text,c.created_at,u.name FROM chat c ");
+		sql.append("SELECT c.id,c.project_id,c.user_id,c.text,c.priority,c.created_at,u.name,cv.good,cv.bad FROM chat c ");
 		sql.append("INNER JOIN user_info u ON c.user_id = u.id ");
+		sql.append("LEFT JOIN (");
+		sql.append("SELECT chat_id,sum(good) as good,sum(bad) as bad FROM chat_value GROUP BY chat_id");
+		sql.append(") cv ON c.id = cv.chat_id ");
 		sql.append("WHERE c.id=? ");
 		
 		Chat c = null;
@@ -40,7 +43,7 @@ public class ChatDao extends BaseDao {
 	
 	public Chat getNew(int project_id, int user_id) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT c.id,c.project_id,c.user_id,c.text,c.created_at,u.name FROM chat c ");
+		sql.append("SELECT c.id,c.project_id,c.user_id,c.text,c.priority,c.created_at,u.name FROM chat c ");
 		sql.append("INNER JOIN user_info u ON c.user_id = u.id ");
 		sql.append("WHERE c.project_id=? AND c.user_id=? ");
 		sql.append("ORDER BY c.id DESC ");
@@ -60,10 +63,13 @@ public class ChatDao extends BaseDao {
 	
 	public List<Chat> getList(int project_id) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT c.id,c.project_id,c.user_id,c.text,c.created_at,u.name FROM chat c ");
+		sql.append("SELECT c.id,c.project_id,c.user_id,c.text,c.priority,c.created_at,u.name,cv.good,cv.bad FROM chat c ");
 		sql.append("INNER JOIN user_info u ON c.user_id = u.id ");
+		sql.append("LEFT JOIN (");
+		sql.append("SELECT chat_id,sum(good) as good,sum(bad) as bad FROM chat_value GROUP BY chat_id");
+		sql.append(") cv ON c.id = cv.chat_id ");
 		sql.append("WHERE c.project_id=? ");
-		sql.append("ORDER BY c.id ASC");
+		sql.append("ORDER BY c.id DESC");
 		
 		List<Chat> cs = null;
 		try {
@@ -79,7 +85,7 @@ public class ChatDao extends BaseDao {
 	
 	public List<Chat> getPinList(int project_id) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT c.id,c.project_id,c.user_id,c.text,c.created_at,u.name FROM chat c ");
+		sql.append("SELECT c.id,c.project_id,c.user_id,c.text,c.priority,c.created_at,u.name FROM chat c ");
 		sql.append("INNER JOIN user_info u ON c.user_id = u.id ");
 		sql.append("WHERE c.project_id=? ");
 		sql.append("AND c.priority is not null ");

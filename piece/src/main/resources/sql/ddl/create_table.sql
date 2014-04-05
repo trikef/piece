@@ -120,6 +120,17 @@ CREATE TABLE chat(
 	PRIMARY KEY(id)
 );
 
+DROP TABLE IF EXISTS chat_value;
+CREATE TABLE chat_value(
+	id SERIAL,
+	chat_id INTEGER NOT NULL,
+	user_id INTEGER NOT NULL,
+	good INTEGER,
+	bad INTEGER,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY(id)
+);
+
 DROP TABLE IF EXISTS product;
 CREATE TABLE product(
 	id SERIAL,

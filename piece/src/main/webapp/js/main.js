@@ -79,9 +79,9 @@ var Chat = {
 			return defer.promise().done(function(data) {
 				if(data.id>0){
 					$('.chat-list')
-					.append("<li class='ui-li-static ui-body-inherit ui-last-child'><p class='ui-li-name'><strong>"+data.name+"</strong></p><p class='ui-li-text'>"+data.text+"</p><p class='ui-li-date'><strong>"+data.created_at_str+"</strong></p>"
-							+"<p class='ui-li-action'><a onClick='Chat.pin("+data.id+","+data.id+")' class='ui-btn ui-shadow ui-corner-all ui-icon-star ui-btn-icon-notext ui-btn-inline'>action</a></p></li>"
-							);
+					.prepend("<li class='ui-li-static ui-body-inherit ui-last-child'><p class='ui-li-name'><strong>"+data.name+"</strong></p><p class='ui-li-text'>"+data.text+"</p><p class='ui-li-date'><strong>"+data.created_at_str+"</strong></p>"
+							+"<p class='ui-li-text-right'><a onClick='Chat.pin("+data.id+","+data.id+")'><i class='fa fa-thumb-tack'></i></a><i class='fa fa-thumbs-o-down'></i><i class='fa fa-thumbs-o-up'></i></p>"
+					);
 				}
 			});
 		},
@@ -102,6 +102,31 @@ var Chat = {
 					$('.pin-list')
 					.append("<li class='ui-li-static ui-body-inherit ui-last-child'><p class='ui-li-name'><strong>"+data.name+"</strong></p><p class='ui-li-text'>"+data.text+"</p><p class='ui-li-date'><strong>"+data.created_at_str+"</strong></p></li>"
 							);
+					$("#pin"+id).html("<i class='fa fa-thumb-tack'></i>");
+				}
+			});
+		},
+		count : function(cid, uid, good, bad, hid) {
+			var defer = $.Deferred();
+			$.ajax({
+				url : "/api/chatvalue",
+				data : {
+					i : cid,
+					u : uid,
+					g : good,
+					b : bad
+				},
+				dataType : 'json',
+				success : defer.resolve,
+				error : defer.reject
+			});
+			return defer.promise().done(function(data) {
+				if(data.regi){
+					if (good > 0) {
+						$(hid).text(data.good);
+					} else if (bad > 0) {
+						$(hid).text(data.bad);
+					}
 				}
 			});
 		}
