@@ -102,7 +102,7 @@
 		<s:if test="%{ps.size()>0}">
 		<s:iterator value="ps">
 		<li>
-			<a data-ajax="false" href="/product/<s:property value="id" />">
+			<a data-ajax="false" href="/product<s:property value="type_name" />/<s:property value="id" />">
 				<p class="ui-li-name"><strong><s:property value="user_name"/></strong></p>
 				<p class="ui-li-text"><s:property value="name"/></p>
 				<p class="ui-li-text-right"><s:property value="type_name"/></p>
@@ -141,10 +141,12 @@
 	<div data-role="footer" data-position="fixed">
 	    <div data-role="navbar">
 	        <ul>
-	            <li><a href="/projectlist" data-ajax="false" data-icon="grid" data-theme="a">プロジェクト</a></li>
+	            <li><a href="/projectlist" data-ajax="false" data-icon="grid" data-theme="b">プロジェクトリスト</a></li>
+<!-- 
 	            <li><a href="#" data-ajax="false" data-icon="bars" data-theme="b">タスク</a></li>
 	            <li><a href="#" data-ajax="false" data-icon="user" data-theme="b">マイページ</a></li>
-	        </ul>
+ -->
+ 	        </ul>
 	    </div><!-- /navbar -->
 	</div><!-- /footer -->
 </div>

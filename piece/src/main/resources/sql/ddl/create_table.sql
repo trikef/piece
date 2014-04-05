@@ -152,3 +152,14 @@ CREATE TABLE product_text(
 	updated_at TIMESTAMP,
 	PRIMARY KEY(text_id)
 );
+
+DROP TABLE IF EXISTS product_chat;
+CREATE TABLE product_chat(
+	id SERIAL,
+	product_id INTEGER NOT NULL,
+	user_id INTEGER NOT NULL,
+	text TEXT NOT NULL,
+	star INTEGER,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY(id)
+);

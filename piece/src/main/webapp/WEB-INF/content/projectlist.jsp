@@ -38,10 +38,12 @@
 	<div data-role="footer" data-position="fixed">
 	    <div data-role="navbar">
 	        <ul>
-	            <li><a href="/projectlist" data-ajax="false" data-icon="grid" data-theme="a">プロジェクト</a></li>
-	            <li><a href="#" data-ajax="false" data-icon="star" data-theme="b">タスク</a></li>
-	            <li><a href="#" data-ajax="false" data-icon="star" data-theme="b">マイページ</a></li>
-	        </ul>
+	            <li><a href="/projectlist" data-ajax="false" data-icon="grid" data-theme="a">プロジェクトリスト</a></li>
+<!-- 
+	            <li><a href="#" data-ajax="false" data-icon="bars" data-theme="b">タスク</a></li>
+	            <li><a href="#" data-ajax="false" data-icon="user" data-theme="b">マイページ</a></li>
+ -->
+ 	        </ul>
 	    </div><!-- /navbar -->
 	</div><!-- /footer -->
 </body>

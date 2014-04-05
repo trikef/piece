@@ -84,10 +84,12 @@
 	<div data-role="footer" data-position="fixed">
 	    <div data-role="navbar">
 	        <ul>
-	            <li><a href="/projectlist" data-ajax="false" data-icon="grid" data-theme="a">プロジェクト</a></li>
+	            <li><a href="/projectlist" data-ajax="false" data-icon="grid" data-theme="b">プロジェクトリスト</a></li>
+<!-- 
 	            <li><a href="#" data-ajax="false" data-icon="bars" data-theme="b">タスク</a></li>
 	            <li><a href="#" data-ajax="false" data-icon="user" data-theme="b">マイページ</a></li>
-	        </ul>
+ -->
+ 	        </ul>
 	    </div><!-- /navbar -->
 	</div><!-- /footer -->
 	<div data-role="panel" id="panel-task-input" data-position-fixed="true">

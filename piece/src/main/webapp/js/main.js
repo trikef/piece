@@ -53,7 +53,7 @@ var Product = {
 			return defer.promise().done(function(data) {
 				if(data.id>0){
 					$('.product-list')
-					.append("<li><a data-ajax='false' class='ui-btn ui-btn-icon-right ui-icon-carat-r' href='/product/"+data.id+"'><p>"+data.name+"</p></a></li>"
+					.append("<li><a data-ajax='false' class='ui-btn ui-btn-icon-right ui-icon-carat-r' href='/producttext/"+data.id+"'><p>"+data.name+"</p></a></li>"
 							);
 				}
 			});
@@ -106,3 +106,32 @@ var Chat = {
 			});
 		}
 	};
+var ProductChat = {
+		add : function() {
+			var defer = $.Deferred();
+			var pid = $("#product-pid-input").val();
+			var uid = $("#product-uid-input").val();
+			var text = $("#product-text-input").val();
+			var star = $("#product-star-input").val();
+			$.ajax({
+				url : "/api/productchatregi",
+				data : {
+					p : pid,
+					u : uid,
+					t : text,
+					s : star
+				},
+				dataType : 'json',
+				success : defer.resolve,
+				error : defer.reject
+			});
+			return defer.promise().done(function(data) {
+				if(data.id>0){
+					$('.productchat-list')
+					.append("<li class='ui-li-static ui-body-inherit ui-last-child'><p class='ui-li-name'><strong>"+data.name+"</strong></p><p class='ui-li-text'>"+data.text+"</p><p class='ui-li-date'><strong>"+data.created_at_str+"</strong></p>"
+							+"</li>"
+							);
+				}
+			});
+		}
+}

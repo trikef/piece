@@ -40,6 +40,9 @@
 	top:-25px;
 	text-align: right;
 }
+.ui-li-topicpath{
+	padding-top: 10px;
+}
 .piece-list{
 	margin-bottom: 10px !important;
 }
