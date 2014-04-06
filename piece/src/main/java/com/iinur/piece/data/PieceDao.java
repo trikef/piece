@@ -115,7 +115,7 @@ public class PieceDao extends BaseDao {
 		sql.append("SELECT child_id, parent_id,array[parent_id] FROM piece_net pn  ");
 		sql.append("INNER JOIN piece pc ON pn.child_id=pc.id  ");
 		sql.append("LEFT join piece p ON pn.parent_id = p.id  ");
-		sql.append("WHERE parent_id=0 AND pc.project_id=3  ");
+		sql.append("WHERE parent_id=0 AND pc.project_id=?  ");
 		sql.append("UNION ALL SELECT b.child_id,b.parent_id,path||b.parent_id FROM rec a  ");
 		sql.append("INNER JOIN  (SELECT pn2.child_id,pn2.parent_id FROM piece_net pn2  ");
 		sql.append("LEFT JOIN piece p2 ON pn2.parent_id = p2.id) b ON a.id=b.parent_id)  ");
@@ -133,7 +133,8 @@ public class PieceDao extends BaseDao {
 		List<PieceWithPath> ps = null;
 		try {
 			ResultSetHandler<List<PieceWithPath>> rsh = new BeanListHandler<PieceWithPath>(PieceWithPath.class);
-			ps = run.query(sql.toString(), rsh, project_id, parent_id);
+			log.debug("getChild(int project_id, int parent_id):"+sql.toString());
+			ps = run.query(sql.toString(), rsh, project_id, project_id, parent_id);
 		} catch (SQLException sqle) {
 			log.error(sqle.getMessage());
 			throw new RuntimeException(sqle.toString());
