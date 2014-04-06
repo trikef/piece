@@ -11,6 +11,7 @@ public class PieceWithPath extends Piece {
 	private Array path;
 	private Array path_title;
 	private int lv;
+	private int child_count;
 	public int getParent_id() {
 		return parent_id;
 	}
@@ -55,6 +56,12 @@ public class PieceWithPath extends Piece {
 	}
 	public void setLv(int lv) {
 		this.lv = lv;
+	}
+	public int getChild_count() {
+		return child_count;
+	}
+	public void setChild_count(int child_count) {
+		this.child_count = child_count;
 	}
 	
 }

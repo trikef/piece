@@ -1,14 +1,13 @@
 package com.iinur.piece.model;
 
-import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.iinur.core.util.PermissionUtils;
+import com.iinur.core.util.TimestampUtils;
 import com.iinur.piece.data.PieceDao;
 import com.iinur.piece.data.bean.Piece;
 import com.iinur.piece.data.bean.PieceWithPath;
@@ -28,15 +27,25 @@ public class PieceModel {
 			String description, String goal, String target_date) {
 		int result = 0;
 		try {
-			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-
-			this.pdao.insert(project_id, user_id, title, description, goal, new Timestamp(
-					df.parse(target_date).getTime()));
+			this.pdao.insert(project_id, user_id, title, description, goal, TimestampUtils.parseDate(target_date));
 			result = this.pdao.getNewId();
 		} catch (ParseException e) {
 			log.error(e.getMessage());
 		}
 		return result;
+	}
+	
+	public void update(int piece_id, String title,
+			String description, String goal, String target_date) {
+		try {
+			this.pdao.update(piece_id, title, description, goal, TimestampUtils.parseDate(target_date));
+		} catch (ParseException e) {
+			log.error(e.getMessage());
+		}
+	}
+
+	public void updateStatus(int piece_id, int status_id){
+		this.pdao.updateStatus(piece_id, status_id);
 	}
 	
 	public Piece getSingle(int id){
@@ -47,7 +56,7 @@ public class PieceModel {
 		return this.pdao.get(project_id);
 	}
 	
-	public List<Piece> getChild(int project_id, int parent_id){
+	public List<PieceWithPath> getChild(int project_id, int parent_id){
 		return this.pdao.getChild(project_id, parent_id);
 	}
 	
@@ -61,5 +70,21 @@ public class PieceModel {
 	
 	public List<PieceWithPath> getListWithPath(int project_id, int parent_id){
 		return this.pdao.getPieceWithPathList(project_id, parent_id);
+	}
+	
+	public boolean permissionExecute(int piece_id, int user_id){
+		Piece p = this.pdao.getSingle(piece_id);
+		int permission = p.getPermission();
+		String group = getGroup(piece_id, user_id);
+		return PermissionUtils.check(permission, group, PermissionUtils.EXECUTE);
+	}
+
+	public String getGroup(int piece_id, int user_id){
+		//TODO performance
+		Piece p = this.pdao.getSingle(piece_id);
+		if(p.getUser_id()==user_id){
+			return PermissionUtils.OWNER;
+		}
+		return PermissionUtils.OTHER;
 	}
 }

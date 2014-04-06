@@ -41,6 +41,33 @@
 .ui-li-topicpath{
 	padding-top: 10px;
 }
+.ui-li-piece{
+	position: relative;
+}
+.ui-li-piece-o{
+	background-color:#FFFFFF;
+	filter:alpha(opacity=35);
+	-moz-opacity:0.35;
+	-khtml-opacity: 0.35;
+	opacity:0.35;
+}
+.ui-li-piece-o a{
+	color: gray !important;
+}
+.ui-li-piece-check{
+	font-size: 23px;
+	position: absolute;
+	z-index: 1;
+	top:12px;
+	left: 8px;
+}
+.ul-li-piece-title{
+	padding-left: 20px;
+}
+.ul-li-count-left{
+	right: auto !important;
+	left: 7px;
+}
 .piece-list{
 	margin-bottom: 10px !important;
 }

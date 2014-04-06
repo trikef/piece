@@ -11,6 +11,7 @@ public class Project {
 	private String goal;
 	private String img;
 	private int status_id;
+	private int permission;
 	private Timestamp target_date;
 	private Timestamp created_at;
 	public int getId() {
@@ -54,6 +55,12 @@ public class Project {
 	}
 	public void setStatus_id(int status_id) {
 		this.status_id = status_id;
+	}
+	public int getPermission() {
+		return permission;
+	}
+	public void setPermission(int permission) {
+		this.permission = permission;
 	}
 	public Timestamp getTarget_date() {
 		return target_date;

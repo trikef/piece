@@ -38,7 +38,7 @@ public class ProjectDao extends BaseDao {
 	
 	public List<Project> get(int user_id) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT * FROM project WHERE user_id=?");
+		sql.append("SELECT * FROM project WHERE user_id=? OR (permission-((permission/10)*10))&4=4");
 		List<Project> ps = null;
 		try {
 			ResultSetHandler<List<Project>> rsh = new BeanListHandler<Project>(Project.class);
@@ -55,6 +55,34 @@ public class ProjectDao extends BaseDao {
 		String sql = "INSERT INTO project (user_id,title,description,goal,target_date) VALUES (?,?,?,?,?)";
 		try {
 			run.update(sql,user_id,title,description,goal,target_date);
+		} catch (SQLException sqle) {
+			log.error(sqle.getMessage());
+			throw new RuntimeException(sqle.toString());
+		}
+	}
+	
+	public void updatePermissionOther(int project_id, int action){
+		StringBuffer sql = new StringBuffer();
+		sql.append("UPDATE project SET permission= ");
+		sql.append("cast(substring(cast(permission as text) from 1 for 2)|| ");
+		sql.append("cast(? as text) ");
+		sql.append("as INTEGER) WHERE id=? ");
+		try {
+			run.update(sql.toString(),action,project_id);
+		} catch (SQLException sqle) {
+			log.error(sqle.getMessage());
+			throw new RuntimeException(sqle.toString());
+		}
+	}
+	
+	public void updatePermissionPlusOther(int project_id, int action){
+		StringBuffer sql = new StringBuffer();
+		sql.append("UPDATE project SET permission= ");
+		sql.append("cast(substring(cast(permission as text) from 1 for 2)|| ");
+		sql.append("cast(cast(substring(cast(permission as text) from 3 for 1) as INTEGER)|? as text) ");
+		sql.append("as INTEGER) WHERE id=? ");
+		try {
+			run.update(sql.toString(),action,project_id);
 		} catch (SQLException sqle) {
 			log.error(sqle.getMessage());
 			throw new RuntimeException(sqle.toString());

@@ -38,6 +38,7 @@ CREATE TABLE project(
 	goal TEXT NOT NULL,
 	img VARCHAR(100),
 	status_id INTEGER DEFAULT 1,
+	permission INTEGER DEFAULT 700,
 	target_date DATE,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY(id)
@@ -63,6 +64,7 @@ CREATE TABLE piece(
 	goal TEXT NOT NULL,
 	skill TEXT,
 	status_id INTEGER DEFAULT 1,
+	permission INTEGER DEFAULT 700,
 	priority INTEGER DEFAULT 100,
 	img VARCHAR(100),
 	url VARCHAR(255),

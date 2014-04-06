@@ -48,8 +48,8 @@
 			<li class="ui-li-header">É^ÉXÉN</li>
 		<s:if test="%{piwps.size()>0}">
 		<s:iterator value="piwps">
-		<li>
-			<p class="piece-topic-path"><small><s:iterator  status="stat" value="piece_path">
+		<li data-role="list-divider">
+			<p><small><s:iterator  status="stat" value="piece_path">
 				<s:if test="#stat.index>0">
 				<a data-ajax="false" href="/piece/<s:property value="id"/>">
 					<s:property value="title"/>
@@ -57,6 +57,8 @@
 				</s:if>
 			</s:iterator>
 			</small></p>
+		</li>
+		<li>
 			<a data-ajax="false" href="/piece/<s:property value="id" />">
 			<p><s:property value="title"/></p>
 			</a>

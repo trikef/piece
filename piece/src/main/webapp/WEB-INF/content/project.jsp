@@ -30,6 +30,18 @@
 			<p><strong>ゴール</strong></p><p><s:property value="p.goal"/></p>
 			<p><strong>リリース予定日</strong></p><p><strong><s:date name="p.target_date" format="yyyy/MM/dd" /></strong></p>
 			<p class="ui-li-aside"><strong><s:date name="p.created_at" format="yyyy/MM/dd HH:mm" /></strong></p>
+			<s:if test="%{p.user_id==uid}">
+			<select onChange="Project.toggle_public(<s:property value="p.id"/>);" id="slider-flip-m" data-role="slider" data-mini="true">
+				<s:if test="%{(p.permission-((p.permission/10)*10))&4==4}">
+				    <option value="private">非公開</option>
+				    <option value="public" selected="">公開</option>
+			    </s:if>
+			    <s:else>
+			    	<option value="private" selected="">非公開</option>
+				    <option value="public">公開</option>
+			    </s:else>
+			</select>
+			</s:if>
 			</li>
 		</ul>
 	<div data-role="tabs">
@@ -125,10 +137,24 @@
 			</div>
 	        <ul data-role="listview" class="piece-list" >
 			<s:iterator value="pis">
-			<li>
+			<li id="piece<s:property value="id" />" class="ui-li-piece <s:if test="%{status_id==0}">ui-li-piece-o</s:if>">
+				<s:if test="%{child_count>0}">
 				<a data-ajax="false" href="/piece/<s:property value="id" />">
-				<p><s:property value="title"/></p>
+				<p class="ul-li-piece-title"><s:property value="title"/></p>
+				<span class="ui-li-count ul-li-count-left"><s:property value="child_count" /></span>
 				</a>
+				</s:if>
+				<s:else>
+					<s:if test="%{user_id==uid}">
+					<span class="ui-li-piece-check" id="check<s:property value="id" />">
+					<s:if test="%{status_id==0}"><a onClick="Piece.check(<s:property value="id"/>,1)"><i class="fa fa-check-square"></i></a></s:if>
+					<s:else><a onClick="Piece.check(<s:property value="id"/>,0)"><i class="fa fa-square-o"></i></a></s:else>
+					</span>
+					</s:if>
+					<a data-ajax="false" href="/piece/<s:property value="id" />">
+					<p class="ul-li-piece-title"><s:property value="title"/></p>
+					</a>
+				</s:else>
 			</li>
 			</s:iterator>
 			</ul>

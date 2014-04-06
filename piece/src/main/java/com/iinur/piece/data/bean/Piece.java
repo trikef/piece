@@ -11,6 +11,7 @@ public class Piece {
 	private String description;
 	private String goal;
 	private int status_id;
+	private int permission;
 	private int priority;
 	private String img;
 	private String url;
@@ -57,6 +58,12 @@ public class Piece {
 	}
 	public void setStatus_id(int status_id) {
 		this.status_id = status_id;
+	}
+	public int getPermission() {
+		return permission;
+	}
+	public void setPermission(int permission) {
+		this.permission = permission;
 	}
 	public int getPriority() {
 		return priority;

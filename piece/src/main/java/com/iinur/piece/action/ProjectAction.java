@@ -7,6 +7,7 @@ import org.apache.struts2.convention.annotation.Result;
 
 import com.iinur.piece.data.bean.Chat;
 import com.iinur.piece.data.bean.Piece;
+import com.iinur.piece.data.bean.PieceWithPath;
 import com.iinur.piece.data.bean.Project;
 import com.iinur.piece.model.ChatModel;
 import com.iinur.piece.model.PieceModel;
@@ -19,7 +20,7 @@ public class ProjectAction extends BaseAction {
 
 	public int id;
 	public Project p;
-	public List<Piece> pis;
+	public List<PieceWithPath> pis;
 	public List<Chat> cs;
 	public List<Chat> cps;
 
