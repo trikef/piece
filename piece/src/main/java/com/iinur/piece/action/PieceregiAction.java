@@ -31,7 +31,7 @@ public class PieceregiAction extends BaseAction {
 			return INPUT;
 		}
 		PieceModel pmodel = new PieceModel();
-		if(td != null){
+		if(t != null){
 			int regi = pmodel.registration(pi, uid, t, d, g, td);
 			if(regi == 0){
 				this.p = new Piece();

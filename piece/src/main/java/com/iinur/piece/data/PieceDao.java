@@ -65,9 +65,10 @@ public class PieceDao extends BaseDao {
 		sql.append("(SELECT pn2.child_id,pn2.parent_id,p2.title FROM piece_net pn2  ");
 		sql.append("LEFT JOIN piece p2 ON pn2.parent_id = p2.id) b ");
 		sql.append("ON a.id=b.parent_id) ");
-		sql.append("SELECT r.id,p3.project_id,p3.user_id,p3.title,p3.description,p3.goal,p3.target_date,p3.status_id,p3.permission,r.pid as parent_id,r.path,r.path_title,array_upper(r.path,1) as LV ");
+		sql.append("SELECT r.id,p3.project_id,p3.user_id,ui.name as user_name,p3.title,p3.description,p3.goal,p3.target_date,p3.status_id,p3.display,p3.permission,r.pid as parent_id,r.path,r.path_title,array_upper(r.path,1) as LV ");
 		sql.append("FROM rec r ");
 		sql.append("LEFT JOIN piece p3 ON r.id=p3.id ");
+		sql.append("LEFT JOIN user_info ui ON p3.user_id=ui.id ");
 		sql.append("WHERE r.id=? ");
 		
 		PieceWithPath p = null;
@@ -86,7 +87,7 @@ public class PieceDao extends BaseDao {
 	
 	public List<Piece> get(int project_id) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT * FROM Piece WHERE project_id=?");
+		sql.append("SELECT * FROM Piece WHERE project_id=? AND display=TRUE");
 		List<Piece> ps = null;
 		try {
 			ResultSetHandler<List<Piece>> rsh = new BeanListHandler<Piece>(Piece.class);
@@ -102,9 +103,10 @@ public class PieceDao extends BaseDao {
 	public List<PieceWithPath> getChild(int project_id, int parent_id) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT ");
-		sql.append("p.id,p.project_id,p.user_id,p.title,p.description,p.goal,p.status_id,p.permission,");
+		sql.append("p.id,p.project_id,p.user_id,ui.name as user_name,p.title,p.description,p.goal,p.status_id,p.permission,");
 		sql.append("p.priority,p.img,p.url,p.target_date,p.created_at,pncc.child_count ");
 		sql.append("FROM piece p ");
+		sql.append("LEFT JOIN user_info ui ON p.user_id=ui.id ");
 		sql.append("INNER JOIN piece_net pn ON p.id=pn.child_id ");
 		sql.append("LEFT JOIN (");
 
@@ -119,15 +121,15 @@ public class PieceDao extends BaseDao {
 		sql.append("UNION ALL SELECT b.child_id,b.parent_id,path||b.parent_id FROM rec a  ");
 		sql.append("INNER JOIN  (SELECT pn2.child_id,pn2.parent_id FROM piece_net pn2  ");
 		sql.append("LEFT JOIN piece p2 ON pn2.parent_id = p2.id) b ON a.id=b.parent_id)  ");
-		sql.append("SELECT r.id,p3.project_id,p3.user_id,p3.status_id, ");
+		sql.append("SELECT r.id,p3.project_id,p3.user_id,p3.status_id,p3.display, ");
 		sql.append("p3.permission,r.path,r.path[2] as pid,array_upper(r.path,1) as LV FROM rec r  ");
 		sql.append("LEFT JOIN piece p3 ON r.id=p3.id  ");
 		sql.append("WHERE not exists (SELECT * FROM piece_net pn3 WHERE pn3.parent_id=r.id) ");
-		sql.append("AND 0=ANY(r.path) ");
+		sql.append("AND 0=ANY(r.path) AND p3.display=TRUE ");
 		sql.append(") pnc GROUP BY pid ");
 		
 		sql.append(") pncc ON p.id=pncc.pid ");
-		sql.append("WHERE p.project_id=? ");
+		sql.append("WHERE p.project_id=? AND p.display=TRUE ");
 		sql.append("AND pn.parent_id=? ");
 
 		List<PieceWithPath> ps = null;
@@ -146,11 +148,11 @@ public class PieceDao extends BaseDao {
 	public List<Piece> getParent(int project_id, int child_id) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT ");
-		sql.append("p.id,p.project_id,p.user_id,p.title,p.description,p.goal,p.status_id,p.permission,");
+		sql.append("p.id,p.project_id,p.user_id,p.title,p.description,p.goal,p.status_id,p.display,p.permission,");
 		sql.append("p.priority,p.img,p.url,p.target_date,p.created_at ");
 		sql.append("FROM piece p ");
 		sql.append("INNER JOIN piece_net pn ON p.id=pn.parent_id ");
-		sql.append("WHERE p.project_id=? ");
+		sql.append("WHERE p.project_id=? AND p.display=TRUE ");
 		sql.append("AND pn.child_id=? ");
 
 		List<Piece> ps = null;
@@ -179,10 +181,11 @@ public class PieceDao extends BaseDao {
 		sql.append("(SELECT pn2.child_id,pn2.parent_id,p2.title FROM piece_net pn2  ");
 		sql.append("LEFT JOIN piece p2 ON pn2.parent_id = p2.id) b ");
 		sql.append("ON a.id=b.parent_id) ");
-		sql.append("SELECT r.id,p3.project_id,p3.user_id,p3.title,p3.description,p3.goal,p3.target_date,p3.status_id,p3.permission,r.pid as parent_id,r.path,r.path_title,array_upper(r.path,1) as LV ");
+		sql.append("SELECT r.id,p3.project_id,p3.user_id,p3.title,p3.description,p3.goal,p3.target_date,p3.status_id,p3.display,p3.permission,r.pid as parent_id,r.path,r.path_title,array_upper(r.path,1) as LV ");
 		sql.append("FROM rec r ");
 		sql.append("LEFT JOIN piece p3 ON r.id=p3.id ");
 		sql.append("WHERE not exists (SELECT * FROM piece_net pn3 WHERE pn3.parent_id=r.id) AND ?=ANY(r.path) ");
+		sql.append("AND p3.display=TRUE ");
 		sql.append("ORDER BY path ");
 
 		List<PieceWithPath> ps = null;
@@ -223,6 +226,16 @@ public class PieceDao extends BaseDao {
 		String sql = "UPDATE piece SET status_id=? WHERE id=?";
 		try {
 			run.update(sql,status_id,piece_id);
+		} catch (SQLException sqle) {
+			log.error(sqle.getMessage());
+			throw new RuntimeException(sqle.toString());
+		}
+	}
+	
+	public void updateDisplay(int piece_id, boolean display){
+		String sql = "UPDATE piece SET display=? WHERE id=?";
+		try {
+			run.update(sql,display,piece_id);
 		} catch (SQLException sqle) {
 			log.error(sqle.getMessage());
 			throw new RuntimeException(sqle.toString());

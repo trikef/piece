@@ -22,7 +22,7 @@ public class ChatDao extends BaseDao {
 	
 	public Chat get(int id) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT c.id,c.project_id,c.user_id,c.text,c.priority,c.created_at,u.name,cv.good,cv.bad FROM chat c ");
+		sql.append("SELECT c.id,c.project_id,c.piece_id,c.user_id,c.text,c.priority,c.created_at,u.name,cv.good,cv.bad FROM chat c ");
 		sql.append("INNER JOIN user_info u ON c.user_id = u.id ");
 		sql.append("LEFT JOIN (");
 		sql.append("SELECT chat_id,sum(good) as good,sum(bad) as bad FROM chat_value GROUP BY chat_id");
@@ -41,18 +41,18 @@ public class ChatDao extends BaseDao {
 		return c;
 	}
 	
-	public Chat getNew(int project_id, int user_id) {
+	public Chat getNew(int project_id, int piece_id, int user_id) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT c.id,c.project_id,c.user_id,c.text,c.priority,c.created_at,u.name FROM chat c ");
+		sql.append("SELECT c.id,c.project_id,c.piece_id,c.user_id,c.text,c.priority,c.created_at,u.name FROM chat c ");
 		sql.append("INNER JOIN user_info u ON c.user_id = u.id ");
-		sql.append("WHERE c.project_id=? AND c.user_id=? ");
+		sql.append("WHERE c.project_id=? AND c.piece_id=? AND c.user_id=? ");
 		sql.append("ORDER BY c.id DESC ");
 		sql.append("LIMIT 1");
 		
 		Chat c = null;
 		try {
 			ResultSetHandler<Chat> rsh = new BeanHandler<Chat>(Chat.class);
-			c = run.query(sql.toString(), rsh, project_id, user_id);
+			c = run.query(sql.toString(), rsh, project_id, piece_id, user_id);
 		} catch (SQLException sqle) {
 			log.error(sqle.getMessage());
 			throw new RuntimeException(sqle.toString());
@@ -61,20 +61,20 @@ public class ChatDao extends BaseDao {
 		return c;
 	}
 	
-	public List<Chat> getList(int project_id) {
+	public List<Chat> getList(int project_id, int piece_id) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT c.id,c.project_id,c.user_id,c.text,c.priority,c.created_at,u.name,cv.good,cv.bad FROM chat c ");
+		sql.append("SELECT c.id,c.project_id,c.piece_id,c.user_id,c.text,c.priority,c.created_at,u.name,cv.good,cv.bad FROM chat c ");
 		sql.append("INNER JOIN user_info u ON c.user_id = u.id ");
 		sql.append("LEFT JOIN (");
 		sql.append("SELECT chat_id,sum(good) as good,sum(bad) as bad FROM chat_value GROUP BY chat_id");
 		sql.append(") cv ON c.id = cv.chat_id ");
-		sql.append("WHERE c.project_id=? ");
+		sql.append("WHERE c.project_id=? AND c.piece_id=? ");
 		sql.append("ORDER BY c.id DESC");
 		
 		List<Chat> cs = null;
 		try {
 			ResultSetHandler<List<Chat>> rsh = new BeanListHandler<Chat>(Chat.class);
-			cs = run.query(sql.toString(), rsh, project_id);
+			cs = run.query(sql.toString(), rsh, project_id, piece_id);
 		} catch (SQLException sqle) {
 			log.error(sqle.getMessage());
 			throw new RuntimeException(sqle.toString());
@@ -83,18 +83,18 @@ public class ChatDao extends BaseDao {
 		return cs;
 	}
 	
-	public List<Chat> getPinList(int project_id) {
+	public List<Chat> getPinList(int project_id, int piece_id) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT c.id,c.project_id,c.user_id,c.text,c.priority,c.created_at,u.name FROM chat c ");
+		sql.append("SELECT c.id,c.project_id,c.piece_id,c.user_id,c.text,c.priority,c.created_at,u.name FROM chat c ");
 		sql.append("INNER JOIN user_info u ON c.user_id = u.id ");
-		sql.append("WHERE c.project_id=? ");
+		sql.append("WHERE c.project_id=? AND c.piece_id=? ");
 		sql.append("AND c.priority is not null ");
 		sql.append("ORDER BY c.priority ASC, c.id ASC");
 		
 		List<Chat> cs = null;
 		try {
 			ResultSetHandler<List<Chat>> rsh = new BeanListHandler<Chat>(Chat.class);
-			cs = run.query(sql.toString(), rsh, project_id);
+			cs = run.query(sql.toString(), rsh, project_id, piece_id);
 		} catch (SQLException sqle) {
 			log.error(sqle.getMessage());
 			throw new RuntimeException(sqle.toString());
@@ -103,10 +103,10 @@ public class ChatDao extends BaseDao {
 		return cs;
 	}
 	
-	public void insert(int project_id, int user_id, String text){
-		String sql = "INSERT INTO chat (project_id,user_id,text) VALUES (?,?,?)";
+	public void insert(int project_id, int piece_id, int user_id, String text){
+		String sql = "INSERT INTO chat (project_id,piece_id,user_id,text) VALUES (?,?,?,?)";
 		try {
-			run.update(sql,project_id,user_id,text);
+			run.update(sql,project_id,piece_id,user_id,text);
 		} catch (SQLException sqle) {
 			log.error(sqle.getMessage());
 			throw new RuntimeException(sqle.toString());

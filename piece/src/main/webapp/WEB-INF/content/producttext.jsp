@@ -61,7 +61,7 @@
 			</s:iterator>
 			</ul>
 	    </div>
-	    <div data-role="collapsibleset" data-theme="a" data-content-theme="b">
+	    <div id="productchat-collapsibleset" data-role="collapsibleset" data-theme="a" data-content-theme="b">
 		    <div data-role="collapsible">
 		    <h2>ƒŒƒrƒ…[’Ç‰Á</h2>
 		        <ul data-role="listview" data-theme="a" data-divider-theme="b">

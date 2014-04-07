@@ -13,8 +13,8 @@ public class ChatModel {
 		this.cdao = new ChatDao();
 	}
 
-	public void registration(int project_id, int user_id, String text){
-		this.cdao.insert(project_id, user_id, text);
+	public void registration(int project_id, int piece_id, int user_id, String text){
+		this.cdao.insert(project_id, piece_id, user_id, text);
 	}
 	
 	public void updatePriority(int id, int priority){
@@ -29,15 +29,15 @@ public class ChatModel {
 		return this.cdao.get(id);
 	}
 
-	public Chat getNew(int project_id, int user_id){
-		return this.cdao.getNew(project_id, user_id);
+	public Chat getNew(int project_id, int piece_id, int user_id){
+		return this.cdao.getNew(project_id, piece_id, user_id);
 	}
 	
-	public List<Chat> getList(int project_id){
-		return this.cdao.getList(project_id);
+	public List<Chat> getList(int project_id, int piece_id){
+		return this.cdao.getList(project_id, piece_id);
 	}
 	
-	public List<Chat> getPinList(int project_id){
-		return this.cdao.getPinList(project_id);
+	public List<Chat> getPinList(int project_id, int piece_id){
+		return this.cdao.getPinList(project_id, piece_id);
 	}
 }

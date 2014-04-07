@@ -23,6 +23,8 @@ public class ProjectAction extends BaseAction {
 	public List<PieceWithPath> pis;
 	public List<Chat> cs;
 	public List<Chat> cps;
+	
+	private static final int PROJECT_NODE_PIECE_ID = 0;
 
 	public String execute(){
 		String result = before();
@@ -36,8 +38,8 @@ public class ProjectAction extends BaseAction {
 		this.pis = pimodel.getChild(id, 0);
 		
 		ChatModel cmodel = new ChatModel();
-		this.cs = cmodel.getList(id);
-		this.cps = cmodel.getPinList(id);
+		this.cs = cmodel.getList(id,PROJECT_NODE_PIECE_ID);
+		this.cps = cmodel.getPinList(id,PROJECT_NODE_PIECE_ID);
 		
 		return SUCCESS;
 	}

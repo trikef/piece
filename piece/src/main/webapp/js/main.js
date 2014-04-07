@@ -44,9 +44,8 @@ var Piece = {
 		return defer.promise().done(function(data) {
 			if(data.id>0){
 				$('.piece-list')
-//				.append("<li><a data-ajax='false' class='ui-btn ui-btn-icon-right ui-icon-carat-r' href='/piece/"+data.id+"'><p>"+data.title+"</p></a></li>"
-//						);
 				.append("<li id='piece"+data.id+"' class='ui-li-piece ui-first-child'><span class='ui-li-piece-check' id='check"+data.id+"'><a onclick='Piece.check("+data.id+",0)' class='ui-link'><i class='fa fa-square-o'></i></a></span><a data-ajax='false' href='/piece/"+data.id+"' class='ui-btn ui-btn-icon-right ui-icon-carat-r'><p class='ul-li-piece-title'>"+data.title+"</p></a></li>");
+				$( "#piece-collapsibleset" ).children( ":last" ).collapsible( "collapse" );
 			}
 		});
 	},
@@ -80,6 +79,28 @@ var Piece = {
 						);
 			}
 		});
+	},
+	display: function(piece_id,display){
+		var defer = $.Deferred();
+		$.ajax({
+			url : "/api/piecedisplay",
+			data : {
+				i : piece_id,
+				d : display
+			},
+			dataType : 'json',
+			success : defer.resolve,
+			error : defer.reject
+		});
+		return defer.promise().done(function(data) {
+			if(data.id>0){
+				if(data.project_id>0){
+					location.href="/project/"+data.project_id;
+				}else{
+					location.href="/projectlist";
+				}
+			}
+		});
 	}
 };
 var Product = {
@@ -106,6 +127,7 @@ var Product = {
 					$('.product-list')
 					.append("<li><a data-ajax='false' class='ui-btn ui-btn-icon-right ui-icon-carat-r' href='/producttext/"+data.id+"'><p>"+data.name+"</p></a></li>"
 							);
+					$( "#data-collapsibleset" ).children( ":last" ).collapsible( "collapse" );
 				}
 			});
 		}
@@ -114,12 +136,14 @@ var Chat = {
 		add : function() {
 			var defer = $.Deferred();
 			var pid = $("#piece-pid-input").val();
+			var pcid = $("#piece-pcid-input").val();
 			var uid = $("#piece-uid-input").val();
 			var text = $("#piece-text-input").val();
 			$.ajax({
 				url : "/api/chatregi",
 				data : {
-					p : pid,
+					pri : pid,
+					pci : pcid,
 					u : uid,
 					t : text
 				},
@@ -131,8 +155,12 @@ var Chat = {
 				if(data.id>0){
 					$('.chat-list')
 					.prepend("<li class='ui-li-static ui-body-inherit ui-last-child'><p class='ui-li-name'><strong>"+data.name+"</strong></p><p class='ui-li-text'>"+data.text+"</p><p class='ui-li-date'><strong>"+data.created_at_str+"</strong></p>"
-							+"<p class='ui-li-text-right'><a onClick='Chat.pin("+data.id+","+data.id+")'><i class='fa fa-thumb-tack'></i></a><i class='fa fa-thumbs-o-down'></i><i class='fa fa-thumbs-o-up'></i></p>"
+							+"<p class='ui-li-action'><span id='pin"+data.id+"'><a onclick='Chat.pin("+data.id+","+data.id+")' class='ui-link'>"
+							+"<i class='fa fa-thumb-tack'></i></a></span>"
+							+"<a onclick=\"Chat.count("+data.id+","+data.user_id+",1,0,'#good"+data.id+"')\" class='ui-link'><i class='fa fa-thumbs-o-up'></i>(<span id='good"+data.id+"'>0</span>)</a>"
+							+"<a onclick=\"Chat.count("+data.id+","+data.user_id+",0,1,'#bad"+data.id+"')\" class='ui-link'><i class='fa fa-thumbs-o-down'></i>(<span id='bad"+data.id+"'>0</span>)</a></p>"
 					);
+					$( "#chat-collapsibleset" ).children( ":last" ).collapsible( "collapse" );
 				}
 			});
 		},
@@ -207,7 +235,8 @@ var ProductChat = {
 					.append("<li class='ui-li-static ui-body-inherit ui-last-child'><p class='ui-li-name'><strong>"+data.name+"</strong></p><p class='ui-li-text'>"+data.text+"</p><p class='ui-li-date'><strong>"+data.created_at_str+"</strong></p>"
 							+"</li>"
 							);
+					$( "#productchat-collapsibleset" ).children( ":last" ).collapsible( "collapse" );
 				}
 			});
 		}
-}
+};

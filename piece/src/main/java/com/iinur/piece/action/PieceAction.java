@@ -5,9 +5,11 @@ import java.util.List;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
+import com.iinur.piece.data.bean.Chat;
 import com.iinur.piece.data.bean.Piece;
 import com.iinur.piece.data.bean.PieceWithPath;
 import com.iinur.piece.data.bean.Product;
+import com.iinur.piece.model.ChatModel;
 import com.iinur.piece.model.PieceModel;
 import com.iinur.piece.model.ProductModel;
 
@@ -24,6 +26,9 @@ public class PieceAction extends BaseAction {
 	public List<PieceWithPath> piwps;
 	public List<Product> ps;
 	
+	public List<Chat> cs;
+	public List<Chat> cps;
+	
 	public String execute(){
 		String result = before();
 		if(result.equals(INPUT)){
@@ -39,6 +44,10 @@ public class PieceAction extends BaseAction {
 		ProductModel pdmodel = new ProductModel();
 		this.ps = pdmodel.getList(id);
 
+		ChatModel cmodel = new ChatModel();
+		this.cs = cmodel.getList(p.getProject_id(),id);
+		this.cps = cmodel.getPinList(p.getProject_id(),id);
+		
 		return SUCCESS;
 	}
 }

@@ -2,6 +2,8 @@ package com.iinur.piece.data.bean;
 
 import java.sql.Timestamp;
 
+import com.iinur.core.util.HtmlUtils;
+
 public class Project {
 
 	private int id;
@@ -35,11 +37,17 @@ public class Project {
 	public String getDescription() {
 		return description;
 	}
+	public String getDescription_link() {
+		return HtmlUtils.replaceLink(description);
+	}
 	public void setDescription(String description) {
 		this.description = description;
 	}
 	public String getGoal() {
 		return goal;
+	}
+	public String getGoal_link() {
+		return HtmlUtils.replaceLink(goal);
 	}
 	public void setGoal(String goal) {
 		this.goal = goal;

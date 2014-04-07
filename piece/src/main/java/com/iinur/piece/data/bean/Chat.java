@@ -3,9 +3,12 @@ package com.iinur.piece.data.bean;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
+import com.iinur.core.util.HtmlUtils;
+
 public class Chat {
 	private int id;
 	private int project_id;
+	private int piece_id;
 	private int user_id;
 	private String text;
 	private int priority;
@@ -27,6 +30,12 @@ public class Chat {
 	public void setProject_id(int project_id) {
 		this.project_id = project_id;
 	}
+	public int getPiece_id() {
+		return piece_id;
+	}
+	public void setPiece_id(int piece_id) {
+		this.piece_id = piece_id;
+	}
 	public int getUser_id() {
 		return user_id;
 	}
@@ -35,6 +44,9 @@ public class Chat {
 	}
 	public String getText() {
 		return text;
+	}
+	public String getText_link(){
+		return HtmlUtils.replaceLink(this.text);
 	}
 	public void setText(String text) {
 		this.text = text;

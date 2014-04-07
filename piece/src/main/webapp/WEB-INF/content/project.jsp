@@ -18,7 +18,7 @@
 	<script src="/js/main.js"></script>
 </head>
 <body>
-<div data-role="page" id="projectlistpage">
+<div data-role="page" id="projectpage">
 	<div data-role="header" data-position="fixed">
 		<h1><s:property value="p.title"/></h1>
 	</div><!-- /header -->
@@ -26,8 +26,8 @@
 		<ul data-role="listview"  data-count-theme="b" data-inset="true">
 			<li>
 			<br /><h3 style="white-space: normal;"><s:property value="p.title"/></h3>
-			<p><strong>概要</strong></p><p><s:property value="p.description"/></p>
-			<p><strong>ゴール</strong></p><p><s:property value="p.goal"/></p>
+			<p><strong>概要</strong></p><p><s:property escape="flase" value="p.description_link"/></p>
+			<p><strong>ゴール</strong></p><p><s:property escape="flase" value="p.goal_link"/></p>
 			<p><strong>リリース予定日</strong></p><p><strong><s:date name="p.target_date" format="yyyy/MM/dd" /></strong></p>
 			<p class="ui-li-aside"><strong><s:date name="p.created_at" format="yyyy/MM/dd HH:mm" /></strong></p>
 			<s:if test="%{p.user_id==uid}">
@@ -53,7 +53,7 @@
 	        </ul>
 	    </div>
 	    <div id="project-chat" class="ui-content">
-		    <div class="btn-min-space" data-role="collapsibleset" data-theme="a" data-content-theme="b">
+		    <div id="chat-collapsibleset" class="btn-min-space" data-role="collapsibleset" data-theme="a" data-content-theme="b">
 			    <div data-role="collapsible">
 			    <h2>チャット追加</h2>
 			        <ul data-role="listview" data-theme="a" data-divider-theme="b">
@@ -72,7 +72,7 @@
 			<s:iterator value="cs">
 			<li>
 				<p class="ui-li-name"><strong><s:property value="name"/></strong></p>
-				<p class="ui-li-text"><s:property value="text"/></p>
+				<p class="ui-li-text"><s:property escape="false" value="text_link"/></p>
 				<p class="ui-li-date"><strong><s:date name="created_at" format="yyyy/MM/dd HH:mm" /></strong></p>
 				<p class="ui-li-action">
 					<s:if test="%{priority>0}"><i class="fa fa-thumb-tack"></i></s:if>
@@ -95,19 +95,20 @@
 			<s:iterator value="cps">
 			<li>
 				<p class="ui-li-name"><strong><s:property value="name"/></strong></p>
-				<p class="ui-li-text"><s:property value="text"/></p>
+				<p class="ui-li-text"><s:property escape="false" value="text_link"/></p>
 				<p class="ui-li-date"><strong><s:date name="created_at" format="yyyy/MM/dd HH:mm" /></strong></p>
 			</li>
 			</s:iterator>
 			</ul>
 		</div>
 	    <div id="project-task" class="ui-content">
-	    	<div class="btn-min-space" data-role="collapsibleset" data-theme="a" data-content-theme="b">
+	    	<div id="piece-collapsibleset" class="btn-min-space" data-role="collapsibleset" data-theme="a" data-content-theme="b">
 			    <div data-role="collapsible">
 			    <h2>タスク追加</h2>
 			        <ul data-role="listview" data-theme="a" data-divider-theme="b">
 		            <li>
 						<input type="hidden" name="pi" id="piece-pid-input" value="<s:property value="p.id" />" />
+						<input type="hidden" name="pci" id="piece-pcid-input" value="0" />
 						<input type="hidden" name="ui" id="piece-uid-input" value="<s:property value="uid" />" />
 						<div class="ui-field-contain">
 							<label for="piece-title-input">タイトル

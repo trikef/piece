@@ -48,6 +48,10 @@ public class PieceModel {
 		this.pdao.updateStatus(piece_id, status_id);
 	}
 	
+	public void updateDisplay(int piece_id, boolean display){
+		this.pdao.updateDisplay(piece_id, display);
+	}
+	
 	public Piece getSingle(int id){
 		return this.pdao.getSingle(id);
 	}

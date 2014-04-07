@@ -2,6 +2,8 @@ package com.iinur.piece.data.bean;
 
 import java.sql.Timestamp;
 
+import com.iinur.core.util.HtmlUtils;
+
 public class Piece {
 
 	private int id;
@@ -11,12 +13,14 @@ public class Piece {
 	private String description;
 	private String goal;
 	private int status_id;
+	private boolean display;
 	private int permission;
 	private int priority;
 	private String img;
 	private String url;
 	private Timestamp target_date;
 	private Timestamp created_at;
+	private String user_name;
 	public int getId() {
 		return id;
 	}
@@ -44,11 +48,17 @@ public class Piece {
 	public String getDescription() {
 		return description;
 	}
+	public String getDescription_link() {
+		return HtmlUtils.replaceLink(description);
+	}
 	public void setDescription(String description) {
 		this.description = description;
 	}
 	public String getGoal() {
 		return goal;
+	}
+	public String getGoal_link() {
+		return HtmlUtils.replaceLink(goal);
 	}
 	public void setGoal(String goal) {
 		this.goal = goal;
@@ -58,6 +68,12 @@ public class Piece {
 	}
 	public void setStatus_id(int status_id) {
 		this.status_id = status_id;
+	}
+	public boolean isDisplay() {
+		return display;
+	}
+	public void setDisplay(boolean display) {
+		this.display = display;
 	}
 	public int getPermission() {
 		return permission;
@@ -94,5 +110,11 @@ public class Piece {
 	}
 	public void setCreated_at(Timestamp created_at) {
 		this.created_at = created_at;
+	}
+	public String getUser_name() {
+		return user_name;
+	}
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
 	}
 }

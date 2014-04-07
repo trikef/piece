@@ -19,7 +19,8 @@ public class ChatregiAction extends BaseAction {
 
 	public Chat c = null;
 	
-	public int p;
+	public int pri;
+	public int pci;
 	public int u;
 	public String t;
 	
@@ -27,8 +28,8 @@ public class ChatregiAction extends BaseAction {
 		
 		if(!StringUtils.isEmpty(t)){
 			ChatModel cmodel = new ChatModel();
-			cmodel.registration(p, u, t);
-			c = cmodel.getNew(p, u);
+			cmodel.registration(pri, pci, u, t);
+			c = cmodel.getNew(pri, pci, u);
 		}
 		return SUCCESS;
 	}
