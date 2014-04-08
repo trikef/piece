@@ -21,6 +21,7 @@
 <div data-role="page" id="piecepage">
 	<div data-role="header">
 		<h1><s:property value="p.title"/></h1>
+		<a data-ajax="false" href="/piece/<s:property value="piwp.id" />" data-icon="back" data-iconpos="notext">Back</a>
 	</div><!-- /header -->
 	<div class="ui-content" role="main">
 		<ul data-role="listview"  data-count-theme="b" data-inset="true">
