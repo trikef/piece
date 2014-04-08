@@ -16,6 +16,9 @@ public class Project {
 	private int permission;
 	private Timestamp target_date;
 	private Timestamp created_at;
+	
+	private boolean unread;
+	
 	public int getId() {
 		return id;
 	}
@@ -81,5 +84,11 @@ public class Project {
 	}
 	public void setCreated_at(Timestamp created_at) {
 		this.created_at = created_at;
+	}
+	public boolean isUnread() {
+		return unread;
+	}
+	public void setUnread(boolean unread) {
+		this.unread = unread;
 	}
 }

@@ -1,3 +1,8 @@
+pre {
+    overflow: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
 .ui-listview li p{
 	white-space: normal !important;	
 }
@@ -67,6 +72,10 @@
 .ul-li-count-left{
 	right: auto !important;
 	left: 7px;
+}
+.ui-li-notify{
+	background-color: red !important;
+	border: none !important;
 }
 .piece-list{
 	margin-bottom: 10px !important;

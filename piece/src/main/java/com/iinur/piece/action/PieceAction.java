@@ -48,6 +48,8 @@ public class PieceAction extends BaseAction {
 		this.cs = cmodel.getList(p.getProject_id(),id);
 		this.cps = cmodel.getPinList(p.getProject_id(),id);
 		
+		this.acsmodel.regiPiece(this.servletPath, id, this.uid);//log
+	
 		return SUCCESS;
 	}
 }

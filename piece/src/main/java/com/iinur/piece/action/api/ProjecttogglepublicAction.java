@@ -38,8 +38,12 @@ public class ProjecttogglepublicAction extends BaseAction{
 					PermissionUtils.OTHER, 
 					PermissionUtils.WRITE)){
 				pmodel.updatePermission(i, PermissionUtils.OTHER, PermissionUtils.NONE);
+				
+				this.atlmodel.regiPrivateProject(servletPath, uid, i);//log
 			} else {
 				pmodel.updatePermission(i, PermissionUtils.OTHER, PermissionUtils.ALL);
+				
+				this.atlmodel.regiPublicProject(servletPath, uid, i);//log
 			}
 			this.project = pmodel.getSingle(i);
 		}

@@ -31,6 +31,10 @@ public class PiecedisplayAction extends BaseAction{
 		if(pmodel.permissionExecute(i, uid)){
 			pmodel.updateDisplay(i, d);
 			this.piece = pmodel.getSingle(i);
+			
+			if(!d){
+				this.atlmodel.regiDelPiece(servletPath, uid, i);//log
+			}
 		}
 
 		return SUCCESS;

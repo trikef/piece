@@ -7,10 +7,11 @@ import com.iinur.piece.data.bean.Project;
 import com.iinur.piece.model.ProjectModel;
 
 @Results({
-	  @Result(name="error", location="projectinput.jsp")
+	  @Result(name="error", location="projectupdateinput.jsp")
 	})
-public class ProjectregiAction extends BaseAction {
+public class ProjectupdateAction extends BaseAction {
 
+	public int pid;
 	public String title;
 	public String description;
 	public String goal;
@@ -25,14 +26,15 @@ public class ProjectregiAction extends BaseAction {
 		}
 		ProjectModel pmodel = new ProjectModel();
 		if(target_date != null){
-			boolean regi = pmodel.registration(uid, title, description, goal, target_date);
+			boolean regi = pmodel.update(pid, title, description, goal, target_date);
 			if(!regi){
 				this.msg = ERROR;
 				return ERROR;
 			}
 		}
-		Project p = pmodel.getNew(uid);
-		this.atlmodel.regiNewProject(servletPath, uid, p.getId());
+		this.atlmodel.regiUpdateProject(servletPath, uid, pid);//log
+		this.acsmodel.regiProject(servletPath, pid, uid);
+		
 		return SUCCESS;
 	}
 }

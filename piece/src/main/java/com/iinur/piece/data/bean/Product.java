@@ -14,6 +14,8 @@ public class Product {
 	private Timestamp created_at;
 	private String user_name;
 	private String type_name;
+	
+	private int project_id;
 	public int getId() {
 		return id;
 	}
@@ -73,5 +75,11 @@ public class Product {
 	}
 	public void setType_name(String type_name) {
 		this.type_name = type_name;
+	}
+	public int getProject_id() {
+		return project_id;
+	}
+	public void setProject_id(int project_id) {
+		this.project_id = project_id;
 	}
 }

@@ -41,6 +41,8 @@ public class PieceregiAction extends BaseAction {
 				this.p = pmodel.getSingle(regi);
 				PiecenetModel pnmodel = new PiecenetModel();
 				pnmodel.registration(pi, pai, this.p.getId());
+				
+				this.atlmodel.regiNewPiece(servletPath, uid, p.getId());//log
 			}
 		}
 		return SUCCESS;

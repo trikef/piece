@@ -10,6 +10,7 @@ public class ProjectlistAction extends BaseAction {
 	public List<Project> ps;
 
 	public String execute(){
+		this.logFlag = true;
 		String result = before();
 		if(result.equals(INPUT)){
 			return INPUT;

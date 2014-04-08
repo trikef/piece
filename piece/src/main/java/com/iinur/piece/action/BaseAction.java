@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.convention.annotation.InterceptorRef;
@@ -11,10 +12,13 @@ import org.apache.struts2.convention.annotation.InterceptorRefs;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.apache.struts2.interceptor.CookiesAware;
+import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.iinur.piece.model.AccessLogModel;
+import com.iinur.piece.model.ActionLogModel;
 import com.opensymphony.xwork2.ActionSupport;
 //TODO change Intercepter
 @InterceptorRefs({
@@ -25,9 +29,13 @@ import com.opensymphony.xwork2.ActionSupport;
 @Results({
 	  @Result(name="input", location="userinput.jsp")
 	})
-public class BaseAction extends ActionSupport implements CookiesAware, ServletResponseAware{
+public class BaseAction extends ActionSupport implements CookiesAware, ServletResponseAware, ServletRequestAware{
 
 	private static final Logger log = LoggerFactory.getLogger(BaseAction.class);
+
+	protected AccessLogModel acsmodel = new AccessLogModel();
+	protected ActionLogModel atlmodel = new ActionLogModel();
+	protected String servletPath = null;
 
 	private static final String COOKIE_NAME_KEY = "cname";
 	private static final String COOKIE_USER_ID_KEY = "cuid";
@@ -36,8 +44,14 @@ public class BaseAction extends ActionSupport implements CookiesAware, ServletRe
 	public String name;
 	public int uid;
 
+	protected boolean logFlag = false;
+
+	private void init(){
+		this.servletPath = request.getServletPath();
+	}
+
 	public String before(){
-		
+		init();
 		try {
 			if (cookie.containsKey(COOKIE_NAME_KEY)&&cookie.containsKey(COOKIE_USER_ID_KEY)) {
 
@@ -52,13 +66,26 @@ public class BaseAction extends ActionSupport implements CookiesAware, ServletRe
 		} catch (UnsupportedEncodingException e) {
 			log.error(e.getMessage());
 		}
+		if(logFlag){
+			accesslog();
+		}
 
 		return SUCCESS;
 	}
 	
-	private HttpServletResponse response;
+	private void accesslog(){
+		acsmodel.regiUrl(this.servletPath, uid);
+	}
+
+	protected HttpServletResponse response;
 	private Map<String, String> cookie;
-	
+	protected HttpServletRequest request;
+
+	@Override
+	public void setServletRequest(HttpServletRequest request) {
+		this.request = request;
+	}
+
 	@Override
 	public void setServletResponse(HttpServletResponse response) {
 		this.response = response;

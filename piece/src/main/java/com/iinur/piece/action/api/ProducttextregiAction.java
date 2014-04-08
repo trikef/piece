@@ -27,10 +27,16 @@ public class ProducttextregiAction extends BaseAction {
 	public String c;//comment
 	
 	public String execute(){
+		String result = before();
+		if(result.equals(INPUT)){
+			return INPUT;
+		}
 		
 		if(pi>0 && !StringUtils.isEmpty(d)){
 			ProducttextModel ptmodel = new ProducttextModel();
 			p = ptmodel.registrationAll(pi, ui, s, d, c);
+			
+			this.atlmodel.regiNewProduct(servletPath, uid, p.getId());//log
 		}
 		return SUCCESS;
 	}

@@ -46,7 +46,7 @@
 			<p class="ui-li-aside"><strong><s:date name="pt.created_at" format="yyyy/MM/dd hh:mm" /></strong></p>
 			</li>
 			<li>
-				<p><s:property value="pt.data"/></p>
+				<pre id="pt<s:property value="pt.id"/>"><s:property value="pt.data"/></pre>
 			</li>
 		</ul>
 		<div id="product-chat" class="ui-content">

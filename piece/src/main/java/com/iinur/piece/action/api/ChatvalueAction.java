@@ -26,6 +26,11 @@ public class ChatvalueAction extends BaseAction{
 	public Chat chat;
 	
 	public String execute(){
+		String result = before();
+		if(result.equals(INPUT)){
+			return INPUT;
+		}
+		
 		ChatvalueModel cvmodel = new ChatvalueModel();
 		cvmodel.registration(i, u, g, b);
 				
@@ -33,6 +38,12 @@ public class ChatvalueAction extends BaseAction{
 		this.chat = cmodel.get(i);
 		this.chat.setRegi(cvmodel.contains);
 
+		if(g==1){
+			this.atlmodel.regiGoodChatValue(servletPath, uid, chat.getProject_id(), chat.getPiece_id(), i);//log
+		} else if(b==1){
+			this.atlmodel.regiBadChatValue(servletPath, uid, chat.getProject_id(), chat.getPiece_id(), i);//log
+		}
+		
 		return SUCCESS;
 	}
 	

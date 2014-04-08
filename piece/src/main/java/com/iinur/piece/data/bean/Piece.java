@@ -6,6 +6,12 @@ import com.iinur.core.util.HtmlUtils;
 
 public class Piece {
 
+	public static final int STATUS_ID_COMP = 0;
+	public static final int STATUS_ID_INCOMP = 1;
+	
+	public static final boolean DISPLAY_ON = true;
+	public static final boolean DISPLAY_OFF = false;
+
 	private int id;
 	private int project_id;
 	private int user_id;

@@ -41,6 +41,8 @@ public class ProjectAction extends BaseAction {
 		this.cs = cmodel.getList(id,PROJECT_NODE_PIECE_ID);
 		this.cps = cmodel.getPinList(id,PROJECT_NODE_PIECE_ID);
 		
+		this.acsmodel.regiProject(this.servletPath, id, this.uid);//log
+
 		return SUCCESS;
 	}
 }

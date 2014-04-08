@@ -31,6 +31,18 @@ public class PiececheckAction extends BaseAction{
 		if(pmodel.permissionExecute(i, uid)){
 			pmodel.updateStatus(i, s);
 			this.piece = pmodel.getSingle(i);
+			
+			//log
+			switch (s) {
+			case Piece.STATUS_ID_COMP:
+				this.atlmodel.regiCompPiece(servletPath, uid, i);
+				break;
+			case Piece.STATUS_ID_INCOMP:
+				this.atlmodel.regiIncompPiece(servletPath, uid, i);
+				break;
+			default:
+				break;
+			}
 		}
 
 		return SUCCESS;

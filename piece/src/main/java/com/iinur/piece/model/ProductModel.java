@@ -21,6 +21,10 @@ public class ProductModel {
 		this.pdao.update(product_id, piece_id, name, status);
 	}
 
+	public Product get(int product_id){
+		return this.pdao.get(product_id);
+	}
+	
 	public Product getNew(int piece_id, int user_id){
 		return this.pdao.getNew(piece_id, user_id);
 	}

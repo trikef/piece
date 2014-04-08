@@ -21,6 +21,7 @@
 <div data-role="page" id="projectpage">
 	<div data-role="header" data-position="fixed">
 		<h1><s:property value="p.title"/></h1>
+		<a href="#nav-panel" data-icon="gear" data-iconpos="notext">Menu</a>
 	</div><!-- /header -->
 	<div class="ui-content" role="main">
 		<ul data-role="listview"  data-count-theme="b" data-inset="true">
@@ -173,6 +174,29 @@
  	        </ul>
 	    </div><!-- /navbar -->
 	</div><!-- /footer -->
+	<div data-role="panel" data-position-fixed="true" data-display="push" data-theme="b" id="nav-panel">
+        <ul data-role="listview">
+            <li data-icon="arrow-r"><a href="#" data-rel="close">閉じる</a></li>
+            <s:if test="%{p.user_id==uid}">
+            <li data-icon="edit"><a data-ajax="false" href="/projectupdateinput/<s:property value="p.id"/>" data-rel="close">編集</a></li>
+<%--
+			<li data-icon="delete">
+                <a href="#popupDialog" data-rel="popup" data-position-to="window" data-transition="pop">削除</a>
+				<div data-role="popup" id="popupDialog" data-overlay-theme="b" data-theme="b" data-dismissible="false" style="max-width:400px;">
+				    <div data-role="header" data-theme="a">
+				    <h1>削除</h1>
+				    </div>
+				    <div role="main" class="ui-content">
+				        <h3 class="ui-title">本当にこのプロジェクトを削除しますか?</h3>
+				        <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">キャンセル</a>
+				        <a onClick="Project.display(<s:property value="p.id"/>,false)" href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back" data-transition="flow">削除</a>
+				    </div>
+				</div>
+			</li>
+ --%>
+ 			</s:if>
+		</ul>
+	</div>
 </div>
 </body>
 </html>

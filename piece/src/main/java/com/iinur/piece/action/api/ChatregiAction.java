@@ -25,11 +25,17 @@ public class ChatregiAction extends BaseAction {
 	public String t;
 	
 	public String execute(){
+		String result = before();
+		if(result.equals(INPUT)){
+			return INPUT;
+		}
 		
 		if(!StringUtils.isEmpty(t)){
 			ChatModel cmodel = new ChatModel();
 			cmodel.registration(pri, pci, u, t);
 			c = cmodel.getNew(pri, pci, u);
+			
+			this.atlmodel.regiNewChat(servletPath, u, pri, pci, c.getId());
 		}
 		return SUCCESS;
 	}

@@ -33,6 +33,8 @@ public class ProductchatregiAction extends BaseAction {
 			ProductChatModel pcmodel = new ProductChatModel();
 			pcmodel.registration(p, u, t, s);
 			c = pcmodel.getNew(p, u);
+			
+			this.atlmodel.regiNewProductChat(servletPath, uid, p, c.getId());//log
 		}
 		return SUCCESS;
 	}

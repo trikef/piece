@@ -178,3 +178,30 @@ CREATE TABLE product_chat(
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY(id)
 );
+
+DROP TABLE IF EXISTS access_log;
+CREATE TABLE access_log(
+	id SERIAL,
+	url TEXT NOT NULL,
+	user_id INTEGER NOT NULL,
+	project_id INTEGER DEFAULT 0,
+	piece_id INTEGER DEFAULT 0,
+	product_id INTEGER DEFAULT 0,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY(id)
+);
+
+DROP TABLE IF EXISTS action_log;
+CREATE TABLE action_log(
+	id SERIAL,
+	url TEXT NOT NULL,
+	action_name TEXT NOT NULL,
+	user_id INTEGER NOT NULL,
+	project_id INTEGER DEFAULT 0,
+	piece_id INTEGER DEFAULT 0,
+	product_id INTEGER DEFAULT 0,
+	chat_id INTEGER DEFAULT 0,
+	product_chat_id INTEGER DEFAULT 0,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY(id)
+);

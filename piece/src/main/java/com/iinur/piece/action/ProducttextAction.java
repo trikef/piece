@@ -37,6 +37,8 @@ public class ProducttextAction extends BaseAction {
 		ProductChatModel pcmodel = new ProductChatModel();
 		this.pcs = pcmodel.getList(pt.getId());
 		
+		this.acsmodel.regiProduct(this.servletPath, id, this.uid);//log
+		
 		return SUCCESS;
 	}
 }

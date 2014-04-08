@@ -36,13 +36,49 @@ public class ProjectDao extends BaseDao {
 		return p;
 	}
 	
+	public Project getNew(int user_id) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT * FROM project WHERE user_id=? ORDER BY created_at DESC LIMIT 1");
+		Project p = null;
+		try {
+			ResultSetHandler<Project> rsh = new BeanHandler<Project>(Project.class);
+			p = run.query(sql.toString(), rsh, user_id);
+		} catch (SQLException sqle) {
+			log.error(sqle.getMessage());
+			throw new RuntimeException(sqle.toString());
+		}
+
+		return p;
+	}
+	
 	public List<Project> get(int user_id) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT * FROM project WHERE user_id=? OR (permission-((permission/10)*10))&4=4");
+		sql.append("SELECT * FROM project p ");
+		 
+		sql.append("LEFT JOIN ");
+		sql.append("(SELECT ");
+		sql.append("atl.project_id,atl.last_at>acl.last_at as unread ");
+		sql.append("FROM ");
+		sql.append("(SELECT ");
+		sql.append("project_id,max(created_at) as last_at ");
+		sql.append("FROM action_log ");
+		sql.append("WHERE user_id <> ? ");
+		sql.append("GROUP BY project_id) atl ");
+		sql.append("LEFT JOIN ");
+		sql.append("(SELECT ");
+		sql.append("project_id,max(created_at) as last_at ");
+		sql.append("FROM access_log ");
+		sql.append("WHERE user_id=? ");
+		sql.append("GROUP BY project_id) acl ");
+		sql.append("ON atl.project_id=acl.project_id) l ");
+		sql.append("ON p.id=l.project_id ");
+
+		sql.append("WHERE p.user_id=? OR (p.permission-((p.permission/10)*10))&4=4 ");
+
 		List<Project> ps = null;
 		try {
 			ResultSetHandler<List<Project>> rsh = new BeanListHandler<Project>(Project.class);
-			ps = run.query(sql.toString(), rsh, user_id);
+			ps = run.query(sql.toString(), rsh, user_id,user_id,user_id);
 		} catch (SQLException sqle) {
 			log.error(sqle.getMessage());
 			throw new RuntimeException(sqle.toString());
@@ -55,6 +91,23 @@ public class ProjectDao extends BaseDao {
 		String sql = "INSERT INTO project (user_id,title,description,goal,target_date) VALUES (?,?,?,?,?)";
 		try {
 			run.update(sql,user_id,title,description,goal,target_date);
+		} catch (SQLException sqle) {
+			log.error(sqle.getMessage());
+			throw new RuntimeException(sqle.toString());
+		}
+	}
+	
+	public void update(int project_id, String title, String description, String goal, Timestamp target_date){
+		StringBuffer sql = new StringBuffer();
+		sql.append("UPDATE project ");
+		sql.append("SET title=?, ");
+		sql.append("description=?, ");
+		sql.append("goal=?, ");
+		sql.append("target_date=? ");
+		sql.append("WHERE id=? ");
+
+		try {
+			run.update(sql.toString(),title,description,goal,target_date,project_id);
 		} catch (SQLException sqle) {
 			log.error(sqle.getMessage());
 			throw new RuntimeException(sqle.toString());

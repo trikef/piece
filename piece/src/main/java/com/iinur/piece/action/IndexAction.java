@@ -8,6 +8,7 @@ public class IndexAction extends BaseAction{
 	private static final Logger log = LoggerFactory.getLogger(IndexAction.class);
 
 	public String execute(){
+		this.logFlag = true;
 		return before();
 	}
 }

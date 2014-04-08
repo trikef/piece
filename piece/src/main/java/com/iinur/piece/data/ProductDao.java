@@ -1,7 +1,6 @@
 package com.iinur.piece.data;
 
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.List;
 
 import org.apache.commons.dbutils.ResultSetHandler;
@@ -21,6 +20,29 @@ public class ProductDao extends BaseDao {
 		super();
 	}
 	
+	public Product get(int product_id){
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT ");
+		sql.append("pd.id,pd.piece_id,pd.user_id,pd.name,pd.status,pd.star,pd.type_id,pd.created_at, ");
+		sql.append("u.name as user_name,pt.name as type_name,pc.project_id ");
+		sql.append("FROM Product pd ");
+		sql.append("INNER JOIN piece pc ON pd.piece_id=pc.id ");
+		sql.append("INNER JOIN user_info u ON pd.user_id = u.id ");
+		sql.append("INNER JOIN product_type pt ON pd.type_id = pt.id ");
+		sql.append("WHERE pd.id=? ");
+
+		Product p = null;
+		try {
+			ResultSetHandler<Product> rsh = new BeanHandler<Product>(Product.class);
+			p = run.query(sql.toString(), rsh, product_id);
+		} catch (SQLException sqle) {
+			log.error(sqle.getMessage());
+			throw new RuntimeException(sqle.toString());
+		}
+
+		return p;
+	}
+
 	public Product getNew(int piece_id, int user_id){
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT * FROM Product WHERE piece_id=? AND user_id=? ORDER BY created_at DESC LIMIT 1");
