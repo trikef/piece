@@ -19,38 +19,16 @@
 </head>
 <body>
 <div data-role="page" id="projectpage">
-	<div data-role="header" data-position="fixed">
-		<h1><s:property value="p.title"/></h1>
-		<a href="#nav-panel" data-icon="gear" data-iconpos="notext">Menu</a>
-	</div><!-- /header -->
-	<div class="ui-content" role="main">
-		<ul data-role="listview"  data-count-theme="b" data-inset="true">
-			<li>
-			<br /><h3 style="white-space: normal;"><s:property value="p.title"/></h3>
-			<p><strong>概要</strong></p><p><s:property escape="flase" value="p.description_link"/></p>
-			<p><strong>ゴール</strong></p><p><s:property escape="flase" value="p.goal_link"/></p>
-			<p><strong>リリース予定日</strong></p><p><strong><s:date name="p.target_date" format="yyyy/MM/dd" /></strong></p>
-			<p class="ui-li-aside"><strong><s:date name="p.created_at" format="yyyy/MM/dd HH:mm" /></strong></p>
-			<s:if test="%{p.user_id==uid}">
-			<select onChange="Project.toggle_public(<s:property value="p.id"/>);" id="slider-flip-m" data-role="slider" data-mini="true">
-				<s:if test="%{(p.permission-((p.permission/10)*10))&4==4}">
-				    <option value="private">非公開</option>
-				    <option value="public" selected="">公開</option>
-			    </s:if>
-			    <s:else>
-			    	<option value="private" selected="">非公開</option>
-				    <option value="public">公開</option>
-			    </s:else>
-			</select>
-			</s:if>
-			</li>
-		</ul>
 	<div data-role="tabs">
+		<div data-role="header">
+			<h1><s:property value="p.title"/></h1>
+			<a href="#nav-panel-project-info" data-icon="info" data-iconpos="notext">Info</a>
+		</div><!-- /header -->
 	    <div data-role="navbar">
 	        <ul>
-	          <li><a class="ui-btn-active" href="#project-chat" data-theme="a" data-ajax="false">チャット</a></li>
-	          <li><a href="#project-pin" data-theme="a" data-ajax="false">ピン</a></li>
-	          <li><a href="#project-task" data-theme="a" data-ajax="false">タスク</a></li>
+	          <li><a class="ui-btn-active" href="#project-chat" data-theme="a" data-ajax="false">Chat</a></li>
+	          <li><a href="#project-pin" data-theme="a" data-ajax="false">Pin</a></li>
+	          <li><a href="#project-task" data-theme="a" data-ajax="false">Task</a></li>
 	        </ul>
 	    </div>
 	    <div id="project-chat" class="ui-content">
@@ -162,11 +140,10 @@
 			</ul>
 	    </div>
 	</div>
-	</div>
 	<div data-role="footer" data-position="fixed">
 	    <div data-role="navbar">
 	        <ul>
-	            <li><a href="/projectlist" data-ajax="false" data-icon="grid" data-theme="b">プロジェクトリスト</a></li>
+	            <li><a href="/projectlist" data-ajax="false" data-theme="b"><i class="fa fa-th-large fa-nav-icon"></i></a></li>
 <!-- 
 	            <li><a href="#" data-ajax="false" data-icon="bars" data-theme="b">タスク</a></li>
 	            <li><a href="#" data-ajax="false" data-icon="user" data-theme="b">マイページ</a></li>
@@ -174,11 +151,31 @@
  	        </ul>
 	    </div><!-- /navbar -->
 	</div><!-- /footer -->
-	<div data-role="panel" data-position-fixed="true" data-display="push" data-theme="b" id="nav-panel">
-        <ul data-role="listview">
+	<div data-role="panel" data-position-fixed="true" data-display="push" data-theme="a" id="nav-panel-project-info">
+		<ul data-role="listview">
             <li data-icon="arrow-r"><a href="#" data-rel="close">閉じる</a></li>
             <s:if test="%{p.user_id==uid}">
             <li data-icon="edit"><a data-ajax="false" href="/projectupdateinput/<s:property value="p.id"/>" data-rel="close">編集</a></li>
+            </s:if>
+			<li>
+			<br /><h3 style="white-space: normal;"><s:property value="p.title"/></h3>
+			<p><strong>概要</strong></p><p><s:property escape="flase" value="p.description_link"/></p>
+			<p><strong>ゴール</strong></p><p><s:property escape="flase" value="p.goal_link"/></p>
+			<p><strong>リリース予定日</strong></p><p><strong><s:date name="p.target_date" format="yyyy/MM/dd" /></strong></p>
+			<p class="ui-li-aside"><strong><s:date name="p.created_at" format="yyyy/MM/dd HH:mm" /></strong></p>
+			<s:if test="%{p.user_id==uid}">
+			<select onChange="Project.toggle_public(<s:property value="p.id"/>);" id="slider-flip-m" data-role="slider" data-mini="true">
+				<s:if test="%{(p.permission-((p.permission/10)*10))&4==4}">
+				    <option value="private">非公開</option>
+				    <option value="public" selected="">公開</option>
+			    </s:if>
+			    <s:else>
+			    	<option value="private" selected="">非公開</option>
+				    <option value="public">公開</option>
+			    </s:else>
+			</select>
+			</s:if>
+			</li>
 <%--
 			<li data-icon="delete">
                 <a href="#popupDialog" data-rel="popup" data-position-to="window" data-transition="pop">削除</a>
@@ -194,7 +191,6 @@
 				</div>
 			</li>
  --%>
- 			</s:if>
 		</ul>
 	</div>
 </div>

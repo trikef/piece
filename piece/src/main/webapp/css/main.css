@@ -1,7 +1,24 @@
+.ui-li-static.ui-collapsible > .ui-collapsible-heading {
+    margin: 0 !important;
+}
+.ui-li-static.ui-collapsible {
+    padding: 0 !important;;
+}
+.ui-li-static.ui-collapsible > .ui-collapsible-heading > .ui-btn {
+    border-top-width: 0;
+}
+.ui-li-static.ui-collapsible > .ui-collapsible-heading.ui-collapsible-heading-collapsed > .ui-btn,
+.ui-li-static.ui-collapsible > .ui-collapsible-content {
+    border-bottom-width: 0;
+}
+
 pre {
     overflow: auto;
     white-space: pre-wrap;
     word-wrap: break-word;
+}
+.fa-nav-icon{
+	font-size: 20px;
 }
 .ui-listview li p{
 	white-space: normal !important;	

@@ -8,6 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title><s:property value="p.title"/></title>
 	<link rel="stylesheet" href="/css/main.css" />
+	<link rel="stylesheet" href="/css/font-awesome.min.css">
 <!-- 	<link rel="stylesheet" href="/css/jquery-ui.css"> -->
 	<link rel="stylesheet" href="/css/jquery.mobile-1.4.2.css" />
 <!--<link rel="shortcut icon" href="../favicon.ico"> -->
@@ -18,8 +19,9 @@
 </head>
 <body>
 <div data-role="page" id="projectinputpage" data-dom-cache="false">
-	<div data-role="header" data-position="fixed">
+	<div data-role="header">
 		<h1>プロジェクト編集</h1>
+		<a data-ajax="false" href="/project/<s:property value="p.id" />" data-icon="back" data-iconpos="notext">Back</a>
 	</div><!-- /header -->
 	<div class="ui-content" role="main">
 		<p style="color:red;"><s:property value="msg" /></p>
@@ -51,7 +53,7 @@
 		<div data-role="footer" data-position="fixed">
 	    <div data-role="navbar">
 	        <ul>
-	            <li><a href="/projectlist" data-ajax="false" data-icon="grid" data-theme="b">プロジェクトリスト</a></li>
+	            <li><a href="/projectlist" data-ajax="false" data-theme="b"><i class="fa fa-th-large fa-nav-icon"></i></a></li>
 <!-- 
 	            <li><a href="#" data-ajax="false" data-icon="bars" data-theme="b">タスク</a></li>
 	            <li><a href="#" data-ajax="false" data-icon="user" data-theme="b">マイページ</a></li>

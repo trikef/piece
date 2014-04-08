@@ -19,12 +19,221 @@
 </head>
 <body>
 <div data-role="page" id="piecepage">
-	<div data-role="header" data-position="fixed">
-		<h1><s:property value="p.title"/></h1>
-		<a href="#nav-panel" data-icon="gear" data-iconpos="notext">Menu</a>
-	</div><!-- /header -->
-	<div class="ui-content" role="main">
-		<ul data-role="listview"  data-count-theme="b" data-inset="true">
+	<div data-role="tabs">
+		<div data-role="header">
+			<p style="font-size:9px;"><s:iterator  status="stat" value="piwp.piece_path">
+				<s:if test="#stat.index==0">
+				<a data-ajax="false" href="/project/<s:property value="piwp.project_id"/>">
+					<s:property value="title"/>
+				</a>>
+				</s:if>
+				<s:else>
+				<a data-ajax="false" href="/piece/<s:property value="id"/>">
+					<s:property value="title"/>
+				</a>>
+				</s:else>
+			</s:iterator>
+			</p>
+		</div>
+		<div data-role="header">
+			<h1><s:property value="p.title"/></h1>
+			<a href="#nav-panel-piece-info" data-icon="info" data-iconpos="notext">Info</a>
+		</div><!-- /header -->
+	    <div data-role="navbar">
+	        <ul>
+	          <li><a class="ui-btn-active" href="#piece-chat" data-theme="a" data-ajax="false">Chat</a></li>
+	          <li><a href="#piece-pin" data-theme="a" data-ajax="false">Pin</a></li>
+	          <li><a href="#piece-task" data-theme="a" data-ajax="false">Task</a></li>
+	          <li><a href="#piece-data" data-theme="a" data-ajax="false">Data</a></li>
+	        </ul>
+	    </div>
+		<div id="piece-chat" class="ui-content">
+		    <div id="chat-collapsibleset" class="btn-min-space" data-role="collapsibleset" data-theme="a" data-content-theme="b">
+			    <div data-role="collapsible">
+			    <h2>チャット追加</h2>
+			        <ul data-role="listview" data-theme="a" data-divider-theme="b">
+			            <li>
+							<div class="ui-field-contain">
+								<textarea cols="40" rows="10" name="g" id="piece-text-input" placeholder="ここにメッセージ内容を入力"></textarea>
+							</div>
+							<div class="ui-field-contain">
+								<a href="#" onClick="Chat.add()" class="ui-btn ui-corner-all">送信</a>
+							</div>
+			            </li>
+			        </ul>
+			    </div>
+			</div>
+		    <ul data-role="listview" class="chat-list" >
+			<s:iterator value="cs">
+			<li>
+				<p class="ui-li-name"><strong><s:property value="name"/></strong></p>
+				<p class="ui-li-text"><s:property escape="false" value="text_link"/></p>
+				<p class="ui-li-date"><strong><s:date name="created_at" format="yyyy/MM/dd HH:mm" /></strong></p>
+				<p class="ui-li-action">
+					<s:if test="%{priority>0}"><i class="fa fa-thumb-tack"></i></s:if>
+					<s:else>
+					<span id="pin<s:property value="id" />">
+					<a onClick="Chat.pin(<s:property value="id"/>,<s:property value="id"/>)">
+						<i class="fa fa-thumb-tack"></i>
+					</a>
+					</span>
+					</s:else>
+					<a onClick="Chat.count(<s:property value="id" />,'<s:property value="uid" />',1,0,'#good<s:property value="id"/>')" class=""><i class="fa fa-thumbs-o-up"></i>(<span id="good<s:property value="id"/>"><s:property value="good"/></span>)</a>
+					<a onClick="Chat.count(<s:property value="id" />,'<s:property value="uid" />',0,1,'#bad<s:property value="id"/>')" class=""><i class="fa fa-thumbs-o-down"></i>(<span id="bad<s:property value="id"/>"><s:property value="bad"/></span>)</a>
+				</p>
+			</li>
+			</s:iterator>
+			</ul>
+	    </div>
+	    <div id="piece-pin" class="ui-content">
+	    	<ul data-role="listview" class="pin-list" >
+			<s:iterator value="cps">
+			<li>
+				<p class="ui-li-name"><strong><s:property value="name"/></strong></p>
+				<p class="ui-li-text"><s:property escape="false" value="text_link"/></p>
+				<p class="ui-li-date"><strong><s:date name="created_at" format="yyyy/MM/dd HH:mm" /></strong></p>
+			</li>
+			</s:iterator>
+			</ul>
+		</div>
+		<div id="piece-task" class="ui-content">
+			<div id="piece-collapsibleset" data-role="collapsibleset" data-theme="a" data-content-theme="b">
+			    <div data-role="collapsible">
+			    <h2>サブタスク追加</h2>
+			        <ul data-role="listview" data-theme="a" data-divider-theme="b">
+			            <li>
+							<input type="hidden" name="pi" id="piece-pid-input" value="<s:property value="piwp.project_id" />" />
+							<input type="hidden" name="pci" id="piece-pcid-input" value="<s:property value="piwp.id" />" />
+							<input type="hidden" name="ui" id="piece-uid-input" value="<s:property value="uid" />" />
+							<div class="ui-field-contain">
+								<label for="piece-title-input">タイトル
+								</label>
+								<input type="text" name="t" id="piece-title-input" placeholder="" />
+							</div>
+							<div class="ui-field-contain">
+								<label for="piece-description-input">説明
+								</label>
+								<textarea cols="40" rows="10" name="d" id="piece-description-input" placeholder=""></textarea>
+							</div>
+							<div class="ui-field-contain">
+								<label for="piece-goal-input">終了条件
+								</label>
+								<textarea cols="40" rows="10" name="g" id="piece-goal-input" placeholder=""></textarea>
+							</div>
+							<div class="ui-field-contain">
+							    <label for="piece-targetdate-input">完了予定日</label>
+					     		<input type="date" name="td" id="piece-targetdate-input" placeholder="yyyy/MM/dd">
+					     	</div>
+							<div class="ui-field-contain">
+								<a onClick="Piece.add(<s:property value="piwp.id" />)" class="ui-btn ui-corner-all">追加</a>
+							</div>
+			            </li>
+			        </ul>
+			    </div>
+			</div>
+	        <ul data-role="listview" class="piece-list ui-li-header" >
+			<s:if test="%{piwps.size()>0}">
+			<s:iterator value="piwps">
+	 		<s:if test="%{parent_id!=#parent_id_before}">
+			<li data-role="list-divider">
+				<p><small><s:iterator  status="stat" value="piece_path">
+					<s:if test="#stat.index>0">
+					<a data-ajax="false" href="/piece/<s:property value="id"/>">
+						<s:property value="title"/>
+					</a>>
+					</s:if>
+				</s:iterator>
+				</small></p>
+			</li>
+			</s:if>
+			<s:set name="parent_id_before" value="parent_id"/>
+			<li id="piece<s:property value="id" />" class="ui-li-piece <s:if test="%{status_id==0}">ui-li-piece-o</s:if>">
+				<s:if test="%{user_id==uid}">
+					<span class="ui-li-piece-check" id="check<s:property value="id" />">
+					<s:if test="%{status_id==0}"><a onClick="Piece.check(<s:property value="id"/>,1)"><i class="fa fa-check-square"></i></a></s:if>
+					<s:else><a onClick="Piece.check(<s:property value="id"/>,0)"><i class="fa fa-square-o"></i></a></s:else>
+					</span>
+				</s:if>
+				<a data-ajax="false" href="/piece/<s:property value="id" />">
+				<p class="ul-li-piece-title"><s:property value="title"/></p>
+				</a>
+			</li>
+			</s:iterator>
+			</s:if>
+			</ul>
+		</div>
+		<div id="piece-data" class="ui-content">
+			<div id="data-collapsibleset" data-role="collapsibleset" data-theme="a" data-content-theme="b">
+			    <div data-role="collapsible">
+			    <h2>データ追加</h2>
+			        <ul data-role="listview" data-theme="a" data-divider-theme="b">
+			            <li>
+							<input type="hidden" name="pi" id="product-pid-input" value="<s:property value="piwp.id" />" />
+							<input type="hidden" name="ui" id="product-uid-input" value="<s:property value="uid" />" />
+							<div class="ui-field-contain">
+								<label for="product-data-input">データ
+								</label>
+								<textarea cols="40" rows="10" name="d" id="product-data-input" placeholder=""></textarea>
+							</div>
+							<div class="ui-field-contain">
+								<label for="product-comment-input">コメント
+								</label>
+								<textarea cols="40" rows="10" name="d" id="product-comment-input" placeholder=""></textarea>
+							</div>
+							<div class="ui-field-contain">
+								<a onClick="Product.add_text(1)" class="ui-btn ui-corner-all">追加</a>
+								<!-- <a onClick="Product.add_text(2)" class="ui-btn ui-corner-all">下書き</a> -->
+							</div>
+			            </li>
+			        </ul>
+			    </div>
+			</div>
+			<ul data-role="listview" class="product-list ui-li-header" >
+			<s:if test="%{ps.size()>0}">
+			<s:iterator value="ps">
+			<li>
+				<a data-ajax="false" href="/product<s:property value="type_name" />/<s:property value="id" />">
+					<p class="ui-li-name"><strong><s:property value="user_name"/></strong></p>
+					<p class="ui-li-text"><s:property value="name"/></p>
+					<p class="ui-li-text-right"><s:property value="type_name"/></p>
+					<p class="ui-li-date"><strong><s:date name="created_at" format="yyyy/MM/dd HH:mm" /></strong></p>
+				</a>
+			</li>
+			</s:iterator>
+			</s:if>
+			</ul>
+		</div>
+	</div>
+	<div data-role="footer" data-position="fixed">
+	    <div data-role="navbar">
+	        <ul>
+	            <li><a href="/projectlist" data-ajax="false" data-theme="b"><i class="fa fa-th-large fa-nav-icon"></i></a></li>
+
+<!-- 
+	            <li><a href="#" data-ajax="false" data-icon="bars" data-theme="b">タスク</a></li>
+	            <li><a href="#" data-ajax="false" data-icon="user" data-theme="b">マイページ</a></li>
+ -->
+ 	        </ul>
+	    </div><!-- /navbar -->
+	</div><!-- /footer -->
+	<div data-role="panel" data-position-fixed="true" data-display="push" data-theme="a" id="nav-panel-piece-info">
+		<ul data-role="listview">
+            <li data-icon="arrow-r"><a href="#" data-rel="close">閉じる</a></li>
+            <s:if test="%{piwp.user_id==uid}">
+			<li data-icon="delete">
+                <a href="#popupDialog" data-rel="popup" data-position-to="window" data-transition="pop">削除</a>
+				<div data-role="popup" id="popupDialog" data-overlay-theme="b" data-theme="b" data-dismissible="false" style="max-width:400px;">
+				    <div data-role="header" data-theme="a">
+				    <h1>削除</h1>
+				    </div>
+				    <div role="main" class="ui-content">
+				        <h3 class="ui-title">本当にこのタスクを削除しますか?</h3>
+				        <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">キャンセル</a>
+				        <a onClick="Piece.display(<s:property value="piwp.id"/>,false)" href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back" data-transition="flow">削除</a>
+				    </div>
+				</div>
+			</li>
+			</s:if>
 			<li>
 			<p><small><s:iterator  status="stat" value="piwp.piece_path">
 				<s:if test="#stat.index==0">
@@ -46,203 +255,6 @@
 			<p><strong><s:date name="piwp.target_date" format="yyyy/MM/dd" /></strong></p>
 			<p class="ui-li-aside"><strong><s:date name="piwp.created_at" format="yyyy/MM/dd hh:mm" /></strong></p>
 			</li>
-		</ul>
-		<div data-role="tabs">
-		    <div data-role="navbar">
-		        <ul>
-		          <li><a class="ui-btn-active" href="#piece-chat" data-theme="a" data-ajax="false">チャット</a></li>
-		          <li><a href="#piece-pin" data-theme="a" data-ajax="false">ピン</a></li>
-		          <li><a href="#piece-task" data-theme="a" data-ajax="false">タスク</a></li>
-		          <li><a href="#piece-data" data-theme="a" data-ajax="false">データ</a></li>
-		        </ul>
-		    </div>
-			<div id="piece-chat" class="ui-content">
-			    <div id="chat-collapsibleset" class="btn-min-space" data-role="collapsibleset" data-theme="a" data-content-theme="b">
-				    <div data-role="collapsible">
-				    <h2>チャット追加</h2>
-				        <ul data-role="listview" data-theme="a" data-divider-theme="b">
-				            <li>
-								<div class="ui-field-contain">
-									<textarea cols="40" rows="10" name="g" id="piece-text-input" placeholder="ここにメッセージ内容を入力"></textarea>
-								</div>
-								<div class="ui-field-contain">
-									<a href="#" onClick="Chat.add()" class="ui-btn ui-corner-all">送信</a>
-								</div>
-				            </li>
-				        </ul>
-				    </div>
-				</div>
-			    <ul data-role="listview" class="chat-list" >
-				<s:iterator value="cs">
-				<li>
-					<p class="ui-li-name"><strong><s:property value="name"/></strong></p>
-					<p class="ui-li-text"><s:property escape="false" value="text_link"/></p>
-					<p class="ui-li-date"><strong><s:date name="created_at" format="yyyy/MM/dd HH:mm" /></strong></p>
-					<p class="ui-li-action">
-						<s:if test="%{priority>0}"><i class="fa fa-thumb-tack"></i></s:if>
-						<s:else>
-						<span id="pin<s:property value="id" />">
-						<a onClick="Chat.pin(<s:property value="id"/>,<s:property value="id"/>)">
-							<i class="fa fa-thumb-tack"></i>
-						</a>
-						</span>
-						</s:else>
-						<a onClick="Chat.count(<s:property value="id" />,'<s:property value="uid" />',1,0,'#good<s:property value="id"/>')" class=""><i class="fa fa-thumbs-o-up"></i>(<span id="good<s:property value="id"/>"><s:property value="good"/></span>)</a>
-						<a onClick="Chat.count(<s:property value="id" />,'<s:property value="uid" />',0,1,'#bad<s:property value="id"/>')" class=""><i class="fa fa-thumbs-o-down"></i>(<span id="bad<s:property value="id"/>"><s:property value="bad"/></span>)</a>
-					</p>
-				</li>
-				</s:iterator>
-				</ul>
-		    </div>
-		    <div id="piece-pin" class="ui-content">
-		    	<ul data-role="listview" class="pin-list" >
-				<s:iterator value="cps">
-				<li>
-					<p class="ui-li-name"><strong><s:property value="name"/></strong></p>
-					<p class="ui-li-text"><s:property escape="false" value="text_link"/></p>
-					<p class="ui-li-date"><strong><s:date name="created_at" format="yyyy/MM/dd HH:mm" /></strong></p>
-				</li>
-				</s:iterator>
-				</ul>
-			</div>
-			<div id="piece-task" class="ui-content">
-				<div id="piece-collapsibleset" data-role="collapsibleset" data-theme="a" data-content-theme="b">
-				    <div data-role="collapsible">
-				    <h2>サブタスク追加</h2>
-				        <ul data-role="listview" data-theme="a" data-divider-theme="b">
-				            <li>
-								<input type="hidden" name="pi" id="piece-pid-input" value="<s:property value="piwp.project_id" />" />
-								<input type="hidden" name="pci" id="piece-pcid-input" value="<s:property value="piwp.id" />" />
-								<input type="hidden" name="ui" id="piece-uid-input" value="<s:property value="uid" />" />
-								<div class="ui-field-contain">
-									<label for="piece-title-input">タイトル
-									</label>
-									<input type="text" name="t" id="piece-title-input" placeholder="" />
-								</div>
-								<div class="ui-field-contain">
-									<label for="piece-description-input">説明
-									</label>
-									<textarea cols="40" rows="10" name="d" id="piece-description-input" placeholder=""></textarea>
-								</div>
-								<div class="ui-field-contain">
-									<label for="piece-goal-input">終了条件
-									</label>
-									<textarea cols="40" rows="10" name="g" id="piece-goal-input" placeholder=""></textarea>
-								</div>
-								<div class="ui-field-contain">
-								    <label for="piece-targetdate-input">完了予定日</label>
-						     		<input type="date" name="td" id="piece-targetdate-input" placeholder="yyyy/MM/dd">
-						     	</div>
-								<div class="ui-field-contain">
-									<a onClick="Piece.add(<s:property value="piwp.id" />)" class="ui-btn ui-corner-all">追加</a>
-								</div>
-				            </li>
-				        </ul>
-				    </div>
-				</div>
-		        <ul data-role="listview" class="piece-list ui-li-header" >
-				<s:if test="%{piwps.size()>0}">
-				<s:iterator value="piwps">
-		 		<s:if test="%{parent_id!=#parent_id_before}">
-				<li data-role="list-divider">
-					<p><small><s:iterator  status="stat" value="piece_path">
-						<s:if test="#stat.index>0">
-						<a data-ajax="false" href="/piece/<s:property value="id"/>">
-							<s:property value="title"/>
-						</a>>
-						</s:if>
-					</s:iterator>
-					</small></p>
-				</li>
-				</s:if>
-				<s:set name="parent_id_before" value="parent_id"/>
-				<li id="piece<s:property value="id" />" class="ui-li-piece <s:if test="%{status_id==0}">ui-li-piece-o</s:if>">
-					<s:if test="%{user_id==uid}">
-						<span class="ui-li-piece-check" id="check<s:property value="id" />">
-						<s:if test="%{status_id==0}"><a onClick="Piece.check(<s:property value="id"/>,1)"><i class="fa fa-check-square"></i></a></s:if>
-						<s:else><a onClick="Piece.check(<s:property value="id"/>,0)"><i class="fa fa-square-o"></i></a></s:else>
-						</span>
-					</s:if>
-					<a data-ajax="false" href="/piece/<s:property value="id" />">
-					<p class="ul-li-piece-title"><s:property value="title"/></p>
-					</a>
-				</li>
-				</s:iterator>
-				</s:if>
-				</ul>
-			</div>
-			<div id="piece-data" class="ui-content">
-				<div id="data-collapsibleset" data-role="collapsibleset" data-theme="a" data-content-theme="b">
-				    <div data-role="collapsible">
-				    <h2>データ追加</h2>
-				        <ul data-role="listview" data-theme="a" data-divider-theme="b">
-				            <li>
-								<input type="hidden" name="pi" id="product-pid-input" value="<s:property value="piwp.id" />" />
-								<input type="hidden" name="ui" id="product-uid-input" value="<s:property value="uid" />" />
-								<div class="ui-field-contain">
-									<label for="product-data-input">データ
-									</label>
-									<textarea cols="40" rows="10" name="d" id="product-data-input" placeholder=""></textarea>
-								</div>
-								<div class="ui-field-contain">
-									<label for="product-comment-input">コメント
-									</label>
-									<textarea cols="40" rows="10" name="d" id="product-comment-input" placeholder=""></textarea>
-								</div>
-								<div class="ui-field-contain">
-									<a onClick="Product.add_text(1)" class="ui-btn ui-corner-all">追加</a>
-									<!-- <a onClick="Product.add_text(2)" class="ui-btn ui-corner-all">下書き</a> -->
-								</div>
-				            </li>
-				        </ul>
-				    </div>
-				</div>
-				<ul data-role="listview" class="product-list ui-li-header" >
-				<s:if test="%{ps.size()>0}">
-				<s:iterator value="ps">
-				<li>
-					<a data-ajax="false" href="/product<s:property value="type_name" />/<s:property value="id" />">
-						<p class="ui-li-name"><strong><s:property value="user_name"/></strong></p>
-						<p class="ui-li-text"><s:property value="name"/></p>
-						<p class="ui-li-text-right"><s:property value="type_name"/></p>
-						<p class="ui-li-date"><strong><s:date name="created_at" format="yyyy/MM/dd HH:mm" /></strong></p>
-					</a>
-				</li>
-				</s:iterator>
-				</s:if>
-				</ul>
-			</div>
-		</div>
-	</div>
-	<div data-role="footer" data-position="fixed">
-	    <div data-role="navbar">
-	        <ul>
-	            <li><a href="/projectlist" data-ajax="false" data-icon="grid" data-theme="b">プロジェクトリスト</a></li>
-<!-- 
-	            <li><a href="#" data-ajax="false" data-icon="bars" data-theme="b">タスク</a></li>
-	            <li><a href="#" data-ajax="false" data-icon="user" data-theme="b">マイページ</a></li>
- -->
- 	        </ul>
-	    </div><!-- /navbar -->
-	</div><!-- /footer -->
-	<div data-role="panel" data-position-fixed="true" data-display="push" data-theme="b" id="nav-panel">
-        <ul data-role="listview">
-            <li data-icon="arrow-r"><a href="#" data-rel="close">閉じる</a></li>
-            <s:if test="%{piwp.user_id==uid}">
-			<li data-icon="delete">
-                <a href="#popupDialog" data-rel="popup" data-position-to="window" data-transition="pop">削除</a>
-				<div data-role="popup" id="popupDialog" data-overlay-theme="b" data-theme="b" data-dismissible="false" style="max-width:400px;">
-				    <div data-role="header" data-theme="a">
-				    <h1>削除</h1>
-				    </div>
-				    <div role="main" class="ui-content">
-				        <h3 class="ui-title">本当にこのタスクを削除しますか?</h3>
-				        <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">キャンセル</a>
-				        <a onClick="Piece.display(<s:property value="piwp.id"/>,false)" href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back" data-transition="flow">削除</a>
-				    </div>
-				</div>
-			</li>
-			</s:if>
 		</ul>
 	</div>
 </div>
