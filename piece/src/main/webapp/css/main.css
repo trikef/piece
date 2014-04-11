@@ -2,7 +2,7 @@
     margin: 0 !important;
 }
 .ui-li-static.ui-collapsible {
-    padding: 0 !important;;
+    padding: 0 !important;
 }
 .ui-li-static.ui-collapsible > .ui-collapsible-heading > .ui-btn {
     border-top-width: 0;
@@ -16,6 +16,12 @@ pre {
     overflow: auto;
     white-space: pre-wrap;
     word-wrap: break-word;
+}
+.ui-panel-wrapper{
+	min-height: 100px !important;
+}
+#tag-name-input .ui-input-search .ui-input-clear{
+	right: 23px !important;
 }
 .fa-nav-icon{
 	font-size: 20px;
@@ -85,6 +91,8 @@ pre {
 }
 .ul-li-piece-title{
 	padding-left: 20px;
+	position: relative;
+	overflow: visible !important;
 }
 .ul-li-count-left{
 	right: auto !important;
@@ -93,6 +101,11 @@ pre {
 .ui-li-notify{
 	background-color: red !important;
 	border: none !important;
+}
+.ul-li-tags{
+	position: absolute;
+	top: 15px;
+	left: 20px;
 }
 .piece-list{
 	margin-bottom: 10px !important;
@@ -110,4 +123,18 @@ pre {
 .btn-min-space{
 	padding-bottom: 20px;
 	margin-top: 0px !important;
+}
+#tag-name-input{
+	position: relative;
+	padding: 0 5px;
+}
+.tag-list li a h2 {
+	color: #006621 !important;
+}
+.tag-name-add-btn{
+	position: absolute;
+	font-size: 26px !important;
+	right: 11px;
+	top: 10px;
+	z-index: 1;
 }

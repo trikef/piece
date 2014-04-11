@@ -12,6 +12,7 @@ public class PieceWithPath extends Piece {
 	private Array path_title;
 	private int lv;
 	private int child_count;
+	private Array tags;
 	public int getParent_id() {
 		return parent_id;
 	}
@@ -30,7 +31,7 @@ public class PieceWithPath extends Piece {
 	}
 	public String[] getPath_title_array() throws SQLException {
 		Object o = path_title.getArray();
-		System.out.println("**************"+o.getClass().getCanonicalName());
+		//System.out.println("**************"+o.getClass().getCanonicalName());
 		String[] array = (String[])o;
 		//return path_title;
 		return array;
@@ -62,6 +63,18 @@ public class PieceWithPath extends Piece {
 	}
 	public void setChild_count(int child_count) {
 		this.child_count = child_count;
+	}
+
+	public Array getTags() {
+		return tags;
+	}
+
+	public String[] getTags_sa() throws SQLException {
+		String[] ts = (String[])tags.getArray();
+		return ts;
+	}
+	public void setTags(Array tags) {
+		this.tags = tags;
 	}
 	
 }

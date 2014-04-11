@@ -1,3 +1,18 @@
+var Main = {
+	loading : function(display){
+		if(display=="show"){
+			$.mobile.loading( "show", {
+	            text: "",
+	            textVisible: false,
+	            theme: $.mobile.loader.prototype.options.theme,
+	            textonly: false,
+	            html: ""
+	    });
+		} else if(display=="hide"){
+			$.mobile.loading( "hide" );
+		}
+	}	
+};
 var Project = {
 	toggle_public : function(project_id){
 		var defer = $.Deferred();
@@ -10,10 +25,12 @@ var Project = {
 			success : defer.resolve,
 			error : defer.reject
 		});
+		Main.loading("show");
 		return defer.promise().done(function(data) {
 			if(data.id>0){
 				//TODO display?
 			}
+			Main.loading("hide");
 		});
 	}	
 };
@@ -41,12 +58,14 @@ var Piece = {
 			success : defer.resolve,
 			error : defer.reject
 		});
+		Main.loading("show");
 		return defer.promise().done(function(data) {
 			if(data.id>0){
 				$('.piece-list')
 				.append("<li id='piece"+data.id+"' class='ui-li-piece ui-first-child'><span class='ui-li-piece-check' id='check"+data.id+"'><a onclick='Piece.check("+data.id+",0)' class='ui-link'><i class='fa fa-square-o'></i></a></span><a data-ajax='false' href='/piece/"+data.id+"' class='ui-btn ui-btn-icon-right ui-icon-carat-r'><p class='ul-li-piece-title'>"+data.title+"</p></a></li>");
 				$( "#piece-collapsibleset" ).children( ":last" ).collapsible( "collapse" );
 			}
+			Main.loading("hide");
 		});
 	},
 	check: function(piece_id,status_id){
@@ -61,6 +80,7 @@ var Piece = {
 			success : defer.resolve,
 			error : defer.reject
 		});
+		Main.loading("show");
 		return defer.promise().done(function(data) {
 			if(data.id>0){
 				var i_none = "fa-square-o";
@@ -78,6 +98,7 @@ var Piece = {
 				.html("<a onClick='Piece.check("+data.id+","+re_status+")'><i class='fa "+icon+"'></i></a>"
 						);
 			}
+			Main.loading("hide");
 		});
 	},
 	display: function(piece_id,display){
@@ -92,6 +113,7 @@ var Piece = {
 			success : defer.resolve,
 			error : defer.reject
 		});
+		Main.loading("show");
 		return defer.promise().done(function(data) {
 			if(data.id>0){
 				if(data.project_id>0){
@@ -100,6 +122,76 @@ var Piece = {
 					location.href="/projectlist";
 				}
 			}
+			Main.loading("hide");
+		});
+	},
+	add_tag : function(tag_id,piece_id) {
+		var defer = $.Deferred();
+		$.ajax({
+			url : "/api/piecetagregi",
+			data : {
+				ti : tag_id,
+				pci : piece_id
+			},
+			dataType : 'json',
+			success : defer.resolve,
+			error : defer.reject
+		});
+		Main.loading("show");
+		return defer.promise().done(function(data) {
+			if(data.id>0){
+				 $('.tag-list')
+				.append(
+				 "<li id='pt"+data.piece_tag_id+"' class='ui-li-has-alt ui-last-child'>"
+				 +"<a class='ui-btn ui-mini'><h2>"+data.name+"</h2></a>"
+				 +"<a onclick='Piece.del_tag("+data.piece_tag_id+", "+data.id+", "+piece_id+")' class='ui-btn ui-mini ui-btn-icon-notext ui-icon-delete ui-btn-a' title='delete'></a></li>"
+				);
+			}
+			$("a.ui-input-clear").trigger("click");
+			Main.loading("hide");
+		});
+	},
+	add_tag_none_html : function(tag_id,piece_id) {
+		var defer = $.Deferred();
+		$.ajax({
+			url : "/api/piecetagregi",
+			data : {
+				ti : tag_id,
+				pci : piece_id
+			},
+			dataType : 'json',
+			success : defer.resolve,
+			error : defer.reject
+		});
+		Main.loading("show");
+		return defer.promise().done(function(data) {
+			Main.loading("hide");
+		});
+	},
+	del_tag : function(piece_tag_id,tag_id,piece_id) {
+		var defer = $.Deferred();
+		$.ajax({
+			url : "/api/piecetagdel",
+			data : {
+				i : piece_tag_id,
+				ti : tag_id,
+				pci : piece_id
+			},
+			dataType : 'json',
+			success : defer.resolve,
+			error : defer.reject
+		});
+		Main.loading("show");
+		return defer.promise().done(function(data) {
+			if(data){
+				$("#pt"+piece_tag_id).empty();
+				/*
+				 $('.piece-list')
+				.append("<li id='piece"+data.id+"' class='ui-li-piece ui-first-child'><span class='ui-li-piece-check' id='check"+data.id+"'><a onclick='Piece.check("+data.id+",0)' class='ui-link'><i class='fa fa-square-o'></i></a></span><a data-ajax='false' href='/piece/"+data.id+"' class='ui-btn ui-btn-icon-right ui-icon-carat-r'><p class='ul-li-piece-title'>"+data.title+"</p></a></li>");
+				$( "#piece-collapsibleset" ).children( ":last" ).collapsible( "collapse" );
+				*/
+			}
+			Main.loading("hide");
 		});
 	}
 };
@@ -122,6 +214,7 @@ var Product = {
 				success : defer.resolve,
 				error : defer.reject
 			});
+			Main.loading("show");
 			return defer.promise().done(function(data) {
 				if(data.id>0){
 					$('.product-list')
@@ -129,6 +222,7 @@ var Product = {
 							);
 					$( "#data-collapsibleset" ).children( ":last" ).collapsible( "collapse" );
 				}
+				Main.loading("hide");
 			});
 		}
 	};
@@ -151,6 +245,7 @@ var Chat = {
 				success : defer.resolve,
 				error : defer.reject
 			});
+			Main.loading("show");
 			return defer.promise().done(function(data) {
 				if(data.id>0){
 					$('.chat-list')
@@ -162,6 +257,7 @@ var Chat = {
 					);
 					$( "#chat-collapsibleset" ).children( ":last" ).collapsible( "collapse" );
 				}
+				Main.loading("hide");
 			});
 		},
 		pin : function(id,priority) {
@@ -176,6 +272,7 @@ var Chat = {
 				success : defer.resolve,
 				error : defer.reject
 			});
+			Main.loading("show");
 			return defer.promise().done(function(data) {
 				if(data.id>0){
 					$('.pin-list')
@@ -183,6 +280,7 @@ var Chat = {
 							);
 					$("#pin"+id).html("<i class='fa fa-thumb-tack'></i>");
 				}
+				Main.loading("hide");
 			});
 		},
 		count : function(cid, uid, good, bad, hid) {
@@ -199,6 +297,7 @@ var Chat = {
 				success : defer.resolve,
 				error : defer.reject
 			});
+			Main.loading("show");
 			return defer.promise().done(function(data) {
 				if(data.regi){
 					if (good > 0) {
@@ -207,6 +306,7 @@ var Chat = {
 						$(hid).text(data.bad);
 					}
 				}
+				Main.loading("hide");
 			});
 		}
 	};
@@ -229,6 +329,7 @@ var ProductChat = {
 				success : defer.resolve,
 				error : defer.reject
 			});
+			Main.loading("show");
 			return defer.promise().done(function(data) {
 				if(data.id>0){
 					$('.productchat-list')
@@ -237,6 +338,55 @@ var ProductChat = {
 							);
 					$( "#productchat-collapsibleset" ).children( ":last" ).collapsible( "collapse" );
 				}
+				Main.loading("hide");
+			});
+		}
+};
+var Tag = {
+		add : function(target,id) {
+			var defer = $.Deferred();
+			var name = $("#tag-name-input form input").val()||$("#tag-name-input").val();
+			var description = $("#tag-des-input").val();
+			$.ajax({
+				url : "/api/tagregi",
+				data : {
+					n : name,
+					des : description
+				},
+				dataType : 'json',
+				success : defer.resolve,
+				error : defer.reject
+			});
+			Main.loading("show");
+			return defer.promise().done(function(data) {
+				if(data.id>0){
+					if(target=="piece"){
+						Piece.add_tag(data.id, id);
+					}
+					//$( "#tag-input-collapsibleset" ).children( ":last" ).collapsible( "collapse" );
+					//$('#tid-input-menu').append("<li data-option-index='0' data-icon='false' class='ui-first-child' role='option' aria-selected='false'><a href='#' tabindex='-1' class='ui-btn ui-checkbox-off ui-btn-icon-right'>"+data.name+"</a></li>");
+				}
+				Main.loading("hide");
+			});
+		},
+		display: function(tag_id,display){
+			var defer = $.Deferred();
+			$.ajax({
+				url : "/api/tagdisplay",
+				data : {
+					i : tag_id,
+					d : display
+				},
+				dataType : 'json',
+				success : defer.resolve,
+				error : defer.reject
+			});
+			Main.loading("show");
+			return defer.promise().done(function(data) {
+				if(data.id>0){
+					lcation.reload();
+				}
+				Main.loading("hide");
 			});
 		}
 };

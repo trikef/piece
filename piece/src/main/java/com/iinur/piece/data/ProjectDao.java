@@ -78,6 +78,7 @@ public class ProjectDao extends BaseDao {
 		List<Project> ps = null;
 		try {
 			ResultSetHandler<List<Project>> rsh = new BeanListHandler<Project>(Project.class);
+			log.debug("List<Project> get(int user_id):"+sql.toString());
 			ps = run.query(sql.toString(), rsh, user_id,user_id,user_id);
 		} catch (SQLException sqle) {
 			log.error(sqle.getMessage());

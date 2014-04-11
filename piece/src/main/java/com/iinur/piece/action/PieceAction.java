@@ -9,9 +9,12 @@ import com.iinur.piece.data.bean.Chat;
 import com.iinur.piece.data.bean.Piece;
 import com.iinur.piece.data.bean.PieceWithPath;
 import com.iinur.piece.data.bean.Product;
+import com.iinur.piece.data.bean.Tag;
 import com.iinur.piece.model.ChatModel;
 import com.iinur.piece.model.PieceModel;
+import com.iinur.piece.model.PieceTagModel;
 import com.iinur.piece.model.ProductModel;
+import com.iinur.piece.model.TagModel;
 
 @Action(value="/piece/{id:.+}",
 results={@Result(name="success", location="piece.jsp")}
@@ -29,6 +32,9 @@ public class PieceAction extends BaseAction {
 	public List<Chat> cs;
 	public List<Chat> cps;
 	
+	public List<Tag> ts;
+	public List<Tag> pts;
+
 	public String execute(){
 		String result = before();
 		if(result.equals(INPUT)){
@@ -48,6 +54,12 @@ public class PieceAction extends BaseAction {
 		this.cs = cmodel.getList(p.getProject_id(),id);
 		this.cps = cmodel.getPinList(p.getProject_id(),id);
 		
+		TagModel tmodel = new TagModel();
+		this.ts = tmodel.getTagsWithSelectedPiece(id);
+
+		PieceTagModel ptmodel = new PieceTagModel();
+		this.pts = ptmodel.getTags(id);
+
 		this.acsmodel.regiPiece(this.servletPath, id, this.uid);//log
 	
 		return SUCCESS;

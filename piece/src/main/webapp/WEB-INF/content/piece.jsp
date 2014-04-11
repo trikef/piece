@@ -19,26 +19,55 @@
 </head>
 <body>
 <div data-role="page" id="piecepage">
-	<div data-role="tabs">
 		<div data-role="header">
-			<p style="font-size:9px;"><s:iterator  status="stat" value="piwp.piece_path">
-				<s:if test="#stat.index==0">
-				<a data-ajax="false" href="/project/<s:property value="piwp.project_id"/>">
-					<s:property value="title"/>
-				</a>>
-				</s:if>
-				<s:else>
-				<a data-ajax="false" href="/piece/<s:property value="id"/>">
-					<s:property value="title"/>
-				</a>>
-				</s:else>
-			</s:iterator>
-			</p>
-		</div>
-		<div data-role="header">
-			<h1><s:property value="p.title"/></h1>
+			<h2>タスク詳細</h2>
 			<a href="#nav-panel-piece-info" data-icon="info" data-iconpos="notext">Info</a>
 		</div><!-- /header -->
+		<div data-role="content">
+			<ul data-role="listview" >
+				<li>
+					<p><small><s:iterator status="stat" value="piwp.piece_path">
+						<s:if test="#stat.index==0">
+						<a data-ajax="false" href="/project/<s:property value="piwp.project_id"/>">
+							<s:property value="title"/>
+						</a>>
+						</s:if>
+						<s:else>
+						<a data-ajax="false" href="/piece/<s:property value="id"/>">
+							<s:property value="title"/>
+						</a>>
+						</s:else>
+					</s:iterator>
+					</small></p>
+				</li>
+				<li>
+					<br /><h1 style="white-space: normal;"><s:property value="piwp.title"/></h1>
+					<p><strong>発行者</strong></p><p><s:property value="piwp.user_name"/></p>
+					<p><strong>概要</strong></p><p><s:property escape="flase" value="piwp.description_link"/></p>
+					<p><strong>ゴール</strong></p><p><s:property escape="flase" value="piwp.goal_link"/></p>
+					<p><strong><s:date name="piwp.target_date" format="yyyy/MM/dd" /></strong></p>
+					<p class="ui-li-aside"><strong><s:date name="piwp.created_at" format="yyyy/MM/dd hh:mm" /></strong></p>
+				</li>
+			</ul>
+			<ul class="tag-list" data-role="listview" data-split-icon=delete data-theme="a" data-split-theme="a">
+			<li data-role="list-divider">タグ</li>
+			<li id="tag-name-input">
+				<p><a onClick="Tag.add('piece',<s:property value="piwp.id"/>)" data-icon="false" class="tag-name-add-btn"><i class="fa fa-plus-circle"></i></a></p>
+				<ul data-role="listview" data-filter="true" data-filter-reveal="true" data-filter-placeholder="タグ追加" data-inset="true">
+			    <s:iterator value="ts">
+				    <li><a onClick="Piece.add_tag(<s:property value="id"/>, <s:property value="piwp.id"/>)"><s:property value="name" /></a></li>
+				</s:iterator>
+				</ul>
+			</li>
+			<s:iterator value="pts">
+				<li id="pt<s:property value="piece_tag_id"/>">
+					<a class=" ui-mini"><h2><s:property value="name"/></h2></a>
+					<a class=" ui-mini" onClick="Piece.del_tag(<s:property value="piece_tag_id"/>, <s:property value="id"/>, <s:property value="piwp.id"/>)">delete</a>
+				</li>
+			</s:iterator>
+			</ul>
+		</div>
+	<div data-role="tabs">
 	    <div data-role="navbar">
 	        <ul>
 	          <li><a class="ui-btn-active" href="#piece-chat" data-theme="a" data-ajax="false">Chat</a></li>
@@ -54,7 +83,7 @@
 			        <ul data-role="listview" data-theme="a" data-divider-theme="b">
 			            <li>
 							<div class="ui-field-contain">
-								<textarea cols="40" rows="10" name="g" id="piece-text-input" placeholder="ここにメッセージ内容を入力"></textarea>
+								<textarea cols="40" rows="10" name="g" id="piece-text-input" placeholder="ここにメッセージ内容を入力" data-clear-btn="true"></textarea>
 							</div>
 							<div class="ui-field-contain">
 								<a href="#" onClick="Chat.add()" class="ui-btn ui-corner-all">送信</a>
@@ -108,17 +137,17 @@
 							<div class="ui-field-contain">
 								<label for="piece-title-input">タイトル
 								</label>
-								<input type="text" name="t" id="piece-title-input" placeholder="" />
+								<input type="text" name="t" id="piece-title-input" placeholder="" data-clear-btn="true" />
 							</div>
 							<div class="ui-field-contain">
 								<label for="piece-description-input">説明
 								</label>
-								<textarea cols="40" rows="10" name="d" id="piece-description-input" placeholder=""></textarea>
+								<textarea cols="40" rows="10" name="d" id="piece-description-input" placeholder="" data-clear-btn="true"></textarea>
 							</div>
 							<div class="ui-field-contain">
 								<label for="piece-goal-input">終了条件
 								</label>
-								<textarea cols="40" rows="10" name="g" id="piece-goal-input" placeholder=""></textarea>
+								<textarea cols="40" rows="10" name="g" id="piece-goal-input" placeholder="" data-clear-btn="true"></textarea>
 							</div>
 							<div class="ui-field-contain">
 							    <label for="piece-targetdate-input">完了予定日</label>
@@ -155,7 +184,9 @@
 					</span>
 				</s:if>
 				<a data-ajax="false" href="/piece/<s:property value="id" />">
-				<p class="ul-li-piece-title"><s:property value="title"/></p>
+				<p class="ul-li-piece-title"><s:property value="title"/>
+				<span class="ul-li-tags"><small><s:iterator status="s" value="tags_sa"><s:property value="tags_sa[#s.index]"/>&nbsp;&nbsp;</s:iterator></small></span>
+				</p>
 				</a>
 			</li>
 			</s:iterator>
@@ -216,7 +247,7 @@
  	        </ul>
 	    </div><!-- /navbar -->
 	</div><!-- /footer -->
-	<div data-role="panel" data-position-fixed="true" data-display="push" data-theme="a" id="nav-panel-piece-info">
+	<div data-role="panel" data-position-fixed="false" data-display="push" data-theme="a" id="nav-panel-piece-info">
 		<ul data-role="listview">
             <li data-icon="arrow-r"><a href="#" data-rel="close">閉じる</a></li>
             <s:if test="%{piwp.user_id==uid}">
@@ -234,27 +265,6 @@
 				</div>
 			</li>
 			</s:if>
-			<li>
-			<p><small><s:iterator  status="stat" value="piwp.piece_path">
-				<s:if test="#stat.index==0">
-				<a data-ajax="false" href="/project/<s:property value="piwp.project_id"/>">
-					<s:property value="title"/>
-				</a>>
-				</s:if>
-				<s:else>
-				<a data-ajax="false" href="/piece/<s:property value="id"/>">
-					<s:property value="title"/>
-				</a>>
-				</s:else>
-			</s:iterator>
-			</small></p>
-			<br /><h3 style="white-space: normal;"><s:property value="piwp.title"/></h3>
-			<p><strong>発行者</strong></p><p><s:property value="piwp.user_name"/></p>
-			<p><strong>概要</strong></p><p><s:property escape="flase" value="piwp.description_link"/></p>
-			<p><strong>ゴール</strong></p><p><s:property escape="flase" value="piwp.goal_link"/></p>
-			<p><strong><s:date name="piwp.target_date" format="yyyy/MM/dd" /></strong></p>
-			<p class="ui-li-aside"><strong><s:date name="piwp.created_at" format="yyyy/MM/dd hh:mm" /></strong></p>
-			</li>
 		</ul>
 	</div>
 </div>
