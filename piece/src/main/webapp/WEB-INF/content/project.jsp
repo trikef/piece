@@ -51,7 +51,7 @@
 			<s:iterator value="cs">
 			<li>
 				<p class="ui-li-name"><strong><s:property value="name"/></strong></p>
-				<p class="ui-li-text"><s:property escape="false" value="text_link"/></p>
+				<pre class="ui-li-text"><s:property escape="false" value="text_link"/></pre>
 				<p class="ui-li-date"><strong><s:date name="created_at" format="yyyy/MM/dd HH:mm" /></strong></p>
 				<p class="ui-li-action">
 					<s:if test="%{priority>0}"><i class="fa fa-thumb-tack"></i></s:if>
@@ -74,76 +74,96 @@
 			<s:iterator value="cps">
 			<li>
 				<p class="ui-li-name"><strong><s:property value="name"/></strong></p>
-				<p class="ui-li-text"><s:property escape="false" value="text_link"/></p>
+				<pre class="ui-li-text"><s:property escape="false" value="text_link"/></pre>
 				<p class="ui-li-date"><strong><s:date name="created_at" format="yyyy/MM/dd HH:mm" /></strong></p>
 			</li>
 			</s:iterator>
 			</ul>
 		</div>
+		<s:set name="piece_path_before" value="null"/>
+		<s:set name="parent_id_before"/>
 	    <div id="project-task" class="ui-content">
-	    	<div id="piece-collapsibleset" class="btn-min-space" data-role="collapsibleset" data-theme="a" data-content-theme="b">
-			    <div data-role="collapsible">
-			    <h2>タスク追加</h2>
-			        <ul data-role="listview" data-theme="a" data-divider-theme="b">
-		            <li>
-						<input type="hidden" name="pi" id="piece-pid-input" value="<s:property value="p.id" />" />
-						<input type="hidden" name="pci" id="piece-pcid-input" value="0" />
-						<input type="hidden" name="ui" id="piece-uid-input" value="<s:property value="uid" />" />
-						<div class="ui-field-contain">
-							<label for="piece-title-input">タイトル
-							</label>
-							<input type="text" name="t" id="piece-title-input" placeholder="" />
-						</div>
-						<div class="ui-field-contain">
-							<label for="piece-description-input">説明
-							</label>
-							<textarea cols="40" rows="10" name="d" id="piece-description-input" placeholder=""></textarea>
-						</div>
-						<div class="ui-field-contain">
-							<label for="piece-goal-input">終了条件
-							</label>
-							<textarea cols="40" rows="10" name="g" id="piece-goal-input" placeholder=""></textarea>
-						</div>
-						<div class="ui-field-contain">
-						    <label for="piece-targetdate-input">完了予定日</label>
-				     		<input type="date" name="td" id="piece-targetdate-input" placeholder="yyyy/MM/dd">
-				     	</div>
-						<div class="ui-field-contain">
-							<a href="#" onClick="Piece.add(0)" class="ui-btn ui-corner-all">追加</a>
-						</div>
-		            </li>
-		        </ul>
-			    </div>
+	    	<div id="piece-name-input" class="btn-min-space">
+				<p><a onClick="Piece.add(0)" data-icon="false" class="piece-name-add-btn"><i class="fa fa-plus-circle"></i></a></p>
+		    	<input id="piece-title-input" type="text" data-clear-btn="true" name="piece-title-input" value="" placeholder="タスク名入力">
+		    	<input type="hidden" name="pi" id="piece-pid-input" value="<s:property value="p.id" />" />
+				<input type="hidden" name="pci" id="piece-pcid-input" value="0" />
+				<input type="hidden" name="ui" id="piece-uid-input" value="<s:property value="uid" />" />
+				<input type="hidden" id="piece-description-input" />
+				<input type="hidden" id="piece-goal-input" />
+				<input type="hidden" id="piece-targetdate-input" />
 			</div>
 	        <ul data-role="listview" class="piece-list" >
-			<s:iterator value="pis">
-			<li id="piece<s:property value="id" />" class="ui-li-piece <s:if test="%{status_id==0}">ui-li-piece-o</s:if>">
-				<s:if test="%{child_count>0}">
-				<a data-ajax="false" href="/piece/<s:property value="id" />">
-				<p class="ul-li-piece-title"><s:property value="title"/></p>
-				<span class="ui-li-count ul-li-count-left"><s:property value="child_count" /></span>
-				</a>
+			<s:if test="%{piwps.size()>0}">
+			<s:set name="piece_lv" value="1"/>
+			<s:iterator value="piwps">
+	 		<s:if test="%{#piece_path_before!=null&&#parent_id_before!=null&&parent_id!=#parent_id_before}">
+				<s:iterator status="stat" value="piece_path">
+				<s:if test="#stat.index>0">
+				<s:set name="piece_lv" value="#stat.index+1"/>
+				<s:if test="#piece_path_before.size()-1<#stat.index||piece_path.get(#stat.index).getTitle()!=#piece_path_before.get(#stat.index).getTitle()">
+				<li class="ui-li-piece">
+					<span style="padding-left:<s:property value="%{(#stat.index-1)*20}"/>px;" class="ui-li-piece-collapse" id="parent<s:property value="id" />">
+					<a onClick=""><i class="fa fa-chevron-down"></i></a>
+					</span>
+					<a style="padding-left:<s:property value="%{#stat.index*20}"/>px;" data-ajax="false" href="/piece/<s:property value="id" />">
+					<p class="ul-li-piece-title"><s:property value="title"/>
+					</p>
+					</a>
+				</li>
 				</s:if>
-				<s:else>
-					<s:if test="%{user_id==uid}">
+				</s:if>
+				</s:iterator>
+			</s:if>
+			<s:elseif test="%{#piece_path_before==null}">
+				<s:iterator status="stat" value="piece_path">
+				<s:if test="#stat.index>0">
+				<s:set name="piece_lv" value="#stat.index+1"/>
+				<li class="ui-li-piece">
+					<span style="padding-left:<s:property value="%{(#stat.index-1)*20}"/>px;" class="ui-li-piece-collapse" id="parent<s:property value="id" />">
+					<a onClick=""><i class="fa fa-chevron-down"></i></a>
+					</span>
+					<a style="padding-left:<s:property value="%{#stat.index*20}"/>px;" data-ajax="false" href="/piece/<s:property value="id" />">
+					<p class="ul-li-piece-title"><s:property value="title"/>
+					</p>
+					</a>
+				</li>
+				</s:if>
+				</s:iterator>
+			</s:elseif>
+			<s:set name="piece_path_before" value="piece_path"/>
+			<s:set name="parent_id_before" value="parent_id"/>
+			<li id="piece<s:property value="id" />" class="ui-li-piece <s:if test="%{status_id==0}">ui-li-piece-o</s:if>">
+				<s:if test="%{user_id==uid}">
 					<span class="ui-li-piece-check" id="check<s:property value="id" />">
 					<s:if test="%{status_id==0}"><a onClick="Piece.check(<s:property value="id"/>,1)"><i class="fa fa-check-square"></i></a></s:if>
 					<s:else><a onClick="Piece.check(<s:property value="id"/>,0)"><i class="fa fa-square-o"></i></a></s:else>
 					</span>
-					</s:if>
-					<a data-ajax="false" href="/piece/<s:property value="id" />">
-					<p class="ul-li-piece-title"><s:property value="title"/></p>
-					</a>
-				</s:else>
+				</s:if>
+				<a style="padding-left:<s:property value="%{#piece_lv*20}"/>px;" data-ajax="false" href="/piece/<s:property value="id" />">
+				<p class="ul-li-piece-title"><s:property value="title"/>
+				<span class="ul-li-tags"><small><s:iterator status="s" value="tags_sa"><s:property value="tags_sa[#s.index]"/>&nbsp;&nbsp;</s:iterator></small></span>
+				</p>
+				</a>
 			</li>
 			</s:iterator>
+			</s:if>
 			</ul>
-	    </div>
+		</div>
+	    
 	</div>
 	<div data-role="footer" data-position="fixed">
 	    <div data-role="navbar">
 	        <ul>
-	            <li><a href="/projectlist" data-ajax="false" data-theme="b"><i class="fa fa-th-large fa-nav-icon"></i></a></li>
+	        	<li>
+	            	<a href="/" data-ajax="false" data-theme="a">
+		            	<span class="nav-icon">
+		            	<i class="fa fa-list-alt fa-nav-icon"></i>
+		            	<s:if test="ncs.size()>0"><i class="fa fa-exclamation-circle fa-notify-icon"></i></s:if>
+		            	</span>
+	            	</a>
+	            </li>
+	            <li><a href="/projectlist" data-ajax="false" data-theme="a"><i class="fa fa-th-large fa-nav-icon"></i></a></li>
 <!-- 
 	            <li><a href="#" data-ajax="false" data-icon="bars" data-theme="b">タスク</a></li>
 	            <li><a href="#" data-ajax="false" data-icon="user" data-theme="b">マイページ</a></li>

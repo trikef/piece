@@ -9,6 +9,11 @@ public class IndexAction extends BaseAction{
 
 	public String execute(){
 		this.logFlag = true;
-		return before();
+		String result = before();
+		if(result.equals(INPUT)){
+			return INPUT;
+		}
+		
+		return SUCCESS;
 	}
 }

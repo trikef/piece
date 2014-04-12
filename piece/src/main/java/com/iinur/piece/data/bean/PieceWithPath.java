@@ -70,8 +70,11 @@ public class PieceWithPath extends Piece {
 	}
 
 	public String[] getTags_sa() throws SQLException {
-		String[] ts = (String[])tags.getArray();
-		return ts;
+		if(tags!=null){
+			String[] ts = (String[])tags.getArray();
+			return ts;
+		}
+		return null;
 	}
 	public void setTags(Array tags) {
 		this.tags = tags;

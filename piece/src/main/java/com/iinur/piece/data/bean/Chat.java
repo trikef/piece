@@ -18,6 +18,8 @@ public class Chat {
 	private int bad;
 	private boolean regi;
 
+	private String project_title;
+	
 	public int getId() {
 		return id;
 	}
@@ -93,5 +95,11 @@ public class Chat {
 	
 	public String getCreated_at_str(){
 		return new SimpleDateFormat(TIME_FORMAT).format(getCreated_at());
+	}
+	public String getProject_title() {
+		return project_title;
+	}
+	public void setProject_title(String project_title) {
+		this.project_title = project_title;
 	}
 }

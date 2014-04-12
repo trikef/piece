@@ -2,6 +2,8 @@ package com.iinur.piece.data.bean;
 
 import java.sql.Timestamp;
 
+import com.iinur.core.util.HtmlUtils;
+
 public class ProductText extends Product {
 
 	private int text_id;
@@ -18,6 +20,9 @@ public class ProductText extends Product {
 	}
 	public String getData() {
 		return data;
+	}
+	public String getData_link() {
+		return HtmlUtils.replaceLink(data);
 	}
 	public void setData(String data) {
 		this.data = data;

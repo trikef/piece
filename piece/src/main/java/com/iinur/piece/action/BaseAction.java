@@ -2,6 +2,7 @@ package com.iinur.piece.action;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,8 +18,10 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.iinur.piece.data.bean.Chat;
 import com.iinur.piece.model.AccessLogModel;
 import com.iinur.piece.model.ActionLogModel;
+import com.iinur.piece.model.ChatModel;
 import com.opensymphony.xwork2.ActionSupport;
 //TODO change Intercepter
 @InterceptorRefs({
@@ -43,6 +46,7 @@ public class BaseAction extends ActionSupport implements CookiesAware, ServletRe
 
 	public String name;
 	public int uid;
+	public List<Chat> ncs = null;
 
 	protected boolean logFlag = false;
 
@@ -60,6 +64,8 @@ public class BaseAction extends ActionSupport implements CookiesAware, ServletRe
 				this.uid = Integer.parseInt(URLDecoder.decode(
 						cookie.get(COOKIE_USER_ID_KEY), COOKIE_ENC));
 
+				ChatModel cmodel = new ChatModel();
+				this.ncs = cmodel.getListUnread(uid);
 			} else {
 				return INPUT;
 			}

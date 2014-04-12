@@ -6,7 +6,6 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
 import com.iinur.piece.data.bean.Chat;
-import com.iinur.piece.data.bean.Piece;
 import com.iinur.piece.data.bean.PieceWithPath;
 import com.iinur.piece.data.bean.Project;
 import com.iinur.piece.model.ChatModel;
@@ -21,6 +20,7 @@ public class ProjectAction extends BaseAction {
 	public int id;
 	public Project p;
 	public List<PieceWithPath> pis;
+	public List<PieceWithPath> piwps;
 	public List<Chat> cs;
 	public List<Chat> cps;
 	
@@ -36,6 +36,7 @@ public class ProjectAction extends BaseAction {
 		
 		PieceModel pimodel = new PieceModel();
 		this.pis = pimodel.getChild(id, 0);
+		this.piwps = pimodel.getListWithPath(id, 0);
 		
 		ChatModel cmodel = new ChatModel();
 		this.cs = cmodel.getList(id,PROJECT_NODE_PIECE_ID);

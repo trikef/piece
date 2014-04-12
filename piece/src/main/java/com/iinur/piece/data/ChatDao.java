@@ -103,6 +103,37 @@ public class ChatDao extends BaseDao {
 		return cs;
 	}
 	
+	public List<Chat> getListUnread(int user_id) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT c.id,c.project_id,c.piece_id,c.user_id,c.text,c.priority,c.created_at,");
+		sql.append("u.name,cv.good,cv.bad,pj.title project_title FROM chat c ");
+		sql.append("INNER JOIN user_info u ON c.user_id = u.id ");
+		sql.append("LEFT JOIN (");
+		sql.append("SELECT chat_id,sum(good) as good,sum(bad) as bad FROM chat_value GROUP BY chat_id");
+		sql.append(") cv ON c.id = cv.chat_id ");
+		sql.append("LEFT JOIN project pj ON c.project_id=pj.id ");
+		
+		sql.append("WHERE c.user_id<>? AND exists (SELECT * FROM ");
+		sql.append("(SELECT * FROM action_log WHERE action_name='NEW CHAT') atl ");
+		sql.append("INNER JOIN (SELECT project_id,piece_id,max(created_at) as created_at "); 
+		sql.append("FROM access_log WHERE user_id=? GROUP BY project_id,piece_id) acl ");
+		sql.append("ON atl.project_id=acl.project_id AND atl.piece_id=acl.piece_id ");
+		sql.append("WHERE atl.created_at>acl.created_at AND atl.chat_id=c.id) ");
+
+		sql.append("ORDER BY c.id DESC");
+		
+		List<Chat> cs = null;
+		try {
+			ResultSetHandler<List<Chat>> rsh = new BeanListHandler<Chat>(Chat.class);
+			cs = run.query(sql.toString(), rsh, user_id,user_id);
+		} catch (SQLException sqle) {
+			log.error(sqle.getMessage());
+			throw new RuntimeException(sqle.toString());
+		}
+
+		return cs;
+	}
+
 	public void insert(int project_id, int piece_id, int user_id, String text){
 		String sql = "INSERT INTO chat (project_id,piece_id,user_id,text) VALUES (?,?,?,?)";
 		try {

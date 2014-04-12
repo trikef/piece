@@ -18,23 +18,40 @@
 	<script src="/js/main.js"></script>
 </head>
 <body>
-<div data-role="page" id="userinputpage" data-dom-cache="false">
+<div data-role="page" id="pieceupdateinputpage" data-dom-cache="false">
 	<div data-role="header">
-		<h1>ログイン/登録</h1>
+		<h1>タスク編集</h1>
+		<a data-rel="back" data-direction="reverse" data-icon="back" data-iconpos="notext">Back</a>
 	</div><!-- /header -->
 	<div class="ui-content" role="main">
-		<h4>ログイン/登録</h4>
-		<form class="ui-mini" action="/userregi" method="post">
+		<p style="color:red;"><s:property value="msg" /></p>
+		<form class="ui-mini" action="/pieceupdate" method="post">
+			<input type="hidden" name="uid" value="<s:property value="uid" />" />
+			<input type="hidden" name="prd" value="<s:property value="p.project_id" />" />
+			<input type="hidden" name="pcd" value="<s:property value="p.id" />" />
 			<div class="ui-field-contain">
-			    <label for="name-input">名前</label>
-	     		<input type="text" name="name" id="name-input" value="" placeholder="半角英数字,スペース無し">
+			    <label for="title-input">タイトル</label>
+	     		<input type="text" name="title" id="title-input" value="<s:property value="p.title" />" placeholder="プロジェクトを表す簡潔な名前を記入してください">
+	     	</div>
+	     	<div class="ui-field-contain">
+				<label for="description-input">概要
+				</label>
+				<textarea cols="40" rows="10" name="description" id="description-input" placeholder=""><s:property value="p.description" /></textarea>
+			</div>
+	     	<div class="ui-field-contain">
+			    <label for="goal-input">ゴール</label>
+	     		<input type="text" name="goal" id="goal-input" value="<s:property value="p.goal" />" placeholder="このプロジェクトが目指すゴールを明確に記入してください">
+	     	</div>
+	     	<div class="ui-field-contain">
+			    <label for="targetdate-input">完了予定日</label>
+	     		<input type="date" name="target_date" id="targetdate-input" value="<s:date name="p.target_date" format="yyyy/MM/dd" />" placeholder="yyyy/MM/dd">
 	     	</div>
 			<div class="ui-field-contain">
 				<input type="submit" id="submit-1" value="登録">
 			</div>
 		</form>
 	</div>
-	<div data-role="footer" data-position="fixed">
+		<div data-role="footer" data-position="fixed">
 	    <div data-role="navbar">
 	        <ul>
 	        	<li>
@@ -46,7 +63,6 @@
 	            	</a>
 	            </li>
 	            <li><a href="/projectlist" data-ajax="false" data-theme="a"><i class="fa fa-th-large fa-nav-icon"></i></a></li>
-
 <!-- 
 	            <li><a href="#" data-ajax="false" data-icon="bars" data-theme="b">タスク</a></li>
 	            <li><a href="#" data-ajax="false" data-icon="user" data-theme="b">マイページ</a></li>

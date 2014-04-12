@@ -18,6 +18,7 @@ public class ActionLogModel extends BaseModel{
 	public static final String ACTION_NAME_NEW_PIECE_TAG = "NEW PIECE TAG";
 	
 	public static final String ACTION_NAME_UPDATE_PROJECT = "UPDATE PROJECT";
+	public static final String ACTION_NAME_UPDATE_PIECE = "UPDATE PIECE";
 	
 	public static final String ACTION_NAME_DEL_PROJECT = "DELETE PROJECT";
 	public static final String ACTION_NAME_DEL_PIECE = "DELETE PIECE";
@@ -79,6 +80,10 @@ public class ActionLogModel extends BaseModel{
 
 	public void regiUpdateProject(String url, int user_id, int project_id){
 		this.atdao.insert(url, ACTION_NAME_UPDATE_PROJECT, user_id, project_id, NONE_ID, NONE_ID, NONE_ID, NONE_ID, NONE_ID);
+	}
+	
+	public void regiUpdatePiece(String url, int user_id, int project_id, int piece_id){
+		this.atdao.insert(url, ACTION_NAME_UPDATE_PIECE, user_id, project_id, piece_id, NONE_ID, NONE_ID, NONE_ID, NONE_ID);
 	}
 
 	public void regiDelProject(String url, int user_id, int project_id){

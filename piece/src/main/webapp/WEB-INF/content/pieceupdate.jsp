@@ -6,7 +6,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title><s:property value="p.title"/></title>
+	<title><s:property value="title"/></title>
 	<link rel="stylesheet" href="/css/main.css" />
 	<link rel="stylesheet" href="/css/font-awesome.min.css">
 <!-- 	<link rel="stylesheet" href="/css/jquery-ui.css"> -->
@@ -18,23 +18,14 @@
 	<script src="/js/main.js"></script>
 </head>
 <body>
-<div data-role="page" id="userinputpage" data-dom-cache="false">
+<div data-role="page" id="pieceupdatepage" data-dom-cache="false">
 	<div data-role="header">
-		<h1>ログイン/登録</h1>
+		<h1>完了</h1>
 	</div><!-- /header -->
 	<div class="ui-content" role="main">
-		<h4>ログイン/登録</h4>
-		<form class="ui-mini" action="/userregi" method="post">
-			<div class="ui-field-contain">
-			    <label for="name-input">名前</label>
-	     		<input type="text" name="name" id="name-input" value="" placeholder="半角英数字,スペース無し">
-	     	</div>
-			<div class="ui-field-contain">
-				<input type="submit" id="submit-1" value="登録">
-			</div>
-		</form>
+		<a data-ajax="false" href="/piece/<s:property value="pcd"/>" class="ui-btn ui-corner-all">タスクに戻る</a>
 	</div>
-	<div data-role="footer" data-position="fixed">
+		<div data-role="footer" data-position="fixed">
 	    <div data-role="navbar">
 	        <ul>
 	        	<li>

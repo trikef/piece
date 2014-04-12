@@ -62,7 +62,7 @@ var Piece = {
 		return defer.promise().done(function(data) {
 			if(data.id>0){
 				$('.piece-list')
-				.append("<li id='piece"+data.id+"' class='ui-li-piece ui-first-child'><span class='ui-li-piece-check' id='check"+data.id+"'><a onclick='Piece.check("+data.id+",0)' class='ui-link'><i class='fa fa-square-o'></i></a></span><a data-ajax='false' href='/piece/"+data.id+"' class='ui-btn ui-btn-icon-right ui-icon-carat-r'><p class='ul-li-piece-title'>"+data.title+"</p></a></li>");
+				.prepend("<li id='piece"+data.id+"' class='ui-li-piece ui-first-child'><span class='ui-li-piece-check' id='check"+data.id+"'><a onclick='Piece.check("+data.id+",0)' class='ui-link'><i class='fa fa-square-o'></i></a></span><a data-ajax='false' href='/piece/"+data.id+"' class='ui-btn ui-btn-icon-right ui-icon-carat-r'><p class='ul-li-piece-title'>"+data.title+"</p></a></li>");
 				$( "#piece-collapsibleset" ).children( ":last" ).collapsible( "collapse" );
 			}
 			Main.loading("hide");

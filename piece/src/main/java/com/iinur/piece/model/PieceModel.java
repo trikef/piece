@@ -35,13 +35,16 @@ public class PieceModel {
 		return result;
 	}
 	
-	public void update(int piece_id, String title,
+	public boolean update(int piece_id, String title,
 			String description, String goal, String target_date) {
+		boolean result = false;
 		try {
 			this.pdao.update(piece_id, title, description, goal, TimestampUtils.parseDate(target_date));
+			result = true;
 		} catch (ParseException e) {
 			log.error(e.getMessage());
 		}
+		return result;
 	}
 
 	public void updateStatus(int piece_id, int status_id){

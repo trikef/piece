@@ -40,4 +40,8 @@ public class ChatModel {
 	public List<Chat> getPinList(int project_id, int piece_id){
 		return this.cdao.getPinList(project_id, piece_id);
 	}
+	
+	public List<Chat> getListUnread(int user_id){
+		return this.cdao.getListUnread(user_id);
+	}
 }

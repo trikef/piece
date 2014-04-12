@@ -48,7 +48,7 @@
 			<p class="ui-li-aside"><strong><s:date name="pt.created_at" format="yyyy/MM/dd hh:mm" /></strong></p>
 			</li>
 			<li>
-				<pre id="pt<s:property value="pt.id"/>"><s:property value="pt.data"/></pre>
+				<pre id="pt<s:property value="pt.id"/>"><s:property escape="false" value="pt.data_link"/></pre>
 			</li>
 		</ul>
 		<div id="product-chat" class="ui-content">
@@ -93,7 +93,15 @@
 	<div data-role="footer" data-position="fixed">
 	    <div data-role="navbar">
 	        <ul>
-	            <li><a href="/projectlist" data-ajax="false" data-theme="b"><i class="fa fa-th-large fa-nav-icon"></i></a></li>
+	        	<li>
+	            	<a href="/" data-ajax="false" data-theme="a">
+		            	<span class="nav-icon">
+		            	<i class="fa fa-list-alt fa-nav-icon"></i>
+		            	<s:if test="ncs.size()>0"><i class="fa fa-exclamation-circle fa-notify-icon"></i></s:if>
+		            	</span>
+	            	</a>
+	            </li>
+	            <li><a href="/projectlist" data-ajax="false" data-theme="a"><i class="fa fa-th-large fa-nav-icon"></i></a></li>
 
 <!-- 
 	            <li><a href="#" data-ajax="false" data-icon="bars" data-theme="b">É^ÉXÉN</a></li>

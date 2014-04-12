@@ -38,7 +38,7 @@ CREATE TABLE project(
 	goal TEXT NOT NULL,
 	img VARCHAR(100),
 	status_id INTEGER DEFAULT 1,
-	permission INTEGER DEFAULT 700,
+	permission INTEGER DEFAULT 770,--ALTER TABLE project ALTER COLUMN permission SET DEFAULT 770;
 	target_date DATE,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY(id)
@@ -206,6 +206,18 @@ CREATE TABLE action_log(
 	chat_id INTEGER DEFAULT 0,
 	product_chat_id INTEGER DEFAULT 0,
 	tag_id INTEGER DEFAULT 0,--ALTER TABLE action_log ADD COLUMN tag_id INTEGER DEFAULT 0;
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY(id)
+);
+
+--INSERT INTO group_member (user_id,project_id,piece_id) SELECT user_id,id,0 FROM project;
+DROP TABLE IF EXISTS group_member;
+CREATE TABLE group_member(
+	id SERIAL,
+	user_id INTEGER NOT NULL,
+	project_id INTEGER NOT NULL,
+	piece_id INTEGER DEFAULT 0,
+	permission INTEGER DEFAULT 7,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY(id)
 );

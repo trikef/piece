@@ -21,7 +21,8 @@
 <div data-role="page" id="piecepage">
 		<div data-role="header">
 			<h2>タスク詳細</h2>
-			<a href="#nav-panel-piece-info" data-icon="info" data-iconpos="notext">Info</a>
+			<a data-rel="back" data-direction="reverse" data-icon="back" data-iconpos="notext">Back</a>
+			<a href="#nav-panel-piece-info" data-icon="gear" data-iconpos="notext">Info</a>
 		</div><!-- /header -->
 		<div data-role="content">
 			<ul data-role="listview" >
@@ -72,7 +73,7 @@
 	        <ul>
 	          <li><a class="ui-btn-active" href="#piece-chat" data-theme="a" data-ajax="false">Chat</a></li>
 	          <li><a href="#piece-pin" data-theme="a" data-ajax="false">Pin</a></li>
-	          <li><a href="#piece-task" data-theme="a" data-ajax="false">Task</a></li>
+	          <li><a href="#piece-task" data-theme="a" data-ajax="false">Sub</a></li>
 	          <li><a href="#piece-data" data-theme="a" data-ajax="false">Data</a></li>
 	        </ul>
 	    </div>
@@ -96,7 +97,7 @@
 			<s:iterator value="cs">
 			<li>
 				<p class="ui-li-name"><strong><s:property value="name"/></strong></p>
-				<p class="ui-li-text"><s:property escape="false" value="text_link"/></p>
+				<pre class="ui-li-text"><s:property escape="false" value="text_link"/></pre>
 				<p class="ui-li-date"><strong><s:date name="created_at" format="yyyy/MM/dd HH:mm" /></strong></p>
 				<p class="ui-li-action">
 					<s:if test="%{priority>0}"><i class="fa fa-thumb-tack"></i></s:if>
@@ -119,62 +120,64 @@
 			<s:iterator value="cps">
 			<li>
 				<p class="ui-li-name"><strong><s:property value="name"/></strong></p>
-				<p class="ui-li-text"><s:property escape="false" value="text_link"/></p>
+				<pre class="ui-li-text"><s:property escape="false" value="text_link"/></pre>
 				<p class="ui-li-date"><strong><s:date name="created_at" format="yyyy/MM/dd HH:mm" /></strong></p>
 			</li>
 			</s:iterator>
 			</ul>
 		</div>
+		<s:set name="piece_path_before" value="piwp.piece_path"/>
+		<s:set name="parent_id_before"/>
 		<div id="piece-task" class="ui-content">
-			<div id="piece-collapsibleset" data-role="collapsibleset" data-theme="a" data-content-theme="b">
-			    <div data-role="collapsible">
-			    <h2>サブタスク追加</h2>
-			        <ul data-role="listview" data-theme="a" data-divider-theme="b">
-			            <li>
-							<input type="hidden" name="pi" id="piece-pid-input" value="<s:property value="piwp.project_id" />" />
-							<input type="hidden" name="pci" id="piece-pcid-input" value="<s:property value="piwp.id" />" />
-							<input type="hidden" name="ui" id="piece-uid-input" value="<s:property value="uid" />" />
-							<div class="ui-field-contain">
-								<label for="piece-title-input">タイトル
-								</label>
-								<input type="text" name="t" id="piece-title-input" placeholder="" data-clear-btn="true" />
-							</div>
-							<div class="ui-field-contain">
-								<label for="piece-description-input">説明
-								</label>
-								<textarea cols="40" rows="10" name="d" id="piece-description-input" placeholder="" data-clear-btn="true"></textarea>
-							</div>
-							<div class="ui-field-contain">
-								<label for="piece-goal-input">終了条件
-								</label>
-								<textarea cols="40" rows="10" name="g" id="piece-goal-input" placeholder="" data-clear-btn="true"></textarea>
-							</div>
-							<div class="ui-field-contain">
-							    <label for="piece-targetdate-input">完了予定日</label>
-					     		<input type="date" name="td" id="piece-targetdate-input" placeholder="yyyy/MM/dd">
-					     	</div>
-							<div class="ui-field-contain">
-								<a onClick="Piece.add(<s:property value="piwp.id" />)" class="ui-btn ui-corner-all">追加</a>
-							</div>
-			            </li>
-			        </ul>
-			    </div>
+			<div id="piece-name-input" class="btn-min-space">
+				<p><a onClick="Piece.add(<s:property value="piwp.id" />)" data-icon="false" class="piece-name-add-btn"><i class="fa fa-plus-circle"></i></a></p>
+		    	<input id="piece-title-input" type="text" data-clear-btn="true" name="piece-title-input" value="" placeholder="タスク名入力">
+		    	<input type="hidden" name="pi" id="piece-pid-input" value="<s:property value="piwp.project_id" />" />
+				<input type="hidden" name="pci" id="piece-pcid-input" value="0" />
+				<input type="hidden" name="ui" id="piece-uid-input" value="<s:property value="uid" />" />
+				<input type="hidden" id="piece-description-input" />
+				<input type="hidden" id="piece-goal-input" />
+				<input type="hidden" id="piece-targetdate-input" />
 			</div>
-	        <ul data-role="listview" class="piece-list ui-li-header" >
+	        <ul data-role="listview" class="piece-list" >
 			<s:if test="%{piwps.size()>0}">
+			<s:set name="piece_lv" value="1"/>
 			<s:iterator value="piwps">
-	 		<s:if test="%{parent_id!=#parent_id_before}">
-			<li data-role="list-divider">
-				<p><small><s:iterator  status="stat" value="piece_path">
-					<s:if test="#stat.index>0">
-					<a data-ajax="false" href="/piece/<s:property value="id"/>">
-						<s:property value="title"/>
-					</a>>
-					</s:if>
-				</s:iterator>
-				</small></p>
+	 		<s:if test="%{#piece_path_before!=null&&#parent_id_before!=null&&parent_id!=#parent_id_before}">
+			<s:iterator status="stat" value="piece_path">
+			<s:if test="#stat.index>0">
+			<s:set name="piece_lv" value="#stat.index+1"/>
+			<s:if test="#piece_path_before.size()-1<#stat.index||piece_path.get(#stat.index).getTitle()!=#piece_path_before.get(#stat.index).getTitle()">
+			<li class="ui-li-piece">
+				<span style="padding-left:<s:property value="%{(#stat.index-1)*20}"/>px;" class="ui-li-piece-collapse" id="parent<s:property value="id" />">
+				<a onClick=""><i class="fa fa-chevron-down"></i></a>
+				</span>
+				<a style="padding-left:<s:property value="%{#stat.index*20}"/>px;" data-ajax="false" href="/piece/<s:property value="id" />">
+				<p class="ul-li-piece-title"><s:property value="title"/>
+				</p>
+				</a>
 			</li>
 			</s:if>
+			</s:if>
+			</s:iterator>
+			</s:if>
+			<s:elseif test="%{#piece_path_before==null}">
+				<s:iterator status="stat" value="piece_path">
+				<s:if test="#stat.index>0">
+				<s:set name="piece_lv" value="#stat.index+1"/>
+				<li class="ui-li-piece">
+					<span style="padding-left:<s:property value="%{(#stat.index-1)*20}"/>px;" class="ui-li-piece-collapse" id="parent<s:property value="id" />">
+					<a onClick=""><i class="fa fa-chevron-down"></i></a>
+					</span>
+					<a style="padding-left:<s:property value="%{#stat.index*20}"/>px;" data-ajax="false" href="/piece/<s:property value="id" />">
+					<p class="ul-li-piece-title"><s:property value="title"/>
+					</p>
+					</a>
+				</li>
+				</s:if>
+				</s:iterator>
+			</s:elseif>
+			<s:set name="piece_path_before" value="piece_path"/>
 			<s:set name="parent_id_before" value="parent_id"/>
 			<li id="piece<s:property value="id" />" class="ui-li-piece <s:if test="%{status_id==0}">ui-li-piece-o</s:if>">
 				<s:if test="%{user_id==uid}">
@@ -183,7 +186,7 @@
 					<s:else><a onClick="Piece.check(<s:property value="id"/>,0)"><i class="fa fa-square-o"></i></a></s:else>
 					</span>
 				</s:if>
-				<a data-ajax="false" href="/piece/<s:property value="id" />">
+				<a style="padding-left:<s:property value="%{#piece_lv*20}"/>px;" data-ajax="false" href="/piece/<s:property value="id" />">
 				<p class="ul-li-piece-title"><s:property value="title"/>
 				<span class="ul-li-tags"><small><s:iterator status="s" value="tags_sa"><s:property value="tags_sa[#s.index]"/>&nbsp;&nbsp;</s:iterator></small></span>
 				</p>
@@ -238,7 +241,15 @@
 	<div data-role="footer" data-position="fixed">
 	    <div data-role="navbar">
 	        <ul>
-	            <li><a href="/projectlist" data-ajax="false" data-theme="b"><i class="fa fa-th-large fa-nav-icon"></i></a></li>
+	        	<li>
+	            	<a href="/" data-ajax="false" data-theme="a">
+		            	<span class="nav-icon">
+		            	<i class="fa fa-list-alt fa-nav-icon"></i>
+		            	<s:if test="ncs.size()>0"><i class="fa fa-exclamation-circle fa-notify-icon"></i></s:if>
+		            	</span>
+	            	</a>
+	            </li>
+	            <li><a href="/projectlist" data-ajax="false" data-theme="a"><i class="fa fa-th-large fa-nav-icon"></i></a></li>
 
 <!-- 
 	            <li><a href="#" data-ajax="false" data-icon="bars" data-theme="b">タスク</a></li>
@@ -247,10 +258,11 @@
  	        </ul>
 	    </div><!-- /navbar -->
 	</div><!-- /footer -->
-	<div data-role="panel" data-position-fixed="false" data-display="push" data-theme="a" id="nav-panel-piece-info">
+	<div data-role="panel" data-position-fixed="false" data-position="right" data-display="push" data-theme="a" id="nav-panel-piece-info">
 		<ul data-role="listview">
-            <li data-icon="arrow-r"><a href="#" data-rel="close">閉じる</a></li>
+            <li data-icon="arrow-l"><a href="#" data-rel="close">閉じる</a></li>
             <s:if test="%{piwp.user_id==uid}">
+            <li data-icon="edit"><a data-ajax="false" href="/pieceupdateinput/<s:property value="piwp.id"/>" data-rel="close">編集</a></li>
 			<li data-icon="delete">
                 <a href="#popupDialog" data-rel="popup" data-position-to="window" data-transition="pop">削除</a>
 				<div data-role="popup" id="popupDialog" data-overlay-theme="b" data-theme="b" data-dismissible="false" style="max-width:400px;">

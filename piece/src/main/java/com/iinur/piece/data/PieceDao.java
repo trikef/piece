@@ -75,7 +75,7 @@ public class PieceDao extends BaseDao {
 		try {
 			ResultSetHandler<PieceWithPath> rsh = new BeanHandler<PieceWithPath>(PieceWithPath.class);
 			String sqlStr = sql.toString();
-			log.debug("getPieceWithPathList sql::"+sqlStr);
+			log.debug("getPieceWithPath sql::"+sqlStr);
 			p = run.query(sql.toString(), rsh, id, id);
 		} catch (SQLException sqle) {
 			log.error(sqle.getMessage());

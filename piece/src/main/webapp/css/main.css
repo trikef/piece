@@ -23,8 +23,17 @@ pre {
 #tag-name-input .ui-input-search .ui-input-clear{
 	right: 23px !important;
 }
+.nav-icon{
+	position: relative;
+}
 .fa-nav-icon{
 	font-size: 20px;
+}
+.fa-notify-icon{
+	color: red;
+	position: absolute;
+	top: -8px;
+	left: 15px;
 }
 .ui-listview li p{
 	white-space: normal !important;	
@@ -45,6 +54,9 @@ pre {
 	top: 15px;
 	z-index: 1;
 }
+.ui-li-unread a{
+	background-color: #FAFAC2 !important;;
+}
 .ui-li-header{
 	margin-top: 30px !important;
 	background-color: lightgray !important;
@@ -56,6 +68,10 @@ pre {
 .ui-li-text{
 	float: left;
 }
+pre.ui-li-text{
+	float: left;
+	margin-top: 7px
+}
 .ui-li-text-right{
 	text-align: right;
 }
@@ -64,6 +80,10 @@ pre {
 	clear: both;
 }
 .ui-li-action{
+	float: right;
+}
+.ui-li-subtitle{
+	color: lightgray;
 	float: right;
 }
 .ui-li-topicpath{
@@ -89,6 +109,23 @@ pre {
 	top:12px;
 	left: 8px;
 }
+.ui-li-piece-collapse{
+	font-size: 23px;
+	position: absolute;
+	z-index: 1;
+	top:12px;
+	left: 8px;
+}
+.ui-li-piece-collapse a{
+    color:#bbb !important;
+    font-style:normal;
+    text-decoration:underline;
+}
+.ui-li-piece-collapse a:hover {
+    color:#333 !important;
+    font-style:normal;
+    text-decoration:underline;
+}
 .ul-li-piece-title{
 	padding-left: 20px;
 	position: relative;
@@ -104,8 +141,14 @@ pre {
 }
 .ul-li-tags{
 	position: absolute;
-	top: 15px;
 	left: 20px;
+	bottom: -15px;
+	height: 15px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 100%;
+	color: #006621;
+	white-space: nowrap;
 }
 .piece-list{
 	margin-bottom: 10px !important;
@@ -137,4 +180,23 @@ pre {
 	right: 11px;
 	top: 10px;
 	z-index: 1;
+}
+#piece-name-input{
+	position: relative;
+}
+#piece-name-input .ui-input-clear{
+	right: 27px;
+}
+.piece-name-add-btn{
+	position: absolute;
+	font-size: 26px !important;
+	right: 8px;
+	top: 2px;
+	z-index: 1;
+}
+#project-task{
+	padding-top: 0;
+}
+#piece-task{
+	padding-top: 0;
 }
