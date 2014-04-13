@@ -19,7 +19,6 @@ public class ProjectAction extends BaseAction {
 
 	public int id;
 	public Project p;
-	public List<PieceWithPath> pis;
 	public List<PieceWithPath> piwps;
 	public List<Chat> cs;
 	public List<Chat> cps;
@@ -35,7 +34,6 @@ public class ProjectAction extends BaseAction {
 		this.p = pmodel.getSingle(id);
 		
 		PieceModel pimodel = new PieceModel();
-		this.pis = pimodel.getChild(id, 0);
 		this.piwps = pimodel.getListWithPath(id, 0);
 		
 		ChatModel cmodel = new ChatModel();

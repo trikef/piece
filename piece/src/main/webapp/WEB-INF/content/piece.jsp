@@ -50,22 +50,26 @@
 					<p class="ui-li-aside"><strong><s:date name="piwp.created_at" format="yyyy/MM/dd hh:mm" /></strong></p>
 				</li>
 			</ul>
-			<ul class="tag-list" data-role="listview" data-split-icon=delete data-theme="a" data-split-theme="a">
-			<li data-role="list-divider">タグ</li>
-			<li id="tag-name-input">
-				<p><a onClick="Tag.add('piece',<s:property value="piwp.id"/>)" data-icon="false" class="tag-name-add-btn"><i class="fa fa-plus-circle"></i></a></p>
-				<ul data-role="listview" data-filter="true" data-filter-reveal="true" data-filter-placeholder="タグ追加" data-inset="true">
-			    <s:iterator value="ts">
-				    <li><a onClick="Piece.add_tag(<s:property value="id"/>, <s:property value="piwp.id"/>)"><s:property value="name" /></a></li>
-				</s:iterator>
-				</ul>
-			</li>
-			<s:iterator value="pts">
-				<li id="pt<s:property value="piece_tag_id"/>">
-					<a class=" ui-mini"><h2><s:property value="name"/></h2></a>
-					<a class=" ui-mini" onClick="Piece.del_tag(<s:property value="piece_tag_id"/>, <s:property value="id"/>, <s:property value="piwp.id"/>)">delete</a>
+			<ul data-role="listview" data-split-icon=delete data-theme="a" data-split-theme="a">
+				<li id="tag-name-input">
+					<p><a onClick="Tag.add('piece',<s:property value="piwp.id"/>)" data-icon="false" class="tag-name-add-btn"><i class="fa fa-plus-circle"></i></a></p>
+					<ul data-role="listview" data-filter="true" data-filter-reveal="true" data-filter-placeholder="タグ追加" data-inset="true">
+				    <s:iterator value="ts">
+					    <li><a onClick="Piece.add_tag(<s:property value="id"/>, <s:property value="piwp.id"/>)"><s:property value="name" /></a></li>
+					</s:iterator>
+					</ul>
 				</li>
-			</s:iterator>
+				<li data-role="list-divider">
+					<i class="fa fa-tags"></i>タグ
+					<ul class="tag-list">
+						<s:iterator value="pts">
+						<li id="pt<s:property value="piece_tag_id"/>">
+							<a class="ui-tag-name"><h2><s:property value="name"/></h2></a>
+							<a class="ui-tag-del" onClick="Piece.del_tag(<s:property value="piece_tag_id"/>, <s:property value="id"/>, <s:property value="piwp.id"/>)"><i class="fa fa-times"></i></a>
+						</li>
+						</s:iterator>
+					</ul>
+				</li>
 			</ul>
 		</div>
 	<div data-role="tabs">
@@ -133,7 +137,7 @@
 			</ul>
 		</div>
 		<s:set name="piece_path_before" value="piwp.piece_path"/>
-		<s:set name="parent_id_before"/>
+		<s:set name="parent_id_before" value="piwp.parent_id"/>
 		<div id="piece-task" class="ui-content">
 			<div id="piece-name-input" class="btn-min-space">
 				<p><a onClick="Piece.add(<s:property value="piwp.id" />)" data-icon="false" class="piece-name-add-btn"><i class="fa fa-plus-circle"></i></a></p>
@@ -153,6 +157,7 @@
 			<s:iterator status="stat" value="piece_path">
 			<s:if test="#stat.index>0">
 			<s:set name="piece_lv" value="#stat.index+1"/>
+<%-- TODO fix tree --%>
 			<s:if test="#piece_path_before.size()-1<#stat.index||piece_path.get(#stat.index).getTitle()!=#piece_path_before.get(#stat.index).getTitle()">
 			<li class="ui-li-piece">
 				<span style="padding-left:<s:property value="%{(#stat.index-1)*20}"/>px;" class="ui-li-piece-collapse" id="parent<s:property value="id" />">

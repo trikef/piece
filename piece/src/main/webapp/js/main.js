@@ -142,9 +142,10 @@ var Piece = {
 			if(data.id>0){
 				 $('.tag-list')
 				.append(
-				 "<li id='pt"+data.piece_tag_id+"' class='ui-li-has-alt ui-last-child'>"
-				 +"<a class='ui-btn ui-mini'><h2>"+data.name+"</h2></a>"
-				 +"<a onclick='Piece.del_tag("+data.piece_tag_id+", "+data.id+", "+piece_id+")' class='ui-btn ui-mini ui-btn-icon-notext ui-icon-delete ui-btn-a' title='delete'></a></li>"
+				 "<li id='pt"+data.piece_tag_id+"'>"
+					+"<a class='ui-tag-name ui-link'><h2>"+data.name+"</h2></a>"
+					+"<a class='ui-tag-del ui-link' onclick='Piece.del_tag("+data.piece_tag_id+", "+data.id+", "+piece_id+")'><i class='fa fa-times'></i></a>"
+				+"</li>"
 				);
 			}
 			$("a.ui-input-clear").trigger("click");
@@ -184,12 +185,7 @@ var Piece = {
 		Main.loading("show");
 		return defer.promise().done(function(data) {
 			if(data){
-				$("#pt"+piece_tag_id).empty();
-				/*
-				 $('.piece-list')
-				.append("<li id='piece"+data.id+"' class='ui-li-piece ui-first-child'><span class='ui-li-piece-check' id='check"+data.id+"'><a onclick='Piece.check("+data.id+",0)' class='ui-link'><i class='fa fa-square-o'></i></a></span><a data-ajax='false' href='/piece/"+data.id+"' class='ui-btn ui-btn-icon-right ui-icon-carat-r'><p class='ul-li-piece-title'>"+data.title+"</p></a></li>");
-				$( "#piece-collapsibleset" ).children( ":last" ).collapsible( "collapse" );
-				*/
+				$("#pt"+piece_tag_id).remove();
 			}
 			Main.loading("hide");
 		});

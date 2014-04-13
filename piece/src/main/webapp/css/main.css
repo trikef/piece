@@ -35,6 +35,7 @@ pre {
 	top: -8px;
 	left: 18px;
 }
+
 .ui-listview li p{
 	white-space: normal !important;	
 }
@@ -187,7 +188,8 @@ pre.ui-li-text{
 	padding: 0 5px;
 }
 .tag-list li a h2 {
-	color: #006621 !important;
+	color: #ffffff !important;
+	max-width: 200px;
 }
 .tag-name-add-btn{
 	position: absolute;
@@ -195,6 +197,29 @@ pre.ui-li-text{
 	right: 11px;
 	top: 10px;
 	z-index: 1;
+}
+.ui-tag-name{
+	padding-left: 0;
+	float: left;
+}
+.tag-list{
+	padding: 0;
+}
+.tag-list li{
+	list-style: none;
+	float: left;
+	background-color: #00A5DE;
+	margin: 5px 5px 0 0;
+	font-size: 15px;
+	line-height: 18px;
+	padding: 2px 7px;
+}
+.ui-tag-name h2{
+	margin: 0 !important;
+	font-weight: normal !important;
+}
+.ui-tag-del{
+	color: #ffffff !important;
 }
 #piece-name-input{
 	position: relative;

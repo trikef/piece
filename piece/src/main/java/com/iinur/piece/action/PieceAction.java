@@ -24,8 +24,6 @@ public class PieceAction extends BaseAction {
 	public Piece p;
 	public PieceWithPath piwp;
 	public int id;
-	//public List<Piece> pis;//child_piece
-	//public List<Piece> pips;//parent_piece
 	public List<PieceWithPath> piwps;
 	public List<Product> ps;
 	
@@ -43,8 +41,6 @@ public class PieceAction extends BaseAction {
 		PieceModel pmodel = new PieceModel();
 		this.p = pmodel.getSingle(id);
 		this.piwp = pmodel.getWithPath(id);
-		//this.pis = pmodel.getChild(this.p.getProject_id(), id);
-		//this.pips = pmodel.getParent(this.p.getProject_id(), id);
 		this.piwps = pmodel.getListWithPath(this.p.getProject_id(), id);
 		
 		ProductModel pdmodel = new ProductModel();
