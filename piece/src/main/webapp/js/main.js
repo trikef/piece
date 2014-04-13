@@ -192,7 +192,7 @@ var Piece = {
 	}
 };
 var Product = {
-		add_text : function(status_id) {
+		add_text : function(status_id,path) {
 			var defer = $.Deferred();
 			var pid = $("#product-pid-input").val();
 			var uid = $("#product-uid-input").val();
@@ -214,8 +214,17 @@ var Product = {
 			return defer.promise().done(function(data) {
 				if(data.id>0){
 					$('.product-list')
-					.append("<li><a data-ajax='false' class='ui-btn ui-btn-icon-right ui-icon-carat-r' href='/producttext/"+data.id+"'><p>"+data.name+"</p></a></li>"
-							);
+					.append(
+					"<li class='ui-first-child ui-last-child'>"
+					+"<a data-ajax='false' href='"+((path)?"/"+path:"")+"/producttext/"+data.id+"' class='ui-btn ui-btn-icon-right ui-icon-carat-r'>"
+					+"<p class='ui-li-name'><strong>"+data.user_name+"</strong></p>"
+					+"<p class='ui-li-text'>ID:"+data.name+"</p>"
+					+"<p class='ui-li-text-right'>"+data.type_name+"</p>"
+					+"<p class='ui-li-date'><strong>"+data.created_at_str+"</strong></p>"
+					+"</a>"
+					+"</li>"
+					);
+
 					$( "#data-collapsibleset" ).children( ":last" ).collapsible( "collapse" );
 				}
 				Main.loading("hide");

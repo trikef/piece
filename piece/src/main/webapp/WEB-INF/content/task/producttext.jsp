@@ -21,27 +21,11 @@
 <div data-role="page" id="piecepage">
 	<div data-role="header">
 		<h1><s:property value="p.title"/></h1>
-		<a data-ajax="false" href="/piece/<s:property value="piwp.id" />" data-icon="back" data-iconpos="notext">Back</a>
+		<a data-rel="back" data-direction="reverse" data-icon="back" data-iconpos="notext">Back</a>
 	</div><!-- /header -->
 	<div class="ui-content" role="main">
 		<ul data-role="listview"  data-count-theme="b" data-inset="true">
 			<li>
-			<p class="ui-li-topicpath"><small><s:iterator  status="stat" value="piwp.piece_path">
-				<s:if test="#stat.index==0">
-				<a data-ajax="false" href="/project/<s:property value="piwp.project_id"/>">
-					<s:property value="title"/>
-				</a>>
-				</s:if>
-				<s:else>
-				<a data-ajax="false" href="/piece/<s:property value="id"/>">
-					<s:property value="title"/>
-				</a>>
-				</s:else>
-			</s:iterator>
-			<a data-ajax="false" href="/piece/<s:property value="piwp.id"/>">
-				<s:property value="piwp.title"/>
-			</a>
-			</small></p>
 			<br /><p><strong>ID:</strong></p><h3 style="white-space: normal;"><s:property value="pt.name"/></h3>
 			<p><strong>コメント</strong></p><p><s:property value="pt.comment"/></p>
 			<p><strong>ユーザー</strong></p><p><s:property value="pt.user_name"/></p>
@@ -101,8 +85,8 @@
 		            	</span>
 	            	</a>
 	            </li>
-	            <li><a href="/projectlist" data-ajax="false" data-theme="b"><i class="fa fa-th-large fa-nav-icon"></i></a></li>
-				<li><a href="/task/" data-ajax="false" data-theme="a"><i class="fa fa-tasks fa-nav-icon"></i></a></li>
+	            <li><a href="/projectlist" data-ajax="false" data-theme="a"><i class="fa fa-th-large fa-nav-icon"></i></a></li>
+				<li><a href="/task/" data-ajax="false" data-theme="b"><i class="fa fa-tasks fa-nav-icon"></i></a></li>
  	        </ul>
 	    </div><!-- /navbar -->
 	</div><!-- /footer -->

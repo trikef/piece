@@ -18,23 +18,41 @@
 	<script src="/js/main.js"></script>
 </head>
 <body>
-<div data-role="page" id="userinputpage" data-dom-cache="false">
-	<div data-role="header">
-		<h1>ログイン/登録</h1>
-	</div><!-- /header -->
-	<div class="ui-content" role="main">
-		<h4>ログイン/登録</h4>
-		<form class="ui-mini" action="/userregi" method="post">
-			<div class="ui-field-contain">
-			    <label for="name-input">名前</label>
-	     		<input type="text" name="name" id="name-input" value="" placeholder="半角英数字,スペース無し">
-	     	</div>
-			<div class="ui-field-contain">
-				<input type="submit" id="submit-1" value="ログイン/登録">
-			</div>
-		</form>
-	</div>
-<%--
+<div data-role="page" id="taskindexpage">
+		<div data-role="header">
+			<h2>タスク検索</h2>
+		</div><!-- /header -->
+		<div data-role="content">
+			<ul data-role="listview" data-theme="a">
+				<li id="search-key-input">
+					<ul data-role="listview" data-filter="true" data-filter-reveal="true" data-filter-placeholder="" data-inset="true">
+				    <s:iterator value="ts">
+					    <li><a href="/task/?ti=<s:property value="id" />"><i class="fa fa-tag"></i>&nbsp;&nbsp;<s:property value="name" /></a></li>
+					</s:iterator>
+					</ul>
+				</li>
+			</ul>
+	        <ul data-role="listview" class="piece-list" >
+			<s:if test="%{piwps.size()>0}">
+			<s:set name="piece_lv" value="1"/>
+			<s:iterator value="piwps">
+			<li id="piece<s:property value="id" />" class="ui-li-piece-detail">
+				<a data-ajax="false" href="/task/detail/<s:property value="id" />">
+				<h2><s:property value="title"/></h2>
+				<p><s:property value="description"/></p>
+				<ul class="tag-list">
+					<s:iterator status="s" value="tags_sa">
+					<li>
+						<span class="ui-tag-name"><h2><s:property value="tags_sa[#s.index]"/></h2></span>
+					</li>
+					</s:iterator>
+				</ul>
+				</a>
+			</li>
+			</s:iterator>
+			</s:if>
+			</ul>
+		</div>
 	<div data-role="footer" data-position="fixed">
 	    <div data-role="navbar">
 	        <ul>
@@ -47,15 +65,10 @@
 	            	</a>
 	            </li>
 	            <li><a href="/projectlist" data-ajax="false" data-theme="a"><i class="fa fa-th-large fa-nav-icon"></i></a></li>
-
-<!-- 
-	            <li><a href="#" data-ajax="false" data-icon="bars" data-theme="b">タスク</a></li>
-	            <li><a href="#" data-ajax="false" data-icon="user" data-theme="b">マイページ</a></li>
- -->
+				<li><a href="/task/" data-ajax="false" data-theme="b"><i class="fa fa-tasks fa-nav-icon"></i></a></li>
  	        </ul>
 	    </div><!-- /navbar -->
 	</div><!-- /footer -->
- --%>
 </div>
 </body>
 </html>

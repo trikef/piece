@@ -79,6 +79,14 @@ public class PieceModel {
 		return this.pdao.getPieceWithPathList(project_id, parent_id);
 	}
 	
+	public List<PieceWithPath> serach(String key){
+		return this.pdao.search(key);
+	}
+	
+	public List<PieceWithPath> searchFromTagId(int tag_id){
+		return this.pdao.searchFromTagId(tag_id);
+	}
+
 	public boolean permissionExecute(int piece_id, int user_id){
 		Piece p = this.pdao.getSingle(piece_id);
 		int permission = p.getPermission();

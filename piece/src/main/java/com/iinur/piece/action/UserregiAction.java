@@ -1,7 +1,6 @@
 package com.iinur.piece.action;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Map;
 
@@ -18,12 +17,11 @@ import org.slf4j.LoggerFactory;
 
 import com.iinur.piece.data.bean.Userinfo;
 import com.iinur.piece.model.UserinfoModel;
-import com.opensymphony.xwork2.ActionSupport;
 
 @InterceptorRefs({
 		@InterceptorRef(value = "cookie", params = { "cookiesName", "*",
 				"cookiesValue", "*" }), @InterceptorRef("defaultStack"), })
-public class UserregiAction extends ActionSupport implements CookiesAware,
+public class UserregiAction extends BaseAction implements CookiesAware,
 		ServletResponseAware {
 
 	private static final Logger log = LoggerFactory
@@ -57,6 +55,9 @@ public class UserregiAction extends ActionSupport implements CookiesAware,
 				log.error(e.getMessage());
 			}
 		}
+		
+		notifyCheck(uid);
+
 		return SUCCESS;
 	}
 
@@ -71,27 +72,5 @@ public class UserregiAction extends ActionSupport implements CookiesAware,
 	@Override
 	public void setCookiesMap(Map<String, String> cookies) {
 		this.cookie = cookies;
-	}
-
-	/*
-	 * cookie hunter name
-	 */
-	private String cname;
-	private String cuid;
-
-	public String getCname() {
-		return cname;
-	}
-
-	public void setCname(String cname) {
-		this.cname = cname;
-	}
-
-	public String getCuid() {
-		return cuid;
-	}
-
-	public void setCuid(String cuid) {
-		this.cuid = cuid;
 	}
 }

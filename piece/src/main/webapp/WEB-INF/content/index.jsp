@@ -46,15 +46,14 @@
 	        <ul>
 	            <li>
 	            	<a href="/" data-ajax="false" data-theme="b">
+		            	<span class="nav-icon">
 		            	<i class="fa fa-list-alt fa-nav-icon"></i>
+		            	<s:if test="ncs.size()>0"><i class="fa fa-exclamation-circle fa-notify-icon"></i></s:if>
+		            	</span>
 	            	</a>
 	            </li>
 	            <li><a href="/projectlist" data-ajax="false" data-theme="a"><i class="fa fa-th-large fa-nav-icon"></i></a></li>
-
-<!-- 
-	            <li><a href="#" data-ajax="false" data-icon="bars" data-theme="b">タスク</a></li>
-	            <li><a href="#" data-ajax="false" data-icon="user" data-theme="b">マイページ</a></li>
- -->
+				<li><a href="/task/" data-ajax="false" data-theme="a"><i class="fa fa-tasks fa-nav-icon"></i></a></li>
  	        </ul>
 	    </div><!-- /navbar -->
 	</div><!-- /footer -->

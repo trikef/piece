@@ -64,8 +64,7 @@ public class BaseAction extends ActionSupport implements CookiesAware, ServletRe
 				this.uid = Integer.parseInt(URLDecoder.decode(
 						cookie.get(COOKIE_USER_ID_KEY), COOKIE_ENC));
 
-				ChatModel cmodel = new ChatModel();
-				this.ncs = cmodel.getListUnread(uid);
+				notifyCheck(uid);
 			} else {
 				return INPUT;
 			}
@@ -79,6 +78,11 @@ public class BaseAction extends ActionSupport implements CookiesAware, ServletRe
 		return SUCCESS;
 	}
 	
+	protected void notifyCheck(int uid){
+		ChatModel cmodel = new ChatModel();
+		this.ncs = cmodel.getListUnread(uid);
+	}
+
 	private void accesslog(){
 		acsmodel.regiUrl(this.servletPath, uid);
 	}

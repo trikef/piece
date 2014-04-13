@@ -98,6 +98,9 @@ pre.ui-li-text{
 	padding-left: 3px;
 	color: #666;
 }
+.ui-btn-b span .fa-list-alt{
+	color: #ffffff;
+}
 .ui-li-subtitle{
 	color: lightgray;
 	float: right;
@@ -107,6 +110,11 @@ pre.ui-li-text{
 }
 .ui-li-piece{
 	position: relative;
+}
+.ui-li-piece-detail{
+	position: relative;
+}
+.ui-li-piece-detail .tag-list{
 }
 .ui-li-piece-o{
 	background-color:#FFFFFF;
@@ -146,6 +154,9 @@ pre.ui-li-text{
 	padding-left: 20px;
 	position: relative;
 	overflow: visible !important;
+}
+.ui-li-piece-detail .ul-li-piece-title{
+	padding-left: 0;
 }
 .ul-li-count-left{
 	right: auto !important;
@@ -188,6 +199,10 @@ pre.ui-li-text{
 	padding: 0 5px;
 }
 .tag-list li a h2 {
+	color: #ffffff !important;
+	max-width: 200px;
+}
+.tag-list li span h2 {
 	color: #ffffff !important;
 	max-width: 200px;
 }

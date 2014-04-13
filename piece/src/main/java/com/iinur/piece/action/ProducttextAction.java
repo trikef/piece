@@ -3,6 +3,7 @@ package com.iinur.piece.action;
 import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Actions;
 import org.apache.struts2.convention.annotation.Result;
 
 import com.iinur.piece.data.bean.PieceWithPath;
@@ -12,11 +13,18 @@ import com.iinur.piece.model.PieceModel;
 import com.iinur.piece.model.ProductChatModel;
 import com.iinur.piece.model.ProducttextModel;
 
-@Action(value="/producttext/{id:.+}",
-results={@Result(name="success", location="producttext.jsp")}
-)
+@Actions({
+		@Action(value="/task/producttext/{id:.+}",
+		results={}
+		),
+		@Action(value="/producttext/{id:.+}",
+		results={@Result(name="success", location="producttext.jsp")
+		,@Result(name="task", location="task/producttext.jsp")}
+		)
+})
 public class ProducttextAction extends BaseAction {
 
+	private static String RESULT_TASK = "task";
 	public int id;
 	
 	public ProductText pt;
@@ -39,6 +47,9 @@ public class ProducttextAction extends BaseAction {
 		
 		this.acsmodel.regiProduct(this.servletPath, id, this.uid);//log
 		
+		if(this.servletPath.startsWith("/task/producttext/")){
+			return RESULT_TASK;
+		}
 		return SUCCESS;
 	}
 }
