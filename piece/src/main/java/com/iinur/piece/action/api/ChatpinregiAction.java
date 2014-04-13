@@ -27,7 +27,7 @@ public class ChatpinregiAction extends BaseAction {
 			return INPUT;
 		}
 		
-		if(i>0 && p >0){
+		if(i>0){
 			ChatModel cmodel = new ChatModel();
 			cmodel.updatePriority(i, p);
 			c = cmodel.get(i);

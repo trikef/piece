@@ -36,6 +36,9 @@ public class ActionLogModel extends BaseModel{
 	public static final String ACTION_NAME_GOOD_CHAT_VALUE = "GOOD CHAT VALUE";
 	public static final String ACTION_NAME_BAD_CHAT_VALUE = "BAD CHAT VALUE";
 
+	public static final String ACTION_NAME_DEL_GOOD_CHAT_VALUE = "DEL GOOD CHAT VALUE";
+	public static final String ACTION_NAME_DEL_BAD_CHAT_VALUE = "DEL BAD CHAT VALUE";
+
 	public ActionLogModel() {
 		this.atdao = new ActionLogDao();
 	}
@@ -131,5 +134,13 @@ public class ActionLogModel extends BaseModel{
 	
 	public void regiBadChatValue(String url, int user_id, int project_id, int piece_id, int chat_id){
 		this.atdao.insert(url, ACTION_NAME_BAD_CHAT_VALUE, user_id, project_id, piece_id, NONE_ID, chat_id, NONE_ID, NONE_ID);
+	}
+	
+	public void regiDelGoodChatValue(String url, int user_id, int project_id, int piece_id, int chat_id){
+		this.atdao.insert(url, ACTION_NAME_DEL_GOOD_CHAT_VALUE, user_id, project_id, piece_id, NONE_ID, chat_id, NONE_ID, NONE_ID);
+	}
+	
+	public void regiDelBadChatValue(String url, int user_id, int project_id, int piece_id, int chat_id){
+		this.atdao.insert(url, ACTION_NAME_DEL_BAD_CHAT_VALUE, user_id, project_id, piece_id, NONE_ID, chat_id, NONE_ID, NONE_ID);
 	}
 }

@@ -32,16 +32,24 @@ public class ChatvalueAction extends BaseAction{
 		}
 		
 		ChatvalueModel cvmodel = new ChatvalueModel();
-		cvmodel.registration(i, u, g, b);
+		int action = cvmodel.toggle(i, u, g, b);
 				
 		ChatModel cmodel = new ChatModel();
 		this.chat = cmodel.get(i);
 		this.chat.setRegi(cvmodel.contains);
 
 		if(g==1){
-			this.atlmodel.regiGoodChatValue(servletPath, uid, chat.getProject_id(), chat.getPiece_id(), i);//log
+			if(action==ChatvalueModel.REGI){
+				this.atlmodel.regiGoodChatValue(servletPath, uid, chat.getProject_id(), chat.getPiece_id(), i);//log
+			} else if(action==ChatvalueModel.DEL){
+				this.atlmodel.regiDelGoodChatValue(servletPath, uid, chat.getProject_id(), chat.getPiece_id(), i);//log
+			}
 		} else if(b==1){
-			this.atlmodel.regiBadChatValue(servletPath, uid, chat.getProject_id(), chat.getPiece_id(), i);//log
+			if(action==ChatvalueModel.REGI){
+				this.atlmodel.regiBadChatValue(servletPath, uid, chat.getProject_id(), chat.getPiece_id(), i);//log
+			} else if(action==ChatvalueModel.DEL){
+				this.atlmodel.regiDelBadChatValue(servletPath, uid, chat.getProject_id(), chat.getPiece_id(), i);//log
+			}
 		}
 		
 		return SUCCESS;

@@ -250,10 +250,10 @@ var Chat = {
 				if(data.id>0){
 					$('.chat-list')
 					.prepend("<li class='ui-li-static ui-body-inherit ui-last-child'><p class='ui-li-name'><strong>"+data.name+"</strong></p><p class='ui-li-text'>"+data.text+"</p><p class='ui-li-date'><strong>"+data.created_at_str+"</strong></p>"
-							+"<p class='ui-li-action'><span id='pin"+data.id+"'><a onclick='Chat.pin("+data.id+","+data.id+")' class='ui-link'>"
+							+"<p class='ui-li-action'><span id='pin"+data.id+"' class='off'><a onclick='Chat.pin("+data.id+","+data.id+")' class='ui-link'>"
 							+"<i class='fa fa-thumb-tack'></i></a></span>"
-							+"<a onclick=\"Chat.count("+data.id+","+data.user_id+",1,0,'#good"+data.id+"')\" class='ui-link'><i class='fa fa-thumbs-o-up'></i>(<span id='good"+data.id+"'>0</span>)</a>"
-							+"<a onclick=\"Chat.count("+data.id+","+data.user_id+",0,1,'#bad"+data.id+"')\" class='ui-link'><i class='fa fa-thumbs-o-down'></i>(<span id='bad"+data.id+"'>0</span>)</a></p>"
+							+"<a onclick=\"Chat.count("+data.id+","+data.user_id+",1,0,'#good"+data.id+"')\" class='ui-link'><i class='fa fa-thumbs-o-up'></i><span id='good"+data.id+"'>0</span></a>"
+							+"<a onclick=\"Chat.count("+data.id+","+data.user_id+",0,1,'#bad"+data.id+"')\" class='ui-link'><i class='fa fa-thumbs-o-down'></i><span id='bad"+data.id+"'>0</span></a></p>"
 					);
 					$( "#chat-collapsibleset" ).children( ":last" ).collapsible( "collapse" );
 				}
@@ -274,11 +274,24 @@ var Chat = {
 			});
 			Main.loading("show");
 			return defer.promise().done(function(data) {
-				if(data.id>0){
+				if(data.priority>0){
 					$('.pin-list')
-					.append("<li class='ui-li-static ui-body-inherit ui-last-child'><p class='ui-li-name'><strong>"+data.name+"</strong></p><p class='ui-li-text'>"+data.text+"</p><p class='ui-li-date'><strong>"+data.created_at_str+"</strong></p></li>"
+					.append("<li id='pin_chat_"+data.id+"' class='ui-li-static ui-body-inherit ui-last-child'><p class='ui-li-name'><strong>"+data.name+"</strong></p><pre class='ui-li-text'>"+data.text_link+"</pre><p class='ui-li-date'><strong>"+data.created_at_str+"</strong></p></li>"
 							);
-					$("#pin"+id).html("<i class='fa fa-thumb-tack'></i>");
+					$("#pin"+data.id).html(
+						"<a onclick='Chat.pin("+data.id+",0)' class='ui-link'>"
+						+"<i class='fa fa-thumb-tack'></i>"
+						+"</a>");
+					$("#pin"+data.id).removeClass("off");
+					$("#pin"+data.id).addClass("on");
+				} else {
+					$('#pin_chat_'+data.id).remove();
+					$("#pin"+data.id).html(
+						"<a onclick='Chat.pin("+data.id+","+data.id+")' class='ui-link'>"
+						+"<i class='fa fa-thumb-tack'></i>"
+						+"</a>");
+					$("#pin"+data.id).removeClass("on");
+					$("#pin"+data.id).addClass("off");
 				}
 				Main.loading("hide");
 			});
@@ -299,13 +312,9 @@ var Chat = {
 			});
 			Main.loading("show");
 			return defer.promise().done(function(data) {
-				if(data.regi){
-					if (good > 0) {
-						$(hid).text(data.good);
-					} else if (bad > 0) {
-						$(hid).text(data.bad);
-					}
-				}
+				$("#good"+data.id).text(data.good);
+				$("#bad"+data.id).text(data.bad);
+
 				Main.loading("hide");
 			});
 		}

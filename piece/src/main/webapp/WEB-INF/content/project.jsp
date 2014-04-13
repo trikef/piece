@@ -54,16 +54,22 @@
 				<pre class="ui-li-text"><s:property escape="false" value="text_link"/></pre>
 				<p class="ui-li-date"><strong><s:date name="created_at" format="yyyy/MM/dd HH:mm" /></strong></p>
 				<p class="ui-li-action">
-					<s:if test="%{priority>0}"><i class="fa fa-thumb-tack"></i></s:if>
+					<s:if test="%{priority>0}">
+					<span id="pin<s:property value="id" />" class="on">
+					<a onClick="Chat.pin(<s:property value="id"/>,0)">
+						<i class="fa fa-thumb-tack"></i>
+					</a>
+					</span>
+					</s:if>
 					<s:else>
-					<span id="pin<s:property value="id" />">
+					<span id="pin<s:property value="id" />" class="off">
 					<a onClick="Chat.pin(<s:property value="id"/>,<s:property value="id"/>)">
 						<i class="fa fa-thumb-tack"></i>
 					</a>
 					</span>
 					</s:else>
-					<a onClick="Chat.count(<s:property value="id" />,'<s:property value="uid" />',1,0,'#good<s:property value="id"/>')" class=""><i class="fa fa-thumbs-o-up"></i>(<span id="good<s:property value="id"/>"><s:property value="good"/></span>)</a>
-					<a onClick="Chat.count(<s:property value="id" />,'<s:property value="uid" />',0,1,'#bad<s:property value="id"/>')" class=""><i class="fa fa-thumbs-o-down"></i>(<span id="bad<s:property value="id"/>"><s:property value="bad"/></span>)</a>
+					<a onClick="Chat.count(<s:property value="id" />,'<s:property value="uid" />',1,0,'#good<s:property value="id"/>')" class=""><i class="fa fa-thumbs-o-up"></i><span id="good<s:property value="id"/>"><s:property value="good"/></span></a>
+					<a onClick="Chat.count(<s:property value="id" />,'<s:property value="uid" />',0,1,'#bad<s:property value="id"/>')" class=""><i class="fa fa-thumbs-o-down"></i><span id="bad<s:property value="id"/>"><s:property value="bad"/></span></a>
 				</p>
 			</li>
 			</s:iterator>
@@ -72,7 +78,7 @@
 	    <div id="project-pin" class="ui-content">
 	    	<ul data-role="listview" class="pin-list" >
 			<s:iterator value="cps">
-			<li>
+			<li id="pin_chat_<s:property value="id"/>">
 				<p class="ui-li-name"><strong><s:property value="name"/></strong></p>
 				<pre class="ui-li-text"><s:property escape="false" value="text_link"/></pre>
 				<p class="ui-li-date"><strong><s:date name="created_at" format="yyyy/MM/dd HH:mm" /></strong></p>

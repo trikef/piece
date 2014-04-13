@@ -33,7 +33,7 @@ pre {
 	color: red;
 	position: absolute;
 	top: -8px;
-	left: 15px;
+	left: 18px;
 }
 .ui-listview li p{
 	white-space: normal !important;	
@@ -81,6 +81,21 @@ pre.ui-li-text{
 }
 .ui-li-action{
 	float: right;
+	font-size: 17px !important;
+	margin: 0 !important;
+}
+.ui-li-action .on a i.fa-thumb-tack{
+	color: black;
+}
+.ui-li-action .off a i.fa-thumb-tack{
+	color: #ddd;
+}
+.ui-link{
+	padding-left: 5px;
+}
+.ui-link span{
+	padding-left: 3px;
+	color: #666;
 }
 .ui-li-subtitle{
 	color: lightgray;

@@ -88,7 +88,7 @@ public class ChatDao extends BaseDao {
 		sql.append("SELECT c.id,c.project_id,c.piece_id,c.user_id,c.text,c.priority,c.created_at,u.name FROM chat c ");
 		sql.append("INNER JOIN user_info u ON c.user_id = u.id ");
 		sql.append("WHERE c.project_id=? AND c.piece_id=? ");
-		sql.append("AND c.priority is not null ");
+		sql.append("AND c.priority>0 ");
 		sql.append("ORDER BY c.priority ASC, c.id ASC");
 		
 		List<Chat> cs = null;

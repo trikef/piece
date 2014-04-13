@@ -43,4 +43,14 @@ public class ChatvalueDao extends BaseDao{
 			throw new RuntimeException(sqle.toString());
 		}
 	}
+	
+	public void delete(int chatId, int userId){
+		String sql = "DELETE FROM chat_value WHERE chat_id=? AND user_id=?";
+		try {
+			run.update(sql,chatId, userId);
+		} catch (SQLException sqle) {
+			log.error(sqle.getMessage());
+			throw new RuntimeException(sqle.toString());
+		}
+	}
 }
