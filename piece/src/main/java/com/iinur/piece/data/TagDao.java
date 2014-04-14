@@ -44,15 +44,20 @@ public class TagDao extends BaseDao{
 		}
 		return t;
 	}
-	/*
-	 * id SERIAL,
-	user_id INTEGER NOT NULL,
-	name VARCHAR(100) NOT NULL,
-	description TEXT,
-	display BOOLEAN DEFAULT TRUE,
-	pop INTEGER DEFAULT 0,--ALTER TABLE tag ADD COLUMN pop INTEGER DEFAULT 0;
-	created_at
-	 */
+	
+	public Tag getFromName(String name) {
+		String sql = "SELECT * FROM tag Where name=?";
+		Tag t = new Tag();
+		try {
+			ResultSetHandler<Tag> rsh = new BeanHandler<Tag>(Tag.class);
+			t = run.query(sql, rsh, name);
+		} catch (SQLException sqle) {
+			log.error(sqle.getMessage());
+			throw new RuntimeException(sqle.toString());
+		}
+		return t;
+	}
+
 	public List<Tag> getTagsWithSelectedPiece(int piece_id) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT ");

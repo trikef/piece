@@ -44,7 +44,6 @@
 						<s:iterator value="pts">
 						<li id="pt<s:property value="piece_tag_id"/>">
 							<a class="ui-tag-name"><h2><s:property value="name"/></h2></a>
-							<a class="ui-tag-del" onClick="Piece.del_tag(<s:property value="piece_tag_id"/>, <s:property value="id"/>, <s:property value="piwp.id"/>)"><i class="fa fa-times"></i></a>
 						</li>
 						</s:iterator>
 					</ul>

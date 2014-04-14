@@ -30,10 +30,13 @@ public class TagregiAction extends BaseAction {
 		
 		if(!StringUtils.isEmpty(n)){
 			TagModel tmodel = new TagModel();
-			tmodel.registration(uid, n, des);
-			tag = tmodel.getNew(uid);
+			tag = tmodel.getFromName(n);
+			if(tag==null){
+				tmodel.registration(uid, n, des);
+				tag = tmodel.getNew(uid);
 			
-			this.atlmodel.regiNewTag(servletPath, uid, tag.getId());
+				this.atlmodel.regiNewTag(servletPath, uid, tag.getId());
+			}
 		}
 		return SUCCESS;
 	}

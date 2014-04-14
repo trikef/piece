@@ -31,11 +31,14 @@ public class PiecetagregiAction extends BaseAction {
 		
 		if(ti>0 && pci>0){
 			PieceTagModel ptmodel = new PieceTagModel();
-			ptmodel.registration(uid, pci, ti);
-			this.t = ptmodel.getNewTag(uid, pci, ti);
-			
-			Piece p = new PieceModel().getSingle(pci);
-			this.atlmodel.regiNewPieceTag(servletPath, uid, p.getProject_id(), pci, ti);
+			this.t = ptmodel.getTag(pci, ti);
+			if(this.t==null){
+				ptmodel.registration(uid, pci, ti);
+				this.t = ptmodel.getNewTag(uid, pci, ti);
+				
+				Piece p = new PieceModel().getSingle(pci);
+				this.atlmodel.regiNewPieceTag(servletPath, uid, p.getProject_id(), pci, ti);
+			}
 		}
 		return SUCCESS;
 	}

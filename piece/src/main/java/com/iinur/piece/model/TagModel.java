@@ -25,6 +25,10 @@ public class TagModel {
 		return this.tdao.get(id);
 	}
 	
+	public Tag getFromName(String name){
+		return this.tdao.getFromName(name);
+	}
+
 	public Tag getNew(int user_id){
 		return this.tdao.getNew(user_id);
 	}

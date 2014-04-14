@@ -65,7 +65,7 @@ public class PieceDao extends BaseDao {
 		sql.append("(SELECT pn2.child_id,pn2.parent_id,p2.title FROM piece_net pn2  ");
 		sql.append("LEFT JOIN piece p2 ON pn2.parent_id = p2.id) b ");
 		sql.append("ON a.id=b.parent_id) ");
-		sql.append("SELECT r.id,p3.project_id,p3.user_id,ui.name as user_name,p3.title,p3.description,p3.goal,p3.target_date,p3.status_id,p3.display,p3.permission,r.pid as parent_id,r.path,r.path_title,array_upper(r.path,1) as LV ");
+		sql.append("SELECT r.id,p3.project_id,p3.user_id,ui.name as user_name,p3.title,p3.description,p3.goal,p3.target_date,p3.status_id,p3.display,p3.permission,p3.created_at,r.pid as parent_id,r.path,r.path_title,array_upper(r.path,1) as LV ");
 		sql.append("FROM rec r ");
 		sql.append("LEFT JOIN piece p3 ON r.id=p3.id ");
 		sql.append("LEFT JOIN user_info ui ON p3.user_id=ui.id ");
@@ -181,7 +181,7 @@ public class PieceDao extends BaseDao {
 		sql.append("(SELECT pn2.child_id,pn2.parent_id,p2.title FROM piece_net pn2  ");
 		sql.append("LEFT JOIN piece p2 ON pn2.parent_id = p2.id) b ");
 		sql.append("ON a.id=b.parent_id) ");
-		sql.append("SELECT r.id,p3.project_id,p3.user_id,p3.title,p3.description,p3.goal,p3.target_date,p3.status_id,p3.display,p3.permission,r.pid as parent_id,r.path,r.path_title,array_upper(r.path,1) as LV,atag.tags ");
+		sql.append("SELECT r.id,p3.project_id,p3.user_id,p3.title,p3.description,p3.goal,p3.target_date,p3.status_id,p3.display,p3.permission,p3.created_at,r.pid as parent_id,r.path,r.path_title,array_upper(r.path,1) as LV,atag.tags ");
 		sql.append("FROM rec r ");
 		sql.append("LEFT JOIN piece p3 ON r.id=p3.id ");
 		sql.append("LEFT JOIN ( ");
@@ -224,7 +224,7 @@ public class PieceDao extends BaseDao {
 		sql.append("(SELECT pn2.child_id,pn2.parent_id,p2.title FROM piece_net pn2  ");
 		sql.append("LEFT JOIN piece p2 ON pn2.parent_id = p2.id) b ");
 		sql.append("ON a.id=b.parent_id) ");
-		sql.append("SELECT r.id,p3.project_id,p3.user_id,p3.title,p3.description,p3.goal,p3.target_date,p3.status_id,p3.display,p3.permission,");
+		sql.append("SELECT r.id,p3.project_id,p3.user_id,p3.title,p3.description,p3.goal,p3.target_date,p3.status_id,p3.display,p3.permission,p3.created_at,");
 		sql.append("r.pid as parent_id,r.path,r.path_title,array_upper(r.path,1) as LV,atag.tags ");
 		sql.append("FROM rec r ");
 		sql.append("LEFT JOIN piece p3 ON r.id=p3.id ");
@@ -239,7 +239,7 @@ public class PieceDao extends BaseDao {
 		sql.append("ON r.id=atag.piece_id ");
 		sql.append("WHERE not exists (SELECT * FROM piece_net pn3 WHERE pn3.parent_id=r.id) ");
 		sql.append("AND p3.display=TRUE AND p3.status_id=1 ");
-		sql.append("ORDER BY path ");
+		sql.append("ORDER BY p3.created_at DESC ");
 
 		List<PieceWithPath> ps = null;
 		try {
@@ -268,7 +268,7 @@ public class PieceDao extends BaseDao {
 		sql.append("(SELECT pn2.child_id,pn2.parent_id,p2.title FROM piece_net pn2  ");
 		sql.append("LEFT JOIN piece p2 ON pn2.parent_id = p2.id) b ");
 		sql.append("ON a.id=b.parent_id) ");
-		sql.append("SELECT r.id,p3.project_id,p3.user_id,p3.title,p3.description,p3.goal,p3.target_date,p3.status_id,p3.display,p3.permission,");
+		sql.append("SELECT r.id,p3.project_id,p3.user_id,p3.title,p3.description,p3.goal,p3.target_date,p3.status_id,p3.display,p3.permission,p3.created_at,");
 		sql.append("r.pid as parent_id,r.path,r.path_title,array_upper(r.path,1) as LV,atag.tags ");
 		sql.append("FROM rec r ");
 		sql.append("LEFT JOIN piece p3 ON r.id=p3.id ");
@@ -284,7 +284,7 @@ public class PieceDao extends BaseDao {
 		sql.append("WHERE not exists (SELECT * FROM piece_net pn3 WHERE pn3.parent_id=r.id) ");
 		sql.append("AND p3.display=TRUE AND p3.status_id=1 ");
 		sql.append("AND exists (SELECT * FROM piece_tag pti WHERE pti.tag_id=? AND pti.piece_id=r.id) ");
-		sql.append("ORDER BY path ");
+		sql.append("ORDER BY p3.created_at DESC ");
 
 		List<PieceWithPath> ps = null;
 		try {

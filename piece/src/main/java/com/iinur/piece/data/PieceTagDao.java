@@ -38,7 +38,26 @@ public class PieceTagDao extends BaseDao{
 		}
 		return t;
 	}
-	
+
+	public Tag getTagFromTagId(int piece_id, int tag_id) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT ");
+		sql.append("t.id,t.user_id,t.name,t.description,t.display,t.pop,t.created_at,pt.id as piece_tag_id ");
+		sql.append("FROM tag t ");
+		sql.append("INNER JOIN piece_tag pt ON t.id=pt.tag_id ");
+		sql.append("WHERE pt.piece_id=? AND pt.tag_id=? LIMIT 1");
+
+		Tag t;
+		try {
+			ResultSetHandler<Tag> rsh = new BeanHandler<Tag>(Tag.class);
+			t = run.query(sql.toString(), rsh, piece_id, tag_id);
+		} catch (SQLException sqle) {
+			log.error(sqle.getMessage());
+			throw new RuntimeException(sqle.toString());
+		}
+		return t;
+	}
+
 	public List<Tag> getTags(int piece_id) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT ");
