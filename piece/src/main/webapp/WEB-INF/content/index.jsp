@@ -58,16 +58,17 @@
 		<div data-role="footer" data-position="fixed">
 	    <div data-role="navbar">
 	        <ul>
-	            <li>
+	            <li class="navbar-button">
 	            	<a href="/" data-ajax="false" data-theme="b">
 		            	<span class="nav-icon">
 		            	<i class="fa fa-list-alt fa-nav-icon"></i>
 		            	<s:if test="notify"><i class="fa fa-exclamation-circle fa-notify-icon"></i></s:if>
 		            	</span>
+		            	<span class="nav-icon-text">ホーム</span>
 	            	</a>
 	            </li>
-	            <li><a href="/projectlist" data-ajax="false" data-theme="a"><i class="fa fa-th-large fa-nav-icon"></i></a></li>
-				<li><a href="/task/" data-ajax="false" data-theme="a"><i class="fa fa-tasks fa-nav-icon"></i></a></li>
+	            <li class="navbar-button"><a href="/projectlist" data-ajax="false" data-theme="a"><i class="fa fa-th-large fa-nav-icon"></i><span class="nav-icon-text">プロジェクト</span></a></li>
+				<li class="navbar-button"><a href="/task/" data-ajax="false" data-theme="a"><i class="fa fa-search fa-nav-icon"></i><span class="nav-icon-text">探す</span></a></li>
  	        </ul>
 	    </div><!-- /navbar -->
 	</div><!-- /footer -->

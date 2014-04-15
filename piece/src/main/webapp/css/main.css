@@ -114,6 +114,9 @@ pre.ui-li-text{
 .ui-btn-b span .fa-list-alt{
 	color: #ffffff;
 }
+.ui-btn-b .nav-icon-text{
+	color: #ffffff;
+}
 .ui-li-subtitle{
 	color: lightgray;
 	float: right;
@@ -270,4 +273,15 @@ pre.ui-li-text{
 }
 .user-icon{
 	padding: 0 5px 0 0;
+}
+.navbar-button{
+	position: relative;
+}
+.nav-icon-text{
+	font-size: 10px;
+	position: absolute;
+	top:25px;
+	left: 0;
+	padding-left: 0 !important;
+	width: 100%;
 }
