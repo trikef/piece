@@ -63,7 +63,8 @@
 					<i class="fa fa-tags"></i>É^ÉO
 					<ul class="tag-list">
 						<s:iterator value="pts">
-						<li id="pt<s:property value="piece_tag_id"/>">
+						<li id="pt<s:property value="piece_tag_id"/>" class="ui-corner-all ui-shadow">
+							<i class="fa fa-tag"></i>
 							<a class="ui-tag-name"><h2><s:property value="name"/></h2></a>
 							<a class="ui-tag-del" onClick="Piece.del_tag(<s:property value="piece_tag_id"/>, <s:property value="id"/>, <s:property value="piwp.id"/>)"><i class="fa fa-times"></i></a>
 						</li>
@@ -200,7 +201,7 @@
 				</s:if>
 				<a style="padding-left:<s:property value="%{#piece_lv*20}"/>px;" data-ajax="false" href="/piece/<s:property value="id" />">
 				<p class="ul-li-piece-title"><s:property value="title"/>
-				<span class="ul-li-tags"><small><s:iterator status="s" value="tags_sa"><s:property value="tags_sa[#s.index]"/>&nbsp;&nbsp;</s:iterator></small></span>
+				<span class="ul-li-tags"><small><s:iterator status="s" value="tags_sa"><span class="ui-corner-all ui-shadow ui-tag-name-mini"><s:property value="tags_sa[#s.index]"/></span></s:iterator></small></span>
 				</p>
 				</a>
 			</li>

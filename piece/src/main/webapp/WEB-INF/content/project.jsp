@@ -170,7 +170,7 @@
 				</s:if>
 				<a style="padding-left:<s:property value="%{#piece_lv*20}"/>px;" data-ajax="false" href="/piece/<s:property value="id" />">
 				<p class="ul-li-piece-title"><s:property value="title"/>
-				<span class="ul-li-tags"><small><s:iterator status="s" value="tags_sa"><s:property value="tags_sa[#s.index]"/>&nbsp;&nbsp;</s:iterator></small></span>
+				<span class="ul-li-tags"><small><s:iterator status="s" value="tags_sa"><span class="ui-corner-all ui-shadow ui-tag-name-mini"><s:property value="tags_sa[#s.index]"/></span></s:iterator></small></span>
 				</p>
 				</a>
 			</li>

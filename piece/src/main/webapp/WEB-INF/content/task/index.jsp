@@ -42,7 +42,8 @@
 				<p><s:property value="description"/></p>
 				<ul class="tag-list">
 					<s:iterator status="s" value="tags_sa">
-					<li>
+					<li class="ui-corner-all ui-shadow">
+						<i class="fa fa-tag"></i>
 						<span class="ui-tag-name"><h2><s:property value="tags_sa[#s.index]"/></h2></span>
 					</li>
 					</s:iterator>

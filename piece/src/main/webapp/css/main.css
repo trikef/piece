@@ -190,7 +190,7 @@ pre.ui-li-text{
 	overflow: hidden;
 	text-overflow: ellipsis;
 	width: 100%;
-	color: #006621;
+	color: #ffffff;
 	white-space: nowrap;
 }
 .piece-list{
@@ -215,12 +215,18 @@ pre.ui-li-text{
 	padding: 0 5px;
 }
 .tag-list li a h2 {
-	color: #ffffff !important;
+	color: #666 !important;
 	max-width: 200px;
 }
 .tag-list li span h2 {
-	color: #ffffff !important;
+	color: #666 !important;
 	max-width: 200px;
+}
+.tag-list li .fa-tag {
+	float: left;
+	padding-right: 5px;
+	padding-top: 2px;
+	color: #666;
 }
 .tag-name-add-btn{
 	position: absolute;
@@ -233,24 +239,31 @@ pre.ui-li-text{
 	padding-left: 0;
 	float: left;
 }
+.ui-tag-name-mini{
+	padding: 0 3px;
+	margin-right: 3px;
+	background-color: #aaa;
+	font-weight: 100;
+}
 .tag-list{
 	padding: 0;
 }
 .tag-list li{
 	list-style: none;
 	float: left;
-	background-color: #00A5DE;
+	background-color: #ffffff;
 	margin: 5px 5px 0 0;
 	font-size: 15px;
 	line-height: 18px;
 	padding: 2px 7px;
+	border: solid 1px #ddd;
 }
 .ui-tag-name h2{
 	margin: 0 !important;
 	font-weight: normal !important;
 }
 .ui-tag-del{
-	color: #ffffff !important;
+	color: #666 !important;
 }
 #piece-name-input{
 	position: relative;

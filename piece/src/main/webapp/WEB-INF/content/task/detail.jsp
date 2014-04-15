@@ -42,7 +42,8 @@
 					<i class="fa fa-tags"></i>É^ÉO
 					<ul class="tag-list">
 						<s:iterator value="pts">
-						<li id="pt<s:property value="piece_tag_id"/>">
+						<li id="pt<s:property value="piece_tag_id"/>" class="ui-corner-all ui-shadow">
+							<i class="fa fa-tag"></i>
 							<a class="ui-tag-name"><h2><s:property value="name"/></h2></a>
 						</li>
 						</s:iterator>
