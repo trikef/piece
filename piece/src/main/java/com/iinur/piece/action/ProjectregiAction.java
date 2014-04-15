@@ -1,5 +1,6 @@
 package com.iinur.piece.action;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 
@@ -24,15 +25,17 @@ public class ProjectregiAction extends BaseAction {
 			return INPUT;
 		}
 		ProjectModel pmodel = new ProjectModel();
-		if(target_date != null){
-			boolean regi = pmodel.registration(uid, title, description, goal, target_date);
-			if(!regi){
+		if(!StringUtils.isEmpty(title)){
+			Project p = pmodel.registration(uid, title, description, goal, target_date);
+			
+			if(p==null){
 				this.msg = ERROR;
 				return ERROR;
+			} else {
+				this.atlmodel.regiNewProject(servletPath, uid, p.getId());
 			}
 		}
-		Project p = pmodel.getNew(uid);
-		this.atlmodel.regiNewProject(servletPath, uid, p.getId());
+
 		return SUCCESS;
 	}
 }

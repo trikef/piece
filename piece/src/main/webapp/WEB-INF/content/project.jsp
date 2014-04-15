@@ -49,8 +49,30 @@
 			</div>
 		    <ul data-role="listview" class="chat-list" >
 			<s:iterator value="cs">
-			<li>
-				<p class="ui-li-name"><strong><s:property value="name"/></strong></p>
+			<li class="ui-li-chat">
+				<div class="ui-li-chat-header">
+					<p class="ui-li-no">NO:<s:property value="id"/></p>
+					<s:if test="user_id==uid">
+					<p class="ui-li-name"><strong><s:property value="name"/></strong></p>
+					</s:if>
+					<s:else>
+					<p class="ui-li-name"><strong><a href="#popup-menu-<s:property value="id"/>" data-rel="popup"><s:property value="name"/></a></strong></p>
+					<div data-role="popup" id="popup-menu-<s:property value="id"/>" data-theme="b">
+				        <ul data-role="listview" data-inset="true" style="min-width:210px;">
+				            <li data-role="list-divider"><s:property value="name"/>さんへのアクション</li>
+				            <s:if test="friend_status_id!=1">
+				            <li><a onClick="User.friend.request(<s:property value="user_id"/>,2,<s:property value="p.id"/>,0,<s:property value="id"/>,'#popup-menu-<s:property value="id"/>');">友達申請</a></li>
+				            </s:if>
+	<%-- TODO block action
+					            <s:if test="friend_status_id!=3">
+					            <li><a onClick="User.friend.request(<s:property value="user_id"/>,3,<s:property value="p.id"/>,0,<s:property value="id"/>);">ブロック</a></li>
+					            </s:if>
+					            <li><a href="#">メッセージ</a></li>
+	--%>
+				        </ul>
+					</div>
+					</s:else>
+				</div>
 				<pre class="ui-li-text"><s:property escape="false" value="text_link"/></pre>
 				<p class="ui-li-date"><strong><s:date name="created_at" format="yyyy/MM/dd HH:mm" /></strong></p>
 				<p class="ui-li-action">
@@ -165,7 +187,7 @@
 	            	<a href="/" data-ajax="false" data-theme="a">
 		            	<span class="nav-icon">
 		            	<i class="fa fa-list-alt fa-nav-icon"></i>
-		            	<s:if test="ncs.size()>0"><i class="fa fa-exclamation-circle fa-notify-icon"></i></s:if>
+		            	<s:if test="notify"><i class="fa fa-exclamation-circle fa-notify-icon"></i></s:if>
 		            	</span>
 	            	</a>
 	            </li>
@@ -180,8 +202,39 @@
             <s:if test="%{p.user_id==uid}">
             <li data-icon="edit"><a data-ajax="false" href="/projectupdateinput/<s:property value="p.id"/>" data-rel="close">編集</a></li>
             </s:if>
+            <s:if test="p.user_id!=uid&&g!=null">
+            <li data-icon="delete">
+            	<a data-ajax="false" href="/groupout?pri=<s:property value="p.id"/>&pci=0">メンバーを抜ける</a>
+            </li>
+            </s:if>
+            <s:if test="g!=null && fs.size()>0">
+			<li data-icon="user">
+				<a href="#popup-menu-group" data-rel="popup">メンバー追加</a>
+				<div data-role="popup" id="popup-menu-group" data-theme="b">
+			        <ul data-role="listview" data-inset="true" style="min-width:210px;">
+			            <li data-role="list-divider">フレンドリスト</li>
+			            <s:iterator value="fs">
+			            <li id="friend-<s:property value="friend_user_id" />">
+			            	<a onClick="Group.add(<s:property value="friend_user_id" />,<s:property value="p.id"/>,0,'#friend-<s:property value="friend_user_id" />');">
+			            	<span class="user-icon">
+			            		<i class="fa fa-user"></i>
+			            	</span>
+			            	<s:property value="friend_name" />
+			            	</a>
+			            </li>
+			            </s:iterator>
+			        </ul>
+				</div>
+			</li>
+			</s:if>
 			<li>
 			<br /><h3 style="white-space: normal;"><s:property value="p.title"/></h3>
+			<p><strong>メンバー</strong></p>
+			<p>
+				<s:iterator value="gs">
+				<s:property value="name"/>,
+				</s:iterator>
+			</p>
 			<p><strong>概要</strong></p><p><s:property escape="flase" value="p.description_link"/></p>
 			<p><strong>ゴール</strong></p><p><s:property escape="flase" value="p.goal_link"/></p>
 			<p><strong>リリース予定日</strong></p><p><strong><s:date name="p.target_date" format="yyyy/MM/dd" /></strong></p>

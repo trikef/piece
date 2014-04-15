@@ -65,7 +65,7 @@ CREATE TABLE piece(
 	skill TEXT,
 	status_id INTEGER DEFAULT 1,
 	display BOOLEAN DEFAULT TRUE,
-	permission INTEGER DEFAULT 700,
+	permission INTEGER DEFAULT 770,--ALTER TABLE piece ALTER COLUMN permission SET DEFAULT 770;
 	priority INTEGER DEFAULT 100,
 	img VARCHAR(100),
 	url VARCHAR(255),
@@ -206,8 +206,19 @@ CREATE TABLE action_log(
 	chat_id INTEGER DEFAULT 0,
 	product_chat_id INTEGER DEFAULT 0,
 	tag_id INTEGER DEFAULT 0,--ALTER TABLE action_log ADD COLUMN tag_id INTEGER DEFAULT 0;
+	target_user_id INTEGER DEFAULT 0,--ALTER TABLE action_log ADD COLUMN target_user_id INTEGER DEFAULT 0;
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY(id)
+);
+
+DROP TABLE IF EXISTS friend;
+CREATE TABLE friend(
+	id SERIAL,
+	own_user_id INTEGER NOT NULL,
+	friend_user_id INTEGER NOT NULL,
+	status_id INTEGER  DEFAULT 2,--1 permission,2 request,3 block
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY(own_user_id,friend_user_id)
 );
 
 --INSERT INTO group_member (user_id,project_id,piece_id) SELECT user_id,id,0 FROM project;

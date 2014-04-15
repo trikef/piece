@@ -115,17 +115,22 @@ public class ChatDao extends BaseDao {
 		
 		sql.append("WHERE c.user_id<>? AND exists (SELECT * FROM ");
 		sql.append("(SELECT * FROM action_log WHERE action_name='NEW CHAT') atl ");
-		sql.append("INNER JOIN (SELECT project_id,piece_id,max(created_at) as created_at "); 
+		sql.append("LEFT JOIN (SELECT project_id,piece_id,max(created_at) as created_at "); 
 		sql.append("FROM access_log WHERE user_id=? GROUP BY project_id,piece_id) acl ");
 		sql.append("ON atl.project_id=acl.project_id AND atl.piece_id=acl.piece_id ");
-		sql.append("WHERE atl.created_at>acl.created_at AND atl.chat_id=c.id) ");
+		sql.append("WHERE (atl.created_at>acl.created_at OR (atl.created_at is not null AND acl.created_at is null)) ");
+		sql.append("AND atl.chat_id=c.id) ");
+
+		sql.append("AND (exists (SELECT * FROM access_log alo LEFT JOIN project po ON alo.project_id=po.id WHERE (po.permission-((po.permission/10)*10))&4=4 AND po.id=c.project_id AND alo.user_id=?) ");//other permission
+		sql.append("OR exists (SELECT * FROM group_member gm WHERE gm.user_id=? AND gm.project_id=c.project_id AND gm.piece_id=0)) ");//group permission
+//TODO add permission piece
 
 		sql.append("ORDER BY c.id DESC");
 		
 		List<Chat> cs = null;
 		try {
 			ResultSetHandler<List<Chat>> rsh = new BeanListHandler<Chat>(Chat.class);
-			cs = run.query(sql.toString(), rsh, user_id,user_id);
+			cs = run.query(sql.toString(), rsh, user_id,user_id,user_id,user_id);
 		} catch (SQLException sqle) {
 			log.error(sqle.getMessage());
 			throw new RuntimeException(sqle.toString());

@@ -73,13 +73,14 @@ public class ProjectDao extends BaseDao {
 		sql.append("ON atl.project_id=acl.project_id) l ");
 		sql.append("ON p.id=l.project_id ");
 
-		sql.append("WHERE p.user_id=? OR (p.permission-((p.permission/10)*10))&4=4 ");
+		sql.append("WHERE exists (SELECT * FROM group_member gm WHERE gm.user_id=? AND gm.piece_id=0 AND gm.project_id=p.id) ");
+		sql.append("OR p.user_id=? OR (p.permission-((p.permission/10)*10))&4=4 ");
 
 		List<Project> ps = null;
 		try {
 			ResultSetHandler<List<Project>> rsh = new BeanListHandler<Project>(Project.class);
 			log.debug("List<Project> get(int user_id):"+sql.toString());
-			ps = run.query(sql.toString(), rsh, user_id,user_id,user_id);
+			ps = run.query(sql.toString(), rsh, user_id,user_id,user_id,user_id);
 		} catch (SQLException sqle) {
 			log.error(sqle.getMessage());
 			throw new RuntimeException(sqle.toString());

@@ -189,6 +189,25 @@ var Piece = {
 			}
 			Main.loading("hide");
 		});
+	},
+	toggle_public : function(piece_id){
+		var defer = $.Deferred();
+		$.ajax({
+			url : "/api/piecetogglepublic",
+			data : {
+				i : piece_id
+			},
+			dataType : 'json',
+			success : defer.resolve,
+			error : defer.reject
+		});
+		Main.loading("show");
+		return defer.promise().done(function(data) {
+			if(data.id>0){
+				//TODO display?
+			}
+			Main.loading("hide");
+		});
 	}
 };
 var Product = {
@@ -399,6 +418,67 @@ var Tag = {
 			return defer.promise().done(function(data) {
 				if(data.id>0){
 					lcation.reload();
+				}
+				Main.loading("hide");
+			});
+		}
+};
+var User = {
+	friend : {
+		STATUS_BLOCK : 3,
+		STATUS_REQUEST : 2,
+		STATUS_PERMISSION : 1,
+		request : function(friend_id,status_id,project_id,piece_id,chat_id,hide_obj_id){
+			var defer = $.Deferred();
+			$.ajax({
+				url : "/api/friendrequest",
+				data : {
+					fi : friend_id,
+					pri : project_id,
+					pci : piece_id,
+					ci : chat_id,
+					si : status_id
+				},
+				dataType : 'json',
+				success : defer.resolve,
+				error : defer.reject
+			});
+			Main.loading("show");
+			return defer.promise().done(function(data){
+				if(data!=null && data.id>0){
+					$(hide_obj_id).hide("fast", function() {
+						if(data.friend_status_id==1){
+							alert("FRIEND OK");
+						} else if(data.friend_status_id==3){
+							alert("BLOCK");
+						} else if(data.status_id==2&&data.friend_status_id==0){
+							alert("REQUEST");
+						}
+						});
+				}
+				Main.loading("hide");
+			});
+		}
+	}	
+};
+var Group = {
+		add : function(friend_id,project_id, piece_id, hide_obj_id) {
+			var defer = $.Deferred();
+			$.ajax({
+				url : "/api/groupmemberregi",
+				data : {
+					fi : friend_id,
+					pri : project_id,
+					pci : piece_id
+				},
+				dataType : 'json',
+				success : defer.resolve,
+				error : defer.reject
+			});
+			Main.loading("show");
+			return defer.promise().done(function(data) {
+				if(data!=null && data.id>0){
+					$(hide_obj_id).hide();
 				}
 				Main.loading("hide");
 			});

@@ -18,10 +18,13 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.iinur.piece.data.FriendDao;
 import com.iinur.piece.data.bean.Chat;
+import com.iinur.piece.data.bean.Friend;
 import com.iinur.piece.model.AccessLogModel;
 import com.iinur.piece.model.ActionLogModel;
 import com.iinur.piece.model.ChatModel;
+import com.iinur.piece.model.FriendModel;
 import com.opensymphony.xwork2.ActionSupport;
 //TODO change Intercepter
 @InterceptorRefs({
@@ -47,6 +50,9 @@ public class BaseAction extends ActionSupport implements CookiesAware, ServletRe
 	public String name;
 	public int uid;
 	public List<Chat> ncs = null;
+	public List<Friend> nfs = null;
+	
+	public boolean notify = false;
 
 	protected boolean logFlag = false;
 
@@ -81,6 +87,11 @@ public class BaseAction extends ActionSupport implements CookiesAware, ServletRe
 	protected void notifyCheck(int uid){
 		ChatModel cmodel = new ChatModel();
 		this.ncs = cmodel.getListUnread(uid);
+		
+		FriendModel fmodel = new FriendModel();
+		this.nfs = fmodel.getListSideFriend(uid, FriendDao.STATUS_REQUEST);
+		
+		this.notify = ((this.ncs.size()+this.nfs.size())>0);
 	}
 
 	private void accesslog(){

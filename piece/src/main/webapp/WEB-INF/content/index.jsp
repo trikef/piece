@@ -20,10 +20,24 @@
 <body>
 <div data-role="page" id="indexpage" data-dom-cache="false">
 	<div data-role="header">
-		<h1>メニュー</h1>
+		<h1>マイページ</h1>
+		<a href="#nav-panel-friend-list" ><i class="fa fa-users"></i></a>
 	</div><!-- /header -->
 	<div class="ui-content" role="main">
-		<a href="/projectlist" class="ui-btn ui-corner-all">プロジェクトリスト</a>
+		<s:if test="nfs.size()>0">
+		<div id="index-friend-request-list" class="ui-content">
+	    	<ul data-role="listview" class="pin-list" data-inset="true">
+	    	<li data-role="list-divider">フレンド申請がきています</li>
+			<s:iterator value="nfs">
+			<li class="ui-li-unread" id="friend-<s:property value="id"/>">
+				<p class="ui-li-name"><strong><s:property value="friend_name"/></strong></p>
+				<button class="ui-btn ui-btn-inline ui-mini" onClick="User.friend.request(<s:property value="friend_user_id"/>,1,0,0,0,'#friend-<s:property value="id"/>');">許可</button>
+				<button class="ui-btn ui-btn-inline ui-mini" onClick="User.friend.request(<s:property value="friend_user_id"/>,3,0,0,0,'#friend-<s:property value="id"/>');">ブロック</button>
+			</li>
+			</s:iterator>
+			</ul>
+		</div>
+		</s:if>
 		<div id="index-chat-list" class="ui-content">
 	    	<ul data-role="listview" class="pin-list" data-inset="true">
 	    	<li data-role="list-divider">未読</li>
@@ -48,7 +62,7 @@
 	            	<a href="/" data-ajax="false" data-theme="b">
 		            	<span class="nav-icon">
 		            	<i class="fa fa-list-alt fa-nav-icon"></i>
-		            	<s:if test="ncs.size()>0"><i class="fa fa-exclamation-circle fa-notify-icon"></i></s:if>
+		            	<s:if test="notify"><i class="fa fa-exclamation-circle fa-notify-icon"></i></s:if>
 		            	</span>
 	            	</a>
 	            </li>
@@ -57,5 +71,13 @@
  	        </ul>
 	    </div><!-- /navbar -->
 	</div><!-- /footer -->
+	<div data-role="panel" data-position-fixed="true" data-display="push" data-theme="a" id="nav-panel-friend-list">
+		<ul data-role="listview">
+            <li data-icon="arrow-r"><a href="#" data-rel="close">閉じる</a></li>
+            <s:iterator value="fs">
+            <li><span class="user-icon"><i class="fa fa-user"></i></span><s:property value="friend_name" /></li>
+            </s:iterator>
+		</ul>
+	</div>
 </body>
 </html>

@@ -97,7 +97,7 @@
 	            	<a href="/" data-ajax="false" data-theme="a">
 		            	<span class="nav-icon">
 		            	<i class="fa fa-list-alt fa-nav-icon"></i>
-		            	<s:if test="ncs.size()>0"><i class="fa fa-exclamation-circle fa-notify-icon"></i></s:if>
+		            	<s:if test="notify"><i class="fa fa-exclamation-circle fa-notify-icon"></i></s:if>
 		            	</span>
 	            	</a>
 	            </li>

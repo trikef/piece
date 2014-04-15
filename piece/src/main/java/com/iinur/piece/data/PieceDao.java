@@ -239,6 +239,9 @@ public class PieceDao extends BaseDao {
 		sql.append("ON r.id=atag.piece_id ");
 		sql.append("WHERE not exists (SELECT * FROM piece_net pn3 WHERE pn3.parent_id=r.id) ");
 		sql.append("AND p3.display=TRUE AND p3.status_id=1 ");
+		
+		sql.append("AND (p3.permission-((p3.permission/10)*10))&4=4 ");
+		
 		sql.append("ORDER BY p3.created_at DESC ");
 
 		List<PieceWithPath> ps = null;
@@ -284,6 +287,9 @@ public class PieceDao extends BaseDao {
 		sql.append("WHERE not exists (SELECT * FROM piece_net pn3 WHERE pn3.parent_id=r.id) ");
 		sql.append("AND p3.display=TRUE AND p3.status_id=1 ");
 		sql.append("AND exists (SELECT * FROM piece_tag pti WHERE pti.tag_id=? AND pti.piece_id=r.id) ");
+		
+		sql.append("AND (p3.permission-((p3.permission/10)*10))&4=4 ");
+		
 		sql.append("ORDER BY p3.created_at DESC ");
 
 		List<PieceWithPath> ps = null;
@@ -334,6 +340,20 @@ public class PieceDao extends BaseDao {
 		String sql = "UPDATE piece SET display=? WHERE id=?";
 		try {
 			run.update(sql,display,piece_id);
+		} catch (SQLException sqle) {
+			log.error(sqle.getMessage());
+			throw new RuntimeException(sqle.toString());
+		}
+	}
+	
+	public void updatePermissionOther(int piece_id, int action){
+		StringBuffer sql = new StringBuffer();
+		sql.append("UPDATE piece SET permission= ");
+		sql.append("cast(substring(cast(permission as text) from 1 for 2)|| ");
+		sql.append("cast(? as text) ");
+		sql.append("as INTEGER) WHERE id=? ");
+		try {
+			run.update(sql.toString(),action,piece_id);
 		} catch (SQLException sqle) {
 			log.error(sqle.getMessage());
 			throw new RuntimeException(sqle.toString());

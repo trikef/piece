@@ -6,11 +6,13 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
 import com.iinur.piece.data.bean.Chat;
+import com.iinur.piece.data.bean.GroupMember;
 import com.iinur.piece.data.bean.Piece;
 import com.iinur.piece.data.bean.PieceWithPath;
 import com.iinur.piece.data.bean.Product;
 import com.iinur.piece.data.bean.Tag;
 import com.iinur.piece.model.ChatModel;
+import com.iinur.piece.model.GroupMemberModel;
 import com.iinur.piece.model.PieceModel;
 import com.iinur.piece.model.PieceTagModel;
 import com.iinur.piece.model.ProductModel;
@@ -32,6 +34,8 @@ public class PieceAction extends BaseAction {
 	
 	public List<Tag> ts;
 	public List<Tag> pts;
+
+	public GroupMember g;
 
 	public String execute(){
 		String result = before();
@@ -55,6 +59,9 @@ public class PieceAction extends BaseAction {
 
 		PieceTagModel ptmodel = new PieceTagModel();
 		this.pts = ptmodel.getTags(id);
+
+		GroupMemberModel gmodel = new GroupMemberModel();
+		this.g = gmodel.get(uid, piwp.getProject_id(), 0);//TODO check piece_id
 
 		this.acsmodel.regiPiece(this.servletPath, id, this.uid);//log
 	

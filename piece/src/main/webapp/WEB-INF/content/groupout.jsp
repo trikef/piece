@@ -23,7 +23,6 @@
 		<h1>完了</h1>
 	</div><!-- /header -->
 	<div class="ui-content" role="main">
-		<h4><s:property value="name" />さん</h4>
 		<a data-ajax="false" href="/projectlist" class="ui-btn ui-corner-all">プロジェクトリストへ</a>
 	</div>
 	<div data-role="footer" data-position="fixed">

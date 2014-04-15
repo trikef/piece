@@ -257,7 +257,7 @@
 	            	<a href="/" data-ajax="false" data-theme="a">
 		            	<span class="nav-icon">
 		            	<i class="fa fa-list-alt fa-nav-icon"></i>
-		            	<s:if test="ncs.size()>0"><i class="fa fa-exclamation-circle fa-notify-icon"></i></s:if>
+		            	<s:if test="notify"><i class="fa fa-exclamation-circle fa-notify-icon"></i></s:if>
 		            	</span>
 	            	</a>
 	            </li>
@@ -285,6 +285,20 @@
 				</div>
 			</li>
 			</s:if>
+			<s:if test="g!=null"><%--TOD permission group --%>
+            <li>
+				<select onChange="Piece.toggle_public(<s:property value="piwp.id"/>);" id="slider-flip-m" data-role="slider" data-mini="true">
+					<s:if test="%{(piwp.permission-((piwp.permission/10)*10))&4==4}">
+					    <option value="private">非公開</option>
+					    <option value="public" selected="">公開</option>
+				    </s:if>
+				    <s:else>
+				    	<option value="private" selected="">非公開</option>
+					    <option value="public">公開</option>
+				    </s:else>
+				</select>
+            </li>
+            </s:if>
 		</ul>
 	</div>
 </div>

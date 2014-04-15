@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import com.iinur.core.util.PermissionUtils;
 import com.iinur.core.util.TimestampUtils;
 import com.iinur.piece.data.PieceDao;
+import com.iinur.piece.data.bean.GroupMember;
 import com.iinur.piece.data.bean.Piece;
 import com.iinur.piece.data.bean.PieceWithPath;
 
@@ -87,11 +88,15 @@ public class PieceModel {
 		return this.pdao.searchFromTagId(tag_id);
 	}
 
-	public boolean permissionExecute(int piece_id, int user_id){
+	public boolean permission(int piece_id, int user_id, int action){
 		Piece p = this.pdao.getSingle(piece_id);
 		int permission = p.getPermission();
 		String group = getGroup(piece_id, user_id);
-		return PermissionUtils.check(permission, group, PermissionUtils.EXECUTE);
+		return PermissionUtils.check(permission, group, action);
+	}
+
+	public boolean permissionExecute(int piece_id, int user_id){
+		return permission(piece_id, user_id, PermissionUtils.EXECUTE);
 	}
 
 	public String getGroup(int piece_id, int user_id){
@@ -99,7 +104,19 @@ public class PieceModel {
 		Piece p = this.pdao.getSingle(piece_id);
 		if(p.getUser_id()==user_id){
 			return PermissionUtils.OWNER;
+		} else {
+			GroupMemberModel gm = new GroupMemberModel();
+			GroupMember g = gm.get(user_id, p.getProject_id(), piece_id);
+			if(g != null){
+				return PermissionUtils.GROUP;
+			}
 		}
 		return PermissionUtils.OTHER;
+	}
+
+	public void updatePermission(int piece_id, String group, int action){
+		if(group.equals(PermissionUtils.OTHER)){
+			this.pdao.updatePermissionOther(piece_id, action);
+		}
 	}
 }
