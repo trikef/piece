@@ -26,15 +26,15 @@
 	<div class="ui-content" role="main">
 		<div id="index-friend-request-list" class="ui-content">
 	    	<ul data-role="listview" class="pin-list" data-inset="true">
-	    		<li data-role="list-divider">ホーム</li>
+	    		<li data-role="list-divider"><span class="menu-list-icon"><i class="fa fa-home"></i></span>ホーム</li>
 				<li><p>訪れた事のあるプロジェクトの未読チャットの通知、フレンド申請の通知、フレンドリストの確認が出来ます</p></li>
-				<li data-role="list-divider">プロジェクト</li>
+				<li data-role="list-divider"><span class="menu-list-icon"><i class="fa fa-th-large"></i></span>プロジェクト</li>
 				<li>
 					<h3><small>プロジェクトリスト</small></h3>
 					<p>一般公開、またはメンバーに所属しているプロジェクトがリストされています。お気軽に閲覧してチャットで意見したり、いいなと思った発言に「いいね！」をして参加してみてください。どのプロジェクトでもメンバーがあなたを歓迎します！</p>
 					<h3><small>マイプロジェクト</small></h3>
 					<p>自分専用の非公開設定プロジェクトです。使い方の練習をしたり、チャット機能でメモ、タスク機能でToDo管理などご自由にお使いください。公開設定に変更するときはよく検討して下さい、非推奨です。</p></li>
-				<li data-role="list-divider">探す</li>
+				<li data-role="list-divider"><span class="menu-list-icon"><i class="fa fa-search"></i></span>探す</li>
 				<li><p>お手伝いして欲しいプロジェクトからのタスクが検索できます。ここで検索できるタスクはみなさんの参加を心待ちにしています！もし興味があるタスクが見つかったけど進め方がよくわからないなど疑問があったらお気軽にタスクチャットで質問してみてください</p></li>
 			</ul>
 		</div>
