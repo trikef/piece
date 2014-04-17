@@ -34,6 +34,10 @@ public class PieceTagModel {
 		return this.ptdao.getTags(piece_id);
 	}
 	
+	public List<Tag> getAllTagsWithPieceCount(){
+		return this.ptdao.getAllTagsWithPieceCount();
+	}
+	
 	public PieceTag getNew(int user_id, int piece_id, int tag_id){
 		return this.ptdao.getNew(user_id, piece_id, tag_id);
 	}

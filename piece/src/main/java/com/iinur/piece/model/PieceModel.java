@@ -102,6 +102,13 @@ public class PieceModel {
 	public String getGroup(int piece_id, int user_id){
 		//TODO performance
 		Piece p = this.pdao.getSingle(piece_id);
+		ProjectModel prmodel = new ProjectModel();
+		String prg = prmodel.getGroup(p.getProject_id(), user_id);
+
+		if(!prg.equals(PermissionUtils.OTHER)){//check project group
+			return prg;
+		}
+
 		if(p.getUser_id()==user_id){
 			return PermissionUtils.OWNER;
 		} else {

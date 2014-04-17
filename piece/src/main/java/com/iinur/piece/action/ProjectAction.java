@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
+import com.iinur.core.util.PermissionUtils;
 import com.iinur.piece.data.FriendDao;
 import com.iinur.piece.data.bean.Chat;
 import com.iinur.piece.data.bean.Friend;
@@ -18,8 +19,10 @@ import com.iinur.piece.model.PieceModel;
 import com.iinur.piece.model.ProjectModel;
 
 @Action(value="/project/{id:.+}",
-results={@Result(name="success", location="project.jsp")}
-)
+results={
+		@Result(name="success", location="project.jsp"),
+		@Result(name="forbidden", type="httpheader", params={"status", "403", "errorMessage", "Forbidden"})
+})
 public class ProjectAction extends BaseAction {
 
 	public int id;
@@ -56,6 +59,10 @@ public class ProjectAction extends BaseAction {
 		
 		FriendModel fmodel = new FriendModel();
 		this.fs = fmodel.getList(uid, FriendDao.STATUS_PERMISSION);
+		
+		if(!pmodel.permission(id, uid, PermissionUtils.READ)){
+			return FORBIDDEN;
+		}
 		
 		this.acsmodel.regiProject(this.servletPath, id, this.uid);//log
 

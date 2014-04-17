@@ -47,6 +47,8 @@ public class BaseAction extends ActionSupport implements CookiesAware, ServletRe
 	private static final String COOKIE_USER_ID_KEY = "cuid";
 	private static final String COOKIE_ENC = "Windows-31J";
 
+	protected static final String FORBIDDEN = "forbidden";
+	
 	public String name;
 	public int uid;
 	public List<Chat> ncs = null;

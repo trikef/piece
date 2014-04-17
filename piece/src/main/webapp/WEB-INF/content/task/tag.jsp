@@ -20,24 +20,46 @@
 </head>
 <body>
 <div data-role="page" id="taskindexpage">
-	<div data-role="header">
-		<h2>タスク検索</h2>
-	</div><!-- /header -->
-	<div data-role="content">
-		<form class="ui-filterable">
-		    <input id="search-key-input" data-type="search" placeholder="タグ名から検索">
-		</form>
-		<ul data-role="listview" data-filter="true" data-input="#search-key-input">
-		    <s:iterator value="ts">
-			    <li>
-			    	<a href="/task/tag?ti=<s:property value="id" />">
-			    		<i class="fa fa-tag"></i>&nbsp;&nbsp;<s:property value="name" />
-			    		<span class="ui-li-count"><s:property value="num" /></span>
-			    	</a>
-			    </li>
+		<div data-role="header">
+			<h2>タスク検索</h2>
+		</div><!-- /header -->
+		<div data-role="content">
+			<ul data-role="listview" data-theme="a">
+				<li id="search-key-input">
+					<ul data-role="listview" data-filter="true" data-filter-reveal="true" data-filter-placeholder="タグ名から検索" data-inset="true">
+				    <s:iterator value="ts">
+					    <li>
+					    	<a href="/task/tag?ti=<s:property value="id" />">
+					    		<i class="fa fa-tag"></i>&nbsp;&nbsp;<s:property value="name" />
+					    		<span class="ui-li-count"><s:property value="num" /></span>
+					    	</a>
+					    </li>
+					</s:iterator>
+					</ul>
+				</li>
+			</ul>
+	        <ul data-role="listview" class="piece-list" >
+			<s:if test="%{piwps.size()>0}">
+			<s:set name="piece_lv" value="1"/>
+			<s:iterator value="piwps">
+			<li id="piece<s:property value="id" />" class="ui-li-piece-detail">
+				<a data-ajax="false" href="/task/detail/<s:property value="id" />">
+				<h2><s:property value="title"/></h2>
+				<p><s:property value="description"/></p>
+				<ul class="tag-list">
+					<s:iterator status="s" value="tags_sa">
+					<li class="ui-corner-all ui-shadow">
+						<i class="fa fa-tag"></i>
+						<span class="ui-tag-name"><h2><s:property value="tags_sa[#s.index]"/></h2></span>
+					</li>
+					</s:iterator>
+				</ul>
+				</a>
+			</li>
 			</s:iterator>
-		</ul>
-	</div>
+			</s:if>
+			</ul>
+		</div>
 	<div data-role="footer" data-position="fixed">
 	    <div data-role="navbar">
 	        <ul>

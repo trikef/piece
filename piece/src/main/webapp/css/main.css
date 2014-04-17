@@ -55,8 +55,18 @@ pre {
 	top: 15px;
 	z-index: 1;
 }
+.ui-title{
+	position: relative;
+	overflow: visible !important;
+}
+.ui-title-icon{
+	position: absolute;
+	top: 5px;
+	left : -25px;
+	width: 30px;
+}
 .ui-li-unread a{
-	background-color: #FAFAC2 !important;;
+	background-color: #FAFAC2 !important;
 }
 .ui-li-header{
 	margin-top: 30px !important;
@@ -111,7 +121,10 @@ pre.ui-li-text{
 	padding-left: 3px;
 	color: #666;
 }
-.ui-btn-b span .fa-list-alt{
+.ui-btn-a .fa-nav-icon{
+	color: #666;
+}
+.ui-btn-b span .fa-nav-icon{
 	color: #ffffff;
 }
 .ui-btn-b .nav-icon-text{
@@ -285,6 +298,9 @@ pre.ui-li-text{
 	padding-top: 0;
 }
 .user-icon{
+	padding: 0 5px 0 0;
+}
+.menu-list-icon{
 	padding: 0 5px 0 0;
 }
 .navbar-button{

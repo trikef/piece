@@ -11,6 +11,8 @@ public class Tag {
 	private Timestamp created_at;
 	
 	private int piece_tag_id;
+	private int num;
+	
 	public int getId() {
 		return id;
 	}
@@ -46,5 +48,11 @@ public class Tag {
 	}
 	public void setPiece_tag_id(int piece_tag_id) {
 		this.piece_tag_id = piece_tag_id;
+	}
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
 	}
 }

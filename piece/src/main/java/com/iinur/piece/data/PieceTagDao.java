@@ -110,6 +110,49 @@ public class PieceTagDao extends BaseDao{
 		return t;
 	}
 
+	public List<Tag> getAllTagsWithPieceCount() {
+		StringBuffer sql = new StringBuffer();
+
+		//TODO tuning
+		sql.append("WITH RECURSIVE rec(id,pid,path,path_title) as ( ");
+		sql.append("SELECT child_id, parent_id,array[parent_id],array[p.title] FROM piece_net pn ");
+		sql.append("INNER JOIN piece pc ON pn.child_id=pc.id ");
+		sql.append("LEFT join piece p ON pn.parent_id = p.id ");
+		sql.append("WHERE parent_id=0 ");
+		sql.append("UNION ALL ");
+		sql.append("SELECT b.child_id,b.parent_id,path||b.parent_id,path_title||title FROM rec a JOIN  ");
+		sql.append("(SELECT pn2.child_id,pn2.parent_id,p2.title FROM piece_net pn2  ");
+		sql.append("LEFT JOIN piece p2 ON pn2.parent_id = p2.id) b ");
+		sql.append("ON a.id=b.parent_id) ");
+		
+		sql.append("SELECT ");
+		//sql.append("t.id,t.name,t.description,t.display,t.pop,t.created_at,count(*) as num ");
+		sql.append("t.id,t.name,count(*) as num ");
+		sql.append("FROM rec r ");
+		sql.append("LEFT JOIN piece p3 ON r.id=p3.id ");
+		
+		sql.append("LEFT JOIN piece_tag pt ON p3.id=pt.piece_id ");
+		sql.append("LEFT JOIN tag t ON pt.tag_id=t.id ");
+		
+		sql.append("WHERE not exists (SELECT * FROM piece_net pn3 WHERE pn3.parent_id=r.id) ");
+		sql.append("AND p3.display=TRUE AND p3.status_id=1 ");
+		sql.append("AND (p3.permission-((p3.permission/10)*10))&4=4 ");
+		sql.append("AND t.name is not null ");
+
+		sql.append("GROUP BY t.id,t.name ");
+		sql.append("ORDER BY count(*) DESC ");
+
+		List<Tag> ts;
+		try {
+			ResultSetHandler<List<Tag>> rsh = new BeanListHandler<Tag>(Tag.class);
+			ts = run.query(sql.toString(), rsh);
+		} catch (SQLException sqle) {
+			log.error(sqle.getMessage());
+			throw new RuntimeException(sqle.toString());
+		}
+		return ts;
+	}
+	
 	public void insert(int user_id, int piece_id, int tag_id){
 		String sql = "INSERT INTO piece_tag (user_id,piece_id,tag_id) VALUES (?,?,?)";
 		try {

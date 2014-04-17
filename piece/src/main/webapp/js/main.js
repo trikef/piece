@@ -273,7 +273,7 @@ var Chat = {
 			return defer.promise().done(function(data) {
 				if(data.id>0){
 					$('.chat-list')
-					.prepend("<li class='ui-li-static ui-body-inherit ui-last-child'><p class='ui-li-name'><strong>"+data.name+"</strong></p><p class='ui-li-text'>"+data.text+"</p><p class='ui-li-date'><strong>"+data.created_at_str+"</strong></p>"
+					.prepend("<li class='ui-li-static ui-body-inherit ui-last-child'><p class='ui-li-name'><strong>"+data.name+"</strong></p><pre class='ui-li-text'>"+data.text+"</pre><p class='ui-li-date'><strong>"+data.created_at_str+"</strong></p>"
 							+"<p class='ui-li-action'><span id='pin"+data.id+"' class='off'><a onclick='Chat.pin("+data.id+","+data.id+")' class='ui-link'>"
 							+"<i class='fa fa-thumb-tack'></i></a></span>"
 							+"<a onclick=\"Chat.count("+data.id+","+data.user_id+",1,0,'#good"+data.id+"')\" class='ui-link'><i class='fa fa-thumbs-o-up'></i><span id='good"+data.id+"'>0</span></a>"
@@ -366,7 +366,7 @@ var ProductChat = {
 			return defer.promise().done(function(data) {
 				if(data.id>0){
 					$('.productchat-list')
-					.append("<li class='ui-li-static ui-body-inherit ui-last-child'><p class='ui-li-name'><strong>"+data.name+"</strong></p><p class='ui-li-text'>"+data.text+"</p><p class='ui-li-date'><strong>"+data.created_at_str+"</strong></p>"
+					.append("<li class='ui-li-static ui-body-inherit ui-last-child'><p class='ui-li-name'><strong>"+data.name+"</strong></p><pre class='ui-li-text'>"+data.text+"</pre><p class='ui-li-date'><strong>"+data.created_at_str+"</strong></p>"
 							+"</li>"
 							);
 					$( "#productchat-collapsibleset" ).children( ":last" ).collapsible( "collapse" );
@@ -484,3 +484,6 @@ var Group = {
 			});
 		}
 };
+$(document).on( 'pageshow',function(event){
+	//TODO graph view
+});

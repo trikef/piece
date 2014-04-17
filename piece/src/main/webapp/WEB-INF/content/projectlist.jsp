@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link rel="shortcut icon" href="/img/favicon.ico" />
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>プロジェクトリスト</title>
@@ -41,16 +42,16 @@
 	    <div data-role="navbar">
 	        <ul>
 	        	<li>
-	            	<a href="/" data-ajax="false" data-theme="a">
+	            	<a href="/" data-ajax="false" data-theme="b">
 	            		<span class="nav-icon">
-		            	<i class="fa fa-list-alt fa-nav-icon"></i>
+		            	<i class="fa fa-home fa-nav-icon"></i>
 		            	<s:if test="notify"><i class="fa fa-exclamation-circle fa-notify-icon"></i></s:if>
 		            	</span>
 		            	<span class="nav-icon-text">ホーム</span>
 	            	</a>
 	            </li>
-	            <li><a href="/projectlist" data-ajax="false" data-theme="b"><i class="fa fa-th-large fa-nav-icon"></i><span class="nav-icon-text">プロジェクト</span></a></li>
-				<li><a href="/task/" data-ajax="false" data-theme="a"><i class="fa fa-search fa-nav-icon"></i><span class="nav-icon-text">探す</span></a></li>
+	            <li><a href="/projectlist" data-ajax="false" data-theme="b" class="ui-btn-active"><i class="fa fa-th-large fa-nav-icon"></i><span class="nav-icon-text">プロジェクト</span></a></li>
+				<li><a href="/task/" data-ajax="false" data-theme="b"><i class="fa fa-search fa-nav-icon"></i><span class="nav-icon-text">探す</span></a></li>
  	        </ul>
 	    </div><!-- /navbar -->
 	</div><!-- /footer -->

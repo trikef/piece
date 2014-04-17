@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
+import com.iinur.core.util.PermissionUtils;
 import com.iinur.piece.data.bean.Chat;
 import com.iinur.piece.data.bean.GroupMember;
 import com.iinur.piece.data.bean.Piece;
@@ -19,8 +20,9 @@ import com.iinur.piece.model.ProductModel;
 import com.iinur.piece.model.TagModel;
 
 @Action(value="/piece/{id:.+}",
-results={@Result(name="success", location="piece.jsp")}
-)
+results={@Result(name="success", location="piece.jsp"),
+		@Result(name="forbidden", type="httpheader", params={"status", "403", "errorMessage", "Forbidden"})
+})
 public class PieceAction extends BaseAction {
 
 	public Piece p;
@@ -62,6 +64,10 @@ public class PieceAction extends BaseAction {
 
 		GroupMemberModel gmodel = new GroupMemberModel();
 		this.g = gmodel.get(uid, piwp.getProject_id(), 0);//TODO check piece_id
+
+		if(!pmodel.permission(id, uid, PermissionUtils.READ)){
+			return FORBIDDEN;
+		}
 
 		this.acsmodel.regiPiece(this.servletPath, id, this.uid);//log
 	
