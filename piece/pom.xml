@@ -59,6 +59,11 @@
 			<artifactId>struts2-json-plugin</artifactId>
 			<version>2.3.15.3</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-tiles-plugin</artifactId>
+			<version>2.3.15.3</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>piece</finalName>
@@ -78,7 +83,7 @@
 				<artifactId>tomcat7-maven-plugin</artifactId>
 				<version>2.2</version>
 				<configuration>
-					<path>/kigaru</path>
+					<path>/piece</path>
 					<server>tomcat</server>
 					<update>true</update>
 				</configuration>
