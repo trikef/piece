@@ -1,5 +1,6 @@
 package com.iinur.piece.data.bean;
 
+import java.sql.Array;
 import java.sql.Timestamp;
 
 public class Tag {
@@ -12,6 +13,9 @@ public class Tag {
 	
 	private int piece_tag_id;
 	private int num;
+	
+	private Array path;
+	private Array path_name;
 	
 	public int getId() {
 		return id;
@@ -54,5 +58,17 @@ public class Tag {
 	}
 	public void setNum(int num) {
 		this.num = num;
+	}
+	public Array getPath() {
+		return path;
+	}
+	public void setPath(Array path) {
+		this.path = path;
+	}
+	public Array getPath_name() {
+		return path_name;
+	}
+	public void setPath_name(Array path_name) {
+		this.path_name = path_name;
 	}
 }

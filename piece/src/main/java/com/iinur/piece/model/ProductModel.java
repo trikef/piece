@@ -32,4 +32,8 @@ public class ProductModel {
 	public List<Product> getList(int piece_id){
 		return this.pdao.getList(piece_id);
 	}
+	
+	public List<Product> getListUnread(int user_id){
+		return this.pdao.getListUnread(user_id);
+	}
 }

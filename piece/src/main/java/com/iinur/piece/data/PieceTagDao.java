@@ -39,6 +39,44 @@ public class PieceTagDao extends BaseDao{
 		return t;
 	}
 
+	public Tag getTagFromName(String name) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT ");
+		sql.append("t.id,t.user_id,t.name,t.description,t.display,t.pop,t.created_at,");
+		sql.append("tc.path,tc.path_name,tc.num ");
+		sql.append("FROM tag t, ");
+		
+		sql.append("(WITH RECURSIVE rect(id,pid,path,path_name) as ( ");
+		sql.append("SELECT child_id, parent_id,array[parent_id],array_append(NULL,tp.name) ");
+		sql.append("FROM tag_net tn ");
+		sql.append("INNER JOIN tag tc ON tn.child_id=tc.id ");
+		sql.append("INNER JOIN tag tp ON tn.parent_id=tp.id ");
+		sql.append("UNION ALL ");
+		sql.append("SELECT b.child_id,b.parent_id,path||b.parent_id,array_append(path_name,b.name) ");
+		sql.append("FROM rect a INNER JOIN  (");
+		sql.append("SELECT tn2.child_id,tn2.parent_id,t2.name ");
+		sql.append("FROM tag_net tn2 ");
+		sql.append("LEFT JOIN tag t2 ON tn2.parent_id=t2.id");
+		sql.append(") b ON a.id=b.parent_id) ");
+		sql.append("SELECT ");
+		sql.append("min(rt.path) as path,min(path_name) as path_name,count(*) as num ");
+		sql.append("FROM rect rt ");
+		sql.append("WHERE (?=ANY(rt.path_name) OR exists (SELECT * FROM tag tt WHERE rt.id=tt.id AND tt.name=?))) tc ");
+		
+		sql.append("WHERE t.name=? ");
+		
+		Tag t;
+		try {
+			ResultSetHandler<Tag> rsh = new BeanHandler<Tag>(Tag.class);
+			t = run.query(sql.toString(), rsh, name,name,name);
+			log.debug("getTagFromName("+name+"):"+sql.toString());
+		} catch (SQLException sqle) {
+			log.error(sqle.getMessage());
+			throw new RuntimeException(sqle.toString());
+		}
+		return t;
+	}
+
 	public Tag getTagFromTagId(int piece_id, int tag_id) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT ");

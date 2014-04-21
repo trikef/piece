@@ -2,6 +2,12 @@ INSERT INTO user_info (name) VALUES ('autoinfo');--自動返信用
 
 INSERT INTO piece (id,project_id,user_id,title,description,goal) VALUES(0,0,0,'PROJECT','-','-');
 
+INSERT INTO tag (user_id,name) VALUES (0,'システム');
+INSERT INTO tag (user_id,name) VALUES (0,'オフィスワーク');
+
+--INSERT INTO tag_net (parent_id,child_id) SELECT 65,id FROM tag;
+--DELETE FROM tag_net WHERE child_id=65;
+
 --INSERT INTO project (user_id,title,description,goal) 
 --SELECT id,'マイプロジェクト','あなた専用のプロジェクトです。非公開設定にしてあるのでご自由にChatでメモをしたり、Taskでちょっとした用事などのToDo管理に使ってください','使い勝手が悪ければ「灯」プロジェクトにご連絡ください。改善しますよー' FROM user_info;
 

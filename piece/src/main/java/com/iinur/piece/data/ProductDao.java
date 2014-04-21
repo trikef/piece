@@ -79,6 +79,43 @@ public class ProductDao extends BaseDao {
 		return ps;
 	}
 
+	public List<Product> getListUnread(int user_id){
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT ");
+		sql.append("pd.id,pj.title,pc.title,du.name,pd.name,pdt.name as type_name,du.name as user_name,pd.created_at, ");
+		sql.append("pj.title as project_title,pc.title as piece_title ");
+		sql.append("FROM product pd ");
+		sql.append("LEFT JOIN product_type pdt ON pd.type_id=pdt.id ");
+		sql.append("LEFT JOIN piece pc ON pd.piece_id=pc.id ");
+		sql.append("LEFT JOIN project pj ON pc.project_id=pj.id ");
+		sql.append("LEFT JOIN user_info du ON pd.user_id=du.id ");
+		
+		sql.append("WHERE exists (");
+		sql.append("SELECT * FROM group_member gm ");
+		sql.append("WHERE gm.project_id=pc.project_id ");
+		sql.append("AND gm.user_id=?");
+		sql.append(") ");
+		sql.append("AND not exists (");
+		sql.append("SELECT * FROM access_log al ");
+		sql.append("WHERE al.user_id=? ");
+		sql.append("AND al.product_id=pd.id");
+		sql.append(") ");
+		sql.append("AND exists (");
+		sql.append("SELECT * FROM user_info ou ");
+		sql.append("WHERE ou.id=? AND ou.created_at<pd.created_at)");
+		
+		List<Product> ps = null;
+		try {
+			ResultSetHandler<List<Product>> rsh = new BeanListHandler<Product>(Product.class);
+			ps = run.query(sql.toString(), rsh, user_id,user_id,user_id);
+		} catch (SQLException sqle) {
+			log.error(sqle.getMessage());
+			throw new RuntimeException(sqle.toString());
+		}
+
+		return ps;
+	}
+
 	public void insert(int piece_id, int user_id, String name, int status){
 		String sql = "INSERT INTO Product (piece_id,user_id,name,status) VALUES (?,?,?,?)";
 		try {

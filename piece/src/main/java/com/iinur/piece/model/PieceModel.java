@@ -12,6 +12,7 @@ import com.iinur.piece.data.PieceDao;
 import com.iinur.piece.data.bean.GroupMember;
 import com.iinur.piece.data.bean.Piece;
 import com.iinur.piece.data.bean.PieceWithPath;
+import com.iinur.piece.data.bean.Project;
 
 public class PieceModel {
 	
@@ -88,8 +89,22 @@ public class PieceModel {
 		return this.pdao.searchFromTagId(tag_id);
 	}
 
+	/**
+	 * 所属するプロジェクトで一般公開なら見えるようにする。
+	 * 
+	 * @param piece_id
+	 * @param user_id
+	 * @param action
+	 * @return
+	 */
 	public boolean permission(int piece_id, int user_id, int action){
 		Piece p = this.pdao.getSingle(piece_id);
+		ProjectModel pjmodel = new ProjectModel();
+		Project pj = pjmodel.getSingle(p.getProject_id());
+		if(PermissionUtils.check(pj.getPermission(), PermissionUtils.OTHER, PermissionUtils.READ)){
+			return true;
+		}
+		
 		int permission = p.getPermission();
 		String group = getGroup(piece_id, user_id);
 		return PermissionUtils.check(permission, group, action);

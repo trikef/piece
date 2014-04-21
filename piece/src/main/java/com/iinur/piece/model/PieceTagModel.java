@@ -45,4 +45,8 @@ public class PieceTagModel {
 	public Tag getNewTag(int user_id, int piece_id, int tag_id){
 		return this.ptdao.getNewTag(user_id, piece_id, tag_id);
 	}
+	
+	public Tag getTagFromName(String name){
+		return this.ptdao.getTagFromName(name);
+	}
 }

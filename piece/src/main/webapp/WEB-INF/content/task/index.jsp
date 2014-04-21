@@ -24,6 +24,10 @@
 		<h2>タスク検索</h2>
 	</div><!-- /header -->
 	<div data-role="content">
+<%--
+		<a href="/task/tag?ti=<s:property value="t1.id" />" class="ui-btn"><s:property value="t1.name" />:<s:property value="t1.num" /></a>
+		<a href="/task/tag?ti=<s:property value="t2.id" />" class="ui-btn"><s:property value="t2.name" />:<s:property value="t2.num" /></a>
+ --%>
 		<form class="ui-filterable">
 		    <input id="search-key-input" data-type="search" placeholder="タグ名から検索">
 		</form>

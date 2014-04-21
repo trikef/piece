@@ -314,3 +314,8 @@ pre.ui-li-text{
 	padding-left: 0 !important;
 	width: 100%;
 }
+.profile-parameter{
+	width: 100%;
+	display: block;
+	height: 30px;
+}

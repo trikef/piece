@@ -289,7 +289,25 @@ public class PieceDao extends BaseDao {
 		sql.append("AND exists (SELECT * FROM piece_tag pti WHERE pti.tag_id=? AND pti.piece_id=r.id) ");
 		
 		sql.append("AND (p3.permission-((p3.permission/10)*10))&4=4 ");
-		
+
+		/* TODO WHERE tag topic path
+		sql.append("AND exists (WITH RECURSIVE rect(id,pid,path,path_name) as ( ");
+		sql.append("SELECT child_id, parent_id,array[parent_id],array_append(NULL,tp.name) ");
+		sql.append("FROM tag_net tn ");
+		sql.append("INNER JOIN tag tc ON tn.child_id=tc.id ");
+		sql.append("INNER JOIN tag tp ON tn.parent_id=tp.id ");
+		sql.append("UNION ALL ");
+		sql.append("SELECT b.child_id,b.parent_id,path||b.parent_id,array_append(path_name,b.name) ");
+		sql.append("FROM rect a INNER JOIN  (");
+		sql.append("SELECT tn2.child_id,tn2.parent_id,t2.name ");
+		sql.append("FROM tag_net tn2 ");
+		sql.append("LEFT JOIN tag t2 ON tn2.parent_id=t2.id");
+		sql.append(") b ON a.id=b.parent_id) ");
+		sql.append("SELECT ");
+		sql.append("rt.id,rt.pid as parent_id,rt.path,rt.path_name,array_upper(rt.path,1) as LV ");
+		//sql.append("FROM rect rt WHERE (?=ANY(rt.path) OR rt.id=?)) ");
+		sql.append("FROM rect rt WHERE rt.id=?) ");
+		*/
 		sql.append("ORDER BY p3.created_at DESC ");
 
 		List<PieceWithPath> ps = null;

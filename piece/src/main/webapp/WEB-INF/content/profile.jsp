@@ -21,54 +21,50 @@
 <body>
 <div data-role="page" id="indexpage" data-dom-cache="false">
 	<div data-role="header">
-		<h1>おしらせ</h1>
+		<h1><s:property value="name" /></h1>
 	</div><!-- /header -->
 	<div class="ui-content" role="main">
-		<s:if test="nfs.size()>0">
-		<div id="index-friend-request-list" class="ui-content">
-	    	<ul data-role="listview" class="pin-list" data-inset="true">
-	    	<li data-role="list-divider">フレンド申請がきています</li>
-			<s:iterator value="nfs">
-			<li class="ui-li-unread" id="friend-<s:property value="id"/>">
-				<p class="ui-li-name"><strong><s:property value="friend_name"/></strong></p>
-				<button class="ui-btn ui-btn-inline ui-mini" onClick="User.friend.request(<s:property value="friend_user_id"/>,1,0,0,0,'#friend-<s:property value="id"/>');">許可</button>
-				<button class="ui-btn ui-btn-inline ui-mini" onClick="User.friend.request(<s:property value="friend_user_id"/>,3,0,0,0,'#friend-<s:property value="id"/>');">ブロック</button>
-			</li>
-			</s:iterator>
-			</ul>
-		</div>
-		</s:if>
-		<s:if test="npds.size()>0">
-		<div id="index-product-unread-list" class="ui-content">
-	    	<ul data-role="listview" class="pin-list" data-inset="true">
-	    	<li data-role="list-divider">評価待ちのタスクがあります</li>
-			<s:iterator value="npds">
-			<li class="ui-li-unread" id="product-<s:property value="id"/>">
-				<a href="/product<s:property value="type_name"/>/<s:property value="id"/>" >
-				<p class="ui-li-name"><strong><s:property value="type_name"/>:<s:property value="name"/></strong></p>
-				<p class="ui-li-text"><s:property value="user_name"/></p>
-				<p class="ui-li-date"><strong><s:date name="created_at" format="yyyy/MM/dd HH:mm" /></strong></p>
-				<p class="ui-li-subtitle"><s:property value="project_title"/>-<s:property value="piece_title"/></p>
-				</a>
-			</li>
-			</s:iterator>
-			</ul>
-		</div>
-		</s:if>
 		<div id="index-chat-list" class="ui-content">
 	    	<ul data-role="listview" class="pin-list" data-inset="true">
-	    	<li data-role="list-divider">未読メッセージ</li>
-			<s:iterator value="ncs">
-			<li class="ui-li-unread">
-				<s:if test="piece_id>0"><a data-ajax="false" href="/piece/<s:property value="piece_id"/>" ></s:if>
-				<s:else><a data-ajax="false" href="/project/<s:property value="project_id"/>" ></s:else>
-					<p class="ui-li-name"><strong><s:property value="name"/></strong></p>
-					<p class="ui-li-text"><s:property value="text"/></p>
-					<p class="ui-li-date"><strong><s:date name="created_at" format="yyyy/MM/dd HH:mm" /></strong></p>
-					<p class="ui-li-subtitle"><s:property value="project_title"/></p>
-				</a>
+	    	<li data-theme="b" data-role="list-divider">ステータス</li>
+			<li data-theme="b">
+				<span class="profile-parameter">
+					<p class="ui-li-name"><strong>経験値</strong></p>
+					<p class="ui-li-text">---</p>
+				</span>
+				<span class="profile-parameter">
+					<p class="ui-li-name"><strong>リーダーシップ</strong></p>
+					<p class="ui-li-text">---</p>
+				</span>
+				<span class="profile-parameter">
+					<p class="ui-li-name"><strong>行動力</strong></p>
+					<p class="ui-li-text">---</p>
+				</span>
+				<span class="profile-parameter">
+					<p class="ui-li-name"><strong>好奇心</strong></p>
+					<p class="ui-li-text">---</p>
+				</span>
+				<span class="profile-parameter">
+					<p class="ui-li-name"><strong>挑戦力</strong></p>
+					<p class="ui-li-text">---</p>
+				</span>
+				<span class="profile-parameter">
+					<p class="ui-li-name"><strong>責任力</strong></p>
+					<p class="ui-li-text">---</p>
+				</span>
+				<span class="profile-parameter">
+					<p class="ui-li-name"><strong>コミュ力</strong></p>
+					<p class="ui-li-text">---</p>
+				</span>
+				<span class="profile-parameter">
+					<p class="ui-li-name"><strong>事務能力</strong></p>
+					<p class="ui-li-text">---</p>
+				</span>
+				<span class="profile-parameter">
+					<p class="ui-li-name"><strong>システム力</strong></p>
+					<p class="ui-li-text">---</p>
+				</span>
 			</li>
-			</s:iterator>
 			</ul>
 		</div>
 	</div>

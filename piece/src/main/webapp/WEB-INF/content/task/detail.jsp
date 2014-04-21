@@ -23,6 +23,9 @@
 		<div data-role="header">
 			<h2>タスク詳細</h2>
 			<a data-rel="back" data-direction="reverse" data-icon="back" data-iconpos="notext">Back</a>
+<%-- TODO do action button
+			<a href="#" onClick="" class="ui-btn ui-btn-inline ui-mini ui-corner-all">参加する</a>
+ --%>
 		</div><!-- /header -->
 		<div data-role="content">
 			<ul data-role="listview" >

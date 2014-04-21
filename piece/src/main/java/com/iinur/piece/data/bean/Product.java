@@ -16,6 +16,9 @@ public class Product {
 	private String user_name;
 	private String type_name;
 	
+	private String project_title;
+	private String piece_title;
+	
 	private int project_id;
 	public int getId() {
 		return id;
@@ -87,5 +90,17 @@ public class Product {
 	}
 	public void setProject_id(int project_id) {
 		this.project_id = project_id;
+	}
+	public String getProject_title() {
+		return project_title;
+	}
+	public void setProject_title(String project_title) {
+		this.project_title = project_title;
+	}
+	public String getPiece_title() {
+		return piece_title;
+	}
+	public void setPiece_title(String piece_title) {
+		this.piece_title = piece_title;
 	}
 }
