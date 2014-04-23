@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.iinur.piece.data.FriendDao;
+import com.iinur.piece.data.bean.AccessLog;
 import com.iinur.piece.data.bean.Chat;
 import com.iinur.piece.data.bean.Friend;
 import com.iinur.piece.data.bean.Product;
@@ -50,6 +51,8 @@ public class BaseAction extends ActionSupport implements CookiesAware, ServletRe
 	private static final String COOKIE_ENC = "Windows-31J";
 
 	protected static final String FORBIDDEN = "forbidden";
+
+	private static final int DEFAULT_HISTORY_LIMIT = 20;
 	
 	public String name;
 	public int uid;
@@ -58,11 +61,17 @@ public class BaseAction extends ActionSupport implements CookiesAware, ServletRe
 	public List<Product> npds = null;
 	
 	public boolean notify = false;
+	
+	public List<AccessLog> hs = null;
 
 	protected boolean logFlag = false;
 
 	private void init(){
 		this.servletPath = request.getServletPath();
+	}
+	
+	private void end(){
+		this.hs = acsmodel.getListFromUserId(uid, DEFAULT_HISTORY_LIMIT);		
 	}
 
 	public String before(){
@@ -86,6 +95,7 @@ public class BaseAction extends ActionSupport implements CookiesAware, ServletRe
 			accesslog();
 		}
 
+		end();
 		return SUCCESS;
 	}
 	

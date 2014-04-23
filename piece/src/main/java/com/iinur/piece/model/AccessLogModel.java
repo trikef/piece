@@ -1,6 +1,9 @@
 package com.iinur.piece.model;
 
+import java.util.List;
+
 import com.iinur.piece.data.AccessLogDao;
+import com.iinur.piece.data.bean.AccessLog;
 import com.iinur.piece.data.bean.Product;
 
 public class AccessLogModel extends BaseModel{
@@ -33,5 +36,9 @@ public class AccessLogModel extends BaseModel{
 	public void regiProduct(String url, int product_id, int user_id){
 		Product pd = getProduct(product_id);
 		registration(url, pd.getProject_id(), pd.getPiece_id(), product_id, user_id);
+	}
+	
+	public List<AccessLog> getListFromUserId(int user_id, int limit){
+		return this.adao.getListFromUserId(user_id, limit);
 	}
 }

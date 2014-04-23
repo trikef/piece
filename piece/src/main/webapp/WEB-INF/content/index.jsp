@@ -93,8 +93,21 @@
 	<div data-role="panel" data-position="right" data-display="overlay" data-theme="a" id="nav-panel-menu-list">
 		<ul data-role="listview">
             <li><a href="#" data-rel="close"><span class="menu-list-icon"><i class="fa fa-undo"></i></span>閉じる</a></li>
-            <li><a href="/profile" alt="プロフィール"><span class="menu-list-icon"><i class="fa fa-user"></i></span><s:property value="name" /></a></li>
             <li><a href="/help" alt="ヘルプ"><span class="menu-list-icon"><i class="fa fa-question"></i></span>ヘルプ</a></li>
+            <li data-role="collapsible" data-inset="false" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" data-iconpos="right">
+		    	<h2><span class="menu-list-icon"><i class="fa fa-clock-o"></i></span>閲覧履歴</h2>
+		        <ul data-role="listview">
+		            <s:iterator value="hs">
+		            <li>
+		            	<a href="<s:property value="url" />" data-ajax="false">
+		            		<s:property value="title" />
+		            		<span class="ui-li-subtitle"><small><s:property value="url" />&nbsp;<s:date name="created_at" format="MM/dd HH:mm" /></small></span>
+	            		</a>
+	            	</li>
+		            </s:iterator>
+		        </ul>
+		    </li>
+            <li><a href="/profile" alt="プロフィール"><span class="menu-list-icon"><i class="fa fa-user"></i></span><s:property value="name" /></a></li>
             <li data-role="collapsible" data-inset="false" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" data-iconpos="right">
 		    	<h2><span class="menu-list-icon"><i class="fa fa-users"></i></span>フレンドリスト</h2>
 		        <ul data-role="listview">
