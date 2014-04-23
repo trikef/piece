@@ -101,8 +101,30 @@
 			</div>
 		    <ul data-role="listview" class="chat-list" >
 			<s:iterator value="cs">
-			<li>
-				<p class="ui-li-name"><strong><s:property value="name"/></strong></p>
+			<li class="ui-li-chat" id="chat-<s:property value="id"/>">
+				<div class="ui-li-chat-header">
+					<p class="ui-li-no">NO:<s:property value="id"/></p>
+					<s:if test="user_id==uid">
+					<p class="ui-li-name"><strong><s:property value="name"/></strong></p>
+					</s:if>
+					<s:else>
+					<p class="ui-li-name"><strong><a href="#popup-menu-<s:property value="id"/>" data-rel="popup"><s:property value="name"/></a></strong></p>
+					<div data-role="popup" id="popup-menu-<s:property value="id"/>" data-theme="b">
+				        <ul data-role="listview" data-inset="true" style="min-width:210px;">
+				            <li data-role="list-divider"><s:property value="name"/>さんへのアクション</li>
+				            <s:if test="friend_status_id!=1">
+				            <li><a onClick="User.friend.request(<s:property value="user_id"/>,2,<s:property value="p.project_id"/>,<s:property value="p.id"/>,<s:property value="id"/>,'#popup-menu-<s:property value="id"/>');">友達申請</a></li>
+				            </s:if>
+	<%-- TODO block action
+					            <s:if test="friend_status_id!=3">
+					            <li><a onClick="User.friend.request(<s:property value="user_id"/>,3,<s:property value="p.id"/>,0,<s:property value="id"/>);">ブロック</a></li>
+					            </s:if>
+					            <li><a href="#">メッセージ</a></li>
+	--%>
+				        </ul>
+					</div>
+					</s:else>
+				</div>
 				<pre class="ui-li-text"><s:property escape="false" value="text_link"/></pre>
 				<p class="ui-li-date"><strong><s:date name="created_at" format="yyyy/MM/dd HH:mm" /></strong></p>
 				<p class="ui-li-action">

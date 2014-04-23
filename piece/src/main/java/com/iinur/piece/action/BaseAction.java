@@ -63,6 +63,7 @@ public class BaseAction extends ActionSupport implements CookiesAware, ServletRe
 	public boolean notify = false;
 	
 	public List<AccessLog> hs = null;
+	public List<Friend> fs = null;
 
 	protected boolean logFlag = false;
 
@@ -71,7 +72,9 @@ public class BaseAction extends ActionSupport implements CookiesAware, ServletRe
 	}
 	
 	private void end(){
-		this.hs = acsmodel.getListFromUserId(uid, DEFAULT_HISTORY_LIMIT);		
+		this.hs = acsmodel.getListFromUserId(uid, DEFAULT_HISTORY_LIMIT);
+		FriendModel fmodel = new FriendModel();
+		this.fs = fmodel.getList(uid, FriendDao.STATUS_PERMISSION);
 	}
 
 	public String before(){

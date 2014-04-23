@@ -50,7 +50,7 @@
 			</div>
 		    <ul data-role="listview" class="chat-list" >
 			<s:iterator value="cs">
-			<li class="ui-li-chat">
+			<li class="ui-li-chat" id="chat-<s:property value="id"/>">
 				<div class="ui-li-chat-header">
 					<p class="ui-li-no">NO:<s:property value="id"/></p>
 					<s:if test="user_id==uid">

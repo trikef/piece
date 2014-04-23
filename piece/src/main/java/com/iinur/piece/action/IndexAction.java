@@ -13,16 +13,12 @@ public class IndexAction extends BaseAction{
 
 	private static final Logger log = LoggerFactory.getLogger(IndexAction.class);
 
-	public List<Friend> fs;
-
 	public String execute(){
 		this.logFlag = true;
 		String result = before();
 		if(result.equals(INPUT)){
 			return INPUT;
 		}
-		FriendModel fmodel = new FriendModel();
-		fs = fmodel.getList(uid, FriendDao.STATUS_PERMISSION);
 		return SUCCESS;
 	}
 }

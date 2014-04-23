@@ -103,6 +103,26 @@ public class ChatDao extends BaseDao {
 		return cs;
 	}
 	
+	public List<Chat> getGoodList(int user_id) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT c.id,c.project_id,pj.title as project_title,c.piece_id,c.user_id,c.text,c.priority,c.created_at,u.name FROM chat c ");
+		sql.append("INNER JOIN user_info u ON c.user_id = u.id ");
+		sql.append("INNER JOIN project pj ON c.project_id = pj.id ");
+		sql.append("WHERE exists (SELECT * FROM chat_value cv WHERE cv.user_id=? AND cv.good>0 AND cv.chat_id=c.id) ");
+		sql.append("ORDER BY c.created_at DESC");
+		
+		List<Chat> cs = null;
+		try {
+			ResultSetHandler<List<Chat>> rsh = new BeanListHandler<Chat>(Chat.class);
+			cs = run.query(sql.toString(), rsh, user_id);
+		} catch (SQLException sqle) {
+			log.error(sqle.getMessage());
+			throw new RuntimeException(sqle.toString());
+		}
+
+		return cs;
+	}
+	
 	public List<Chat> getListUnread(int user_id) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT c.id,c.project_id,c.piece_id,c.user_id,c.text,c.priority,c.created_at,");

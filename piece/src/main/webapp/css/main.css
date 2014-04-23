@@ -91,10 +91,12 @@ pre {
 }
 .ui-li-text{
 	float: left;
+	width: 100%;
 }
 pre.ui-li-text{
 	float: left;
-	margin-top: 17px
+	margin-top: 17px;
+	width: 100%;
 }
 .ui-li-text-right{
 	text-align: right;
