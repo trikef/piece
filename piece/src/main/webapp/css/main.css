@@ -201,12 +201,18 @@ pre.ui-li-text{
 	position: absolute;
 	left: 20px;
 	bottom: -15px;
-	height: 15px;
+	height: 18px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	width: 100%;
 	color: #ffffff;
 	white-space: nowrap;
+}
+.ui-li-piece-top .ul-li-tags{
+	left: 0 !important;
+}
+.ui-li-piece-top .ul-li-piece-title{
+	padding-left: 0 !important;
 }
 .piece-list{
 	margin-bottom: 10px !important;
@@ -259,6 +265,7 @@ pre.ui-li-text{
 	margin-right: 3px;
 	background-color: #aaa;
 	font-weight: 100;
+	text-shadow: none;
 }
 .tag-list{
 	padding: 0;

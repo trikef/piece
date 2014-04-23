@@ -28,6 +28,22 @@
 		<a href="/task/tag?ti=<s:property value="t1.id" />" class="ui-btn"><s:property value="t1.name" />:<s:property value="t1.num" /></a>
 		<a href="/task/tag?ti=<s:property value="t2.id" />" class="ui-btn"><s:property value="t2.name" />:<s:property value="t2.num" /></a>
  --%>
+		<s:if test="%{pstp.size()>0}">
+ 		<ul data-role="listview" class="piece-list" >
+			<s:set name="piece_lv" value="1"/>
+    		<li data-role="list-divider"><span class="menu-list-icon">新着おすすめタスク</li>
+			<s:iterator value="pstp">
+			<li id="piece<s:property value="id" />" class="ui-li-piece-top">
+				<a data-ajax="false" href="/task/detail/<s:property value="id" />">
+				<div class="ul-li-piece-title">
+					<h2><s:property value="title"/></h2>
+					<span class="ul-li-tags"><small><s:iterator status="s" value="tags_sa"><span class="ui-corner-all ui-shadow ui-tag-name-mini"><s:property value="tags_sa[#s.index]"/></span></s:iterator></small></span>
+				</div>
+				</a>
+			</li>
+			</s:iterator>
+		</ul>
+		</s:if>
 		<form class="ui-filterable">
 		    <input id="search-key-input" data-type="search" placeholder="タグ名から検索">
 		</form>

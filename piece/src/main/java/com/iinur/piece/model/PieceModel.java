@@ -89,6 +89,10 @@ public class PieceModel {
 		return this.pdao.searchFromTagId(tag_id);
 	}
 
+	public List<PieceWithPath> searchFromTagName(String tag_name, int limit){
+		return this.pdao.searchFromTagName(tag_name, limit);
+	}
+
 	/**
 	 * 所属するプロジェクトで一般公開なら見えるようにする。
 	 * 

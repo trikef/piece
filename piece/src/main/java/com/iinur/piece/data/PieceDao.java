@@ -324,6 +324,73 @@ public class PieceDao extends BaseDao {
 		return ps;
 	}
 
+	public List<PieceWithPath> searchFromTagName(String tag_name, int limit){
+		StringBuffer sql = new StringBuffer();
+
+		sql.append("WITH RECURSIVE rec(id,pid,path,path_title) as ( ");
+		sql.append("SELECT child_id, parent_id,array[parent_id],array[p.title] FROM piece_net pn ");
+		sql.append("INNER JOIN piece pc ON pn.child_id=pc.id ");
+		sql.append("LEFT join piece p ON pn.parent_id = p.id ");
+		sql.append("WHERE parent_id=0 ");
+		sql.append("UNION ALL ");
+		sql.append("SELECT b.child_id,b.parent_id,path||b.parent_id,path_title||title FROM rec a JOIN  ");
+		sql.append("(SELECT pn2.child_id,pn2.parent_id,p2.title FROM piece_net pn2  ");
+		sql.append("LEFT JOIN piece p2 ON pn2.parent_id = p2.id) b ");
+		sql.append("ON a.id=b.parent_id) ");
+		sql.append("SELECT r.id,p3.project_id,p3.user_id,p3.title,p3.description,p3.goal,p3.target_date,p3.status_id,p3.display,p3.permission,p3.created_at,");
+		sql.append("r.pid as parent_id,r.path,r.path_title,array_upper(r.path,1) as LV,atag.tags ");
+		sql.append("FROM rec r ");
+		sql.append("LEFT JOIN piece p3 ON r.id=p3.id ");
+		sql.append("LEFT JOIN ( ");
+		sql.append("SELECT ");
+		sql.append("apta.piece_id,array(");
+		sql.append("SELECT at.name FROM piece_tag aptb ");
+		sql.append("INNER JOIN tag at ON at.id=aptb.tag_id ");
+		sql.append("WHERE aptb.piece_id=apta.piece_id ");
+		sql.append(") as tags FROM piece_tag apta GROUP BY apta.piece_id ");
+		sql.append(") atag ");
+		sql.append("ON r.id=atag.piece_id ");
+		sql.append("WHERE not exists (SELECT * FROM piece_net pn3 WHERE pn3.parent_id=r.id) ");
+		sql.append("AND p3.display=TRUE AND p3.status_id=1 ");
+		sql.append("AND exists (SELECT * FROM piece_tag pti INNER JOIN tag t ON pti.tag_id=t.id WHERE t.name=? AND pti.piece_id=r.id) ");
+		
+		sql.append("AND (p3.permission-((p3.permission/10)*10))&4=4 ");
+
+		/* TODO WHERE tag topic path
+		sql.append("AND exists (WITH RECURSIVE rect(id,pid,path,path_name) as ( ");
+		sql.append("SELECT child_id, parent_id,array[parent_id],array_append(NULL,tp.name) ");
+		sql.append("FROM tag_net tn ");
+		sql.append("INNER JOIN tag tc ON tn.child_id=tc.id ");
+		sql.append("INNER JOIN tag tp ON tn.parent_id=tp.id ");
+		sql.append("UNION ALL ");
+		sql.append("SELECT b.child_id,b.parent_id,path||b.parent_id,array_append(path_name,b.name) ");
+		sql.append("FROM rect a INNER JOIN  (");
+		sql.append("SELECT tn2.child_id,tn2.parent_id,t2.name ");
+		sql.append("FROM tag_net tn2 ");
+		sql.append("LEFT JOIN tag t2 ON tn2.parent_id=t2.id");
+		sql.append(") b ON a.id=b.parent_id) ");
+		sql.append("SELECT ");
+		sql.append("rt.id,rt.pid as parent_id,rt.path,rt.path_name,array_upper(rt.path,1) as LV ");
+		//sql.append("FROM rect rt WHERE (?=ANY(rt.path) OR rt.id=?)) ");
+		sql.append("FROM rect rt WHERE rt.id=?) ");
+		*/
+		sql.append("ORDER BY p3.created_at DESC ");
+		sql.append("LIMIT ? ");
+
+		List<PieceWithPath> ps = null;
+		try {
+			ResultSetHandler<List<PieceWithPath>> rsh = new BeanListHandler<PieceWithPath>(PieceWithPath.class);
+			String sqlStr = sql.toString();
+			log.debug("search sql::"+sqlStr);
+			ps = run.query(sql.toString(), rsh, tag_name, limit);
+		} catch (SQLException sqle) {
+			log.error(sqle.getMessage());
+			throw new RuntimeException(sqle.toString());
+		}
+
+		return ps;
+	}
+
 	public void insert(int project_id, int user_id, String title, String description, String goal, Timestamp target_date){
 		String sql = "INSERT INTO Piece (project_id,user_id,title,description,goal,target_date) VALUES (?,?,?,?,?,?)";
 		try {
