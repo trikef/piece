@@ -48,7 +48,7 @@
 			        </ul>
 			    </div>
 			</div>
-		    <ul data-role="listview" class="chat-list" >
+		    <ul data-role="listview" class="chat-list" data-filter="true" data-filter-placeholder="" data-filter-theme="a" >
 			<s:iterator value="cs">
 			<li class="ui-li-chat" id="chat-<s:property value="id"/>">
 				<div class="ui-li-chat-header">
@@ -99,7 +99,7 @@
 			</ul>
 	    </div>
 	    <div id="project-pin" class="ui-content">
-	    	<ul data-role="listview" class="pin-list" >
+	    	<ul data-role="listview" class="pin-list" data-filter="true" data-filter-placeholder="" data-filter-theme="a" >
 			<s:iterator value="cps">
 			<li id="pin_chat_<s:property value="id"/>">
 				<p class="ui-li-name"><strong><s:property value="name"/></strong></p>
@@ -122,7 +122,7 @@
 				<input type="hidden" id="piece-goal-input" />
 				<input type="hidden" id="piece-targetdate-input" />
 			</div>
-	        <ul data-role="listview" class="piece-list" >
+	        <ul data-role="listview" class="piece-list" data-filter="true" data-filter-placeholder="" data-filter-theme="a" >
 			<s:if test="%{piwps.size()>0}">
 			<s:set name="piece_lv" value="1"/>
 			<s:iterator value="piwps">

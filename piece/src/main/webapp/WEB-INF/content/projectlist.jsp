@@ -25,7 +25,7 @@
 		<a href="/projectinput" data-ajax="false" class="ui-btn ui-shadow ui-corner-all ui-icon-plus ui-btn-icon-notext ui-btn-inline ui-btn-right">Options</a>
 	</div><!-- /header -->
 	<div class="ui-content" role="main">
-		<ul data-role="listview"  data-count-theme="b" data-inset="true">
+		<ul data-role="listview"  data-count-theme="b" data-inset="true" data-filter="true" data-filter-placeholder="" data-filter-theme="a">
 		    <s:iterator value="ps">
 			<li><a data-ajax="false" href="/project/<s:property value="id"/>">
 			<br /><h3 style="white-space: normal;"><s:property value="title"/></h3>
