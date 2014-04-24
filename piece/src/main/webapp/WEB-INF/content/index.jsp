@@ -93,6 +93,7 @@
 	<div data-role="panel" data-position="right" data-display="overlay" data-theme="a" id="nav-panel-menu-list">
 		<ul data-role="listview">
             <li><a href="#" data-rel="close"><span class="menu-list-icon"><i class="fa fa-undo"></i></span>•Â‚¶‚é</a></li>
+            <li><a href="/slide" alt="Tomos‚Æ‚Í" data-ajax="false"><span class="menu-list-icon"><i class="fa fa-fire"></i></span>Tomos‚Æ‚Í</a></li>
             <li><a href="/help" alt="ƒwƒ‹ƒv"><span class="menu-list-icon"><i class="fa fa-question"></i></span>ƒwƒ‹ƒv</a></li>
             <li><a href="/fav" alt="ƒwƒ‹ƒv"><span class="menu-list-icon"><i class="fa fa-star"></i></span>‚¨‹C‚É“ü‚è</a></li>
             <li data-role="collapsible" data-inset="false" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" data-iconpos="right">

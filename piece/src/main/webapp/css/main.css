@@ -328,3 +328,8 @@ pre.ui-li-text{
 	display: block;
 	height: 30px;
 }
+.img-style-none{
+	border: 0 !important;
+	background: transparent !important;
+	box-shadow: none !important;
+}
